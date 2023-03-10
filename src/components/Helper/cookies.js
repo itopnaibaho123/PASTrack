@@ -1,3 +1,5 @@
+import React from "react";
+
 const setCookie = (cname, cvalue, exdays) => {
     if (exdays) {
       const d = new Date();
@@ -14,7 +16,7 @@ const setCookie = (cname, cvalue, exdays) => {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(";");
-    console.log(ca)
+    // console.log(ca)
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) == " ") {
@@ -48,6 +50,7 @@ const setCookie = (cname, cvalue, exdays) => {
     setCookie("token", "");
     setCookie("username", "");
     setCookie("role", "");
+    setCookie("type", "");
   };
   
   const parseCookie = (cookie, key) => {
@@ -61,6 +64,8 @@ const setCookie = (cname, cvalue, exdays) => {
   
     return cookieObj[key];
   };
+
   
-  export { setCookie, getCookie, clearCookie, parseCookie, getRoles };
+  
+  export { setCookie, getCookie, clearCookie, parseCookie };
   

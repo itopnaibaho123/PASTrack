@@ -20,22 +20,24 @@ export default function login() {
               handleSubmit={async (formData, setFormData) => {
                 // setIsError(false);
                 try {
-                  const res = await axios.post("http://localhost:8080/api/login", formData);
-
-                  const {
-                    data: { token, username, role },
-                    status,
-                  } = res;
-                  console.log(res.data.role)
-                  if (status === 200) {
-                    setCookie("token", token) 
-                    setCookie("username", username)
-                    setCookie("role", role)
-
-                    router.push("/");
+                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}api/login`, {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                    headers: {
+                      "Content-Type": "application/json"
+                    }
+                  })
+                  if (res.ok) {
+                    const json = await res.json()
+                    setCookie("token", json.token)
+                    setCookie("username", json.username)
+                    setCookie("role", json.role)
+                    setCookie("type", json.type)
+                    router.push("/")
                   }
+               
                 } catch (err) {
-                    console.log(err)
+                    // console.log(err)
                 } finally {
                   setFormData({});
                 }
