@@ -5,8 +5,8 @@ import { getCookie } from "./cookies";
 export default async function checkRole(ctx, allowedRoles = []) {
   const { role, token } = ctx.req.cookies;
   
-  const tokenTrue = false;
-  const rolesTrue = false;
+  let tokenTrue = false;
+  let rolesTrue = false;
 
   if(token) {
     tokenTrue = true;
