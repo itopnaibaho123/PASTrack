@@ -8,8 +8,9 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Profile from '../components/Profile';
 
-export default function index() {
+export default function index(props) {
   const router = useRouter();
+  
 
   return (
     <div className="">
@@ -22,18 +23,21 @@ export default function index() {
 
 export async function getServerSideProps(context) {
   // context.req.query
-
-  checkRole(context)
-  
-  // if(!cookies.token){
+  const [tokenTrue, rolesTrue] = checkRole(context)
+  if(!tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      }
+    }
+  }
+  // if(!rolesTrue){
   //   return {
   //     redirect: {
-  //       destination: "/login",
+  //       destination: "/",
   //       permanent: false,
   //     }
   //   }
   // }
-  return {
-    props: {},
-  };
 }
