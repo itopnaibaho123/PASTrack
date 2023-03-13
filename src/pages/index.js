@@ -23,13 +23,19 @@ export default function index(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const [tokenTrue, rolesTrue] = checkRole(context)
-  if(!tokenTrue) {
+  const authentications = checkRole(context)
+  if(!authentications.tokenTrue) {
     return {
       redirect: {
         destination: "/login",
         permanent: false,
       }
+    }
+  }
+
+  return {
+    props: {
+      
     }
   }
   // if(!rolesTrue){

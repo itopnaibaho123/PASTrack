@@ -1,8 +1,4 @@
-import { redirect } from "next/dist/server/api-utils";
-import { useState } from "react";
-import { getCookie } from "./cookies";
-
-export default async function checkRole(ctx, allowedRoles = []) {
+export default function checkRole(ctx, allowedRoles = []) {
   const { role, token } = ctx.req.cookies;
   
   let tokenTrue = false;
@@ -15,5 +11,8 @@ export default async function checkRole(ctx, allowedRoles = []) {
       }
   }
   
-  return [tokenTrue, rolesTrue];
+  return {
+    tokenTrue: tokenTrue,
+    rolesTrue: rolesTrue
+  };
 }
