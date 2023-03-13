@@ -7,68 +7,57 @@ import PasswordInput from "@/components/PasswordInput";
 import { setCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 export default function login() {
-
-    const router = useRouter();
+  const router = useRouter();
   return (
     <>
       <div className=" grid place-items-center py-32">
-      <FormModalContextProvider>
-            <LoginForm
-              formLabel={<img src="/assets/logo/LumbaAuth.svg" alt="Lumba" />}
-              buttonLabel="Show Modal"
-              submitLabel="Save Changes"
-              handleSubmit={async (formData, setFormData) => {
-                // setIsError(false);
-                try {
-                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}api/login`, {
+        <FormModalContextProvider>
+          <LoginForm
+            formLabel={<img src="/assets/logo/LumbaAuth.svg" alt="Lumba" />}
+            buttonLabel="Show Modal"
+            submitLabel="Save Changes"
+            handleSubmit={async (formData, setFormData) => {
+              // setIsError(false);
+              try {
+                const res = await fetch(
+                  `${process.env.NEXT_PUBLIC_API_ROUTE}api/login`,
+                  {
                     method: "POST",
                     body: JSON.stringify(formData),
                     headers: {
-                      "Content-Type": "application/json"
-                    }
-                  })
-                  if (res.ok) {
-                    const json = await res.json()
-                    setCookie("token", json.token)
-                    setCookie("username", json.username)
-                    setCookie("role", json.role)
-                    setCookie("type", json.type)
-                    router.push("/")
+                      "Content-Type": "application/json",
+                    },
                   }
-               
-                } catch (err) {
-                    // console.log(err)
-                } finally {
-                  setFormData({});
+                );
+                if (res.ok) {
+                  const json = await res.json();
+                  setCookie("token", json.token);
+                  setCookie("username", json.username);
+                  setCookie("role", json.role);
+                  setCookie("type", json.type);
+                  router.push("/");
                 }
-              }}
-            >
-              <Input label={"Username"} name={"username"} placeholder="Type your username" required />
-              <PasswordInput label={"Password"} name={"password"} placeholder="Type your password" required />
-            </LoginForm>
-          </FormModalContextProvider>
-        {/* <form >
-          <H3>Login Here</H3>
-          <div className="py-14 ">
-            <div className="">
-              <Input
-                placeholder="username"
-                name="username"
-                label="username"
-                variant="secondary"
-                helper=""
-              />
-              <Input
-                placeholder="password"
-                name="password"
-                label="password"
-                variant="secondary"
-                helper=""
-                type="password"
-              />
-            </div>
-          </div>
-        </form> */}
+              } catch (err) {
+                // console.log(err)
+              } finally {
+                setFormData({});
+              }
+            }}
+          >
+            <Input
+              label={"Username"}
+              name={"username"}
+              placeholder="Type your username"
+              required
+            />
+            <PasswordInput
+              label={"Password"}
+              name={"password"}
+              placeholder="Type your password"
+              required
+            />
+          </LoginForm>
+        </FormModalContextProvider>
       </div>
     </>
   );

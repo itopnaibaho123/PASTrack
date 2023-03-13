@@ -1,7 +1,7 @@
 import * as React from "react";
 // import { clearCookie } from "../../helper/cookies";
 import { useRouter } from "next/router";
-import { clearCookie, getCookie, getRoles } from "@/components/Helper/cookies";
+
 import Button from "@/components/Button";
 
 export default function Profile({ isVisible, setIsVisible }) {
@@ -9,7 +9,7 @@ export default function Profile({ isVisible, setIsVisible }) {
 
   const profile = () => {
 
-    router.push(`/profile/${getCookie("username")}`);
+    router.push(`/profile`);
   };
 
 

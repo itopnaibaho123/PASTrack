@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { B } from "@/components/Typography";
-import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
-import axios from "axios";
+import React, {useState, useEffect} from "react";
 import checkRole from "@/components/Helper/CheckRole";
 import Button from "@/components/Button";
-export default function profile(props) {
-  const router = useRouter();
-  // const { id } = router.query;
+import { B } from "@/components/Typography";
+import axios from "axios";
+import { getCookie } from "@/components/Helper/cookies";
+export default function EditProfile(props) {
   const [profile, setProfile] = useState({});
-
+  const [role, setRole] = useState("");
+  const router = useRouter()
+    
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,34 +23,39 @@ export default function profile(props) {
         );
 
         setProfile(data.data);
-        console.log(data.data);
+        setRole(data.data.role.role)
+        
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
   }, []);
-  console.log(profile)
   return (
-    <div className="">
-      <Button onClick={() => {
-        router.back()
-      }}>Go back</Button>
-      <B>{profile.id}</B>
-      <B>{profile.nama}</B>
-      <B>{profile.username}</B>
-      <div className="flex ">
+    <>
+      <div className="">
+        <Button
+          onClick={() => {
+            router.back();
+          }}
+        >
+          Go back
+        </Button>
+        <B>{profile.id}</B>
+        <B>{profile.nama}</B>
+        <B>{profile.username}</B>
+
         <B>{profile.password}</B>
-        <Button>Ganti Password</Button>
+
+        <B>{role}</B>
       </div>
-      <B>{props.role}</B>
-      <Button>Edit Profile</Button>
-    </div>
+    </>
   );
 }
+
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context);
+  const authentications = checkRole(context, ["ADMIN"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -59,11 +64,19 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const { role, username } = context.req.cookies;
+
+  // const { role, username } = context.req.cookies;
+  if (!authentications.rolesTrue) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
-      id: username,
-      role: role,
+      id: context.params.username,
     },
   };
 }

@@ -18,32 +18,37 @@ export default function Input({
   variant,
   helper,
   disabled,
-  type = 'text'
+  required = true,
+  full,
+  type = "text",
+  inputvalue
 }) {
-
   // const [form, setForm] = useState()
   const { setFormData, formData } = useContext(FormModalContext);
 
   return (
-    <div className="flex flex-col gap-2 px-4">
-      <label className="font-medium" htmlFor={name}>
+    <div className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`}>
+      <label htmlFor={name}>
         {label}
       </label>
-      <input
-        className={`${variants[variant]}`}
-        id={name}
-        placeholder={placeholder}
-        name={name}
-        disabled={disabled}
-        type={type}
-        value={formData[name] || ""}
-        onChange= {(e) => {
-          setFormData((previous) => ({
-            ...previous,
-            [name]: e.target.value,
-          }))
-        }}
-      />
+      <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+        <input
+          className={` px-3 py-1.5 flex-1 !outline-none ${variants[variant]}`}
+          id={name}
+          placeholder={placeholder}
+          name={name}
+          disabled={disabled}
+          type={type}
+          value={formData[name] || inputvalue}
+          required={required}
+          onChange={(e) => {
+            setFormData((previous) => ({
+              ...previous,
+              [name]: e.target.value,
+            }));
+          }}
+        />
+      </div>
       {helper && (
         <span className="px-4 font-medium text-red-300">{helper}</span>
       )}
