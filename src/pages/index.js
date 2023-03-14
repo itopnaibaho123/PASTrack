@@ -16,6 +16,15 @@ export default function index(props) {
     
     router.push("/profile/listuser");
   };
+  const gantiPassword = () => {
+    router.push("/profile/ChangePassword")
+  }
+  const registerGuru = () => {
+    router.push("/registrasi/Guru")
+  }
+  const registerSiswa = () => {
+    router.push("/registrasi/Siswa")
+  }
 
   if(props.role==="ADMIN"){
 
@@ -25,6 +34,9 @@ export default function index(props) {
         <Logout />
         <Profile/>
         <Button onClick={setAllProfile}>See All Profile</Button>
+        <Button onClick={gantiPassword}>Change Password</Button>
+        <Button onClick={registerGuru}>Register Guru</Button>
+        <Button onClick={registerSiswa}>Register Siswa</Button>
       </div>
     );
   }
@@ -34,6 +46,7 @@ export default function index(props) {
         <p>Index</p>
         <Logout />
         <Profile/>
+        <Button onClick={gantiPassword}>Change Password</Button>
       </div>
     );
   }
@@ -43,6 +56,7 @@ export default function index(props) {
         <p>Index</p>
         <Logout />
         <Profile/>
+        <Button onClick={gantiPassword}>Change Password</Button>
       </div>
     );
   }
@@ -52,6 +66,7 @@ export default function index(props) {
         <p>Index</p>
         <Logout />
         <Profile/>
+        <Button onClick={gantiPassword}>Change Password</Button>
       </div>
     );
   }

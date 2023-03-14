@@ -27,7 +27,7 @@ export default function TableBody({ data, cols }) {
                   index === 0 && "font-bold"
                 }`}
               >
-                <div className="flex px-1">
+                <div className="flex gap-2">
                   <Button onClick={() => router.push(`/profile/${item['username']}`)}>Detail</Button>
                   <Button onClick={() => router.push(`/profile/${item['username']}/EditProfile`)}>Edit</Button>
                 </div>

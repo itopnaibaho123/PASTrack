@@ -27,7 +27,6 @@ export default function list(props) {
            <TableHead cols={keys} />
           <TableBody data={props.data} cols={keys} /> 
         </Table>
-        
       </div>
     </>
   );

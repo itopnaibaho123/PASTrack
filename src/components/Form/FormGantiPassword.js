@@ -1,12 +1,11 @@
-import React from 'react'
-import { useContext } from 'react';
-import { FormModalContext } from './context/FormModalContext';
-import Button from './Button';
-export default function EditProfileForm({handleSubmit, children}) {
+import React, {useContext} from 'react'
+import { FormModalContext } from '../context/FormModalContext';
+import Button from '../Button';
+export default function FormGantiPassword({handleSubmit, children}) {
     const { formData, setFormData } = useContext(FormModalContext);
   return (
     <>
-    <form
+      <form
         autoComplete="off"
         className="flex flex-col h-full transition duration-300 overflow-x-hidden relative bg-white z-40"
         onSubmit={(e) => {
@@ -25,5 +24,5 @@ export default function EditProfileForm({handleSubmit, children}) {
         </div>
       </form>
     </>
-  )
+  );
 }

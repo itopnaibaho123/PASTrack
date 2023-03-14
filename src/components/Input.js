@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import { useContext } from "react";
 import { FormModalContext } from "./context/FormModalContext";
 
@@ -39,7 +39,7 @@ export default function Input({
           name={name}
           disabled={disabled}
           type={type}
-          value={formData[name] || inputvalue}
+          value={formData[name] || inputvalue || ''}
           required={required}
           onChange={(e) => {
             setFormData((previous) => ({

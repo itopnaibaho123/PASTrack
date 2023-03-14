@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import checkRole from "@/components/Helper/CheckRole";
 import FormModalContextProvider from "@/components/context/FormModalContext";
-import EditProfileForm from "@/components/EditProfileForm";
+import EditProfileForm from "@/components/Form/EditProfileForm";
 import { useRouter } from "next/router";
 import Input from "@/components/Input";
 import { getCookie } from "@/components/Helper/cookies";
 import axios from "axios";
+import { FormModalContext } from "@/components/context/FormModalContext";
 
 export default function EditProfile(props) {
   const router = useRouter();
-  const [nama, setNama] = useState("")
+  // const [ formData, setFormData ] = useContext(FormModalContext);
+  const [dataObject, setDataObject] = useState({});
   useEffect(() => {
     async function fetchData() {
       try {
@@ -21,20 +23,22 @@ export default function EditProfile(props) {
             },
           }
         );
-
-        setNama(data.data.nama);
+        setDataObject(data.data)
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
   }, []);
+
+  
   return (
     <div>
       <FormModalContextProvider>
         <EditProfileForm
           handleSubmit={async (formData, setFormData) => {
             // setIsError(false);
+            
             try {
               const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_ROUTE}api/user/${props.id}`,
@@ -43,27 +47,30 @@ export default function EditProfile(props) {
                   body: JSON.stringify(formData),
                   headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${context.req.cookies.token}`,
+                    Authorization: `Bearer ${getCookie('token')}`,
                   },
                 }
               );
+              console.log("MASUK SINI BOSSSS");
               if (res.ok) {
                 router.back();
               }
             } catch (err) {
               // console.log(err)
+              console.log(err)
             } finally {
               setFormData({});
             }
           }}
         >
           <Input
-              label={"nama"}
-              name={"nama"}
-              placeholder="Type New Name"
-              required
-              inputvalue= {nama}
-            />
+            label="nama"
+            name= "nama"
+            placeholder="Type New Name"
+            required
+            inputvalue={dataObject.nama}
+          />
+          
         </EditProfileForm>
       </FormModalContextProvider>
     </div>
