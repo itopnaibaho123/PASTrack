@@ -8,6 +8,7 @@ import Toast from '@/components/Toast'
 import Card from '@/components/Card'
 import Footer from '@/components/Footer'
 import Input from '@/components/Input'
+import Sidebar from '@/components/Sidebar'
 
 
 const test = (   
@@ -15,7 +16,6 @@ const test = (
     console.log("Hello World")
   }
 )
-
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -56,6 +56,9 @@ export default function components() {
       </div>
       <div className='mt-4'>
         <Footer></Footer>
+      </div>
+      <div className='mt-4'>
+        <Sidebar></Sidebar>
       </div>
       <div className='max-w-[364px]'>
         {/* <Input 
