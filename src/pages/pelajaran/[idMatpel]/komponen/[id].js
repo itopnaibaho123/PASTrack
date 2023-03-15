@@ -2,7 +2,7 @@ import React from "react";
 import FormModalContextProvider from "@/components/context/FormModalContext";
 import FormKomponen from "@/components/Form/FormKomponen";
 import Input from "@/components/Input";
-import Textarea from "@/components/textarea";
+import Textarea from "@/components/Textarea";
 import Button from "@/components/Button";
 import { useRouter } from "next/router";
 export default function detailKomponen() {

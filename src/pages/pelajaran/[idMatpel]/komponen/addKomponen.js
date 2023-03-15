@@ -1,7 +1,7 @@
 import FormModalContextProvider from "@/components/context/FormModalContext";
 import FormKomponen from "@/components/Form/FormKomponen";
 import Input from "@/components/Input";
-import Textarea from "@/components/textarea";
+import Textarea from "@/components/Textarea";
 import { useRouter } from "next/router";
 import React from "react";
 import Button from "@/components/Button";
