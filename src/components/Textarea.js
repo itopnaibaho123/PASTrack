@@ -1,6 +1,5 @@
-  import React, { useState } from "react";
-import { useContext } from "react";
-import { FormModalContext } from "./context/FormModalContext";
+import React, {useContext} from 'react'
+import { FormModalContext } from './context/FormModalContext';
 
 const variants = {
   primary: "bg-main-color-navy text-background",
@@ -10,8 +9,7 @@ const variants = {
   ghost: "bg-white text-main-color-navy ring-1 ring-main-color-navy",
   delete: "bg-red-500 text-white",
 };
-
-export default function Input({
+export default function Textarea({
   placeholder,
   name,
   label,
@@ -23,16 +21,6 @@ export default function Input({
   type = "text",
   inputvalue
 }) {
-  const datum = [
-    {
-      'tugas': 'tugas 1',
-      'nilai': 80
-    },
-    {
-      'tugas': 'tugas 1',
-      'nilai': 80
-    }
-  ]
   // const [form, setForm] = useState()
   const { setFormData, formData } = useContext(FormModalContext);
 
@@ -42,9 +30,8 @@ export default function Input({
         {label}
       </label>
       <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
-        <input
-          max={100}
-          min={0}
+        <textarea
+          rows="4"
           className={` px-3 py-1.5 flex-1 !outline-none ${variants[variant]}`}
           id={name}
           placeholder={placeholder}
@@ -65,7 +52,5 @@ export default function Input({
         <span className="px-4 font-medium text-red-300">{helper}</span>
       )}
     </div>
-  );
+  )
 }
-
-

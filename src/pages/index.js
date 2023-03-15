@@ -37,6 +37,7 @@ export default function index(props) {
         <Button onClick={gantiPassword}>Change Password</Button>
         <Button onClick={registerGuru}>Register Guru</Button>
         <Button onClick={registerSiswa}>Register Siswa</Button>
+        <Button onClick={() => router.push(`${router.asPath}/pelajaran`)}>Pelajaran</Button>
       </div>
     );
   }

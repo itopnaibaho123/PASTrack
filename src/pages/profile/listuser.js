@@ -25,7 +25,7 @@ export default function list(props) {
         <Button onClick= {() => router.back()}>Back</Button>
         <Table> 
            <TableHead cols={keys} />
-          <TableBody data={props.data} cols={keys} /> 
+          <TableBody data={props.data} cols={keys} profile={true} /> 
         </Table>
       </div>
     </>

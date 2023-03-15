@@ -8,7 +8,7 @@ module.exports = {
         'main-color-navy': '#0E3178',
         'main-color-yellow': '#FFD503',
         'main-text-brown': '#666666',
-        'main-text-grey': '#EAEAEA'
+        'main-text-grey': '#EAEAEA',
       }
 
     },
