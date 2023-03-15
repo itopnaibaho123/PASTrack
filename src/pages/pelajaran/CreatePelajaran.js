@@ -3,7 +3,7 @@ import FormCreateMataPelajaran from "@/components/Form/FormCreateMataPelajaran";
 import React from "react";
 import Input from "@/components/Input";
 import Select from "@/components/DropDown/Select";
-import Textarea from "@/components/textarea";
+import Textarea from "@/components/Textarea";
 export default function CreatePelajaran() {
   return (
     <div>
