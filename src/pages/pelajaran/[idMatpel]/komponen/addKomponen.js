@@ -21,7 +21,7 @@ export default function addKomponen() {
           />
           <Textarea
             type="text"
-            label={"Description"}
+            label={"Description"} 
             name={"description"}
             placeholder={"Description"}
             required

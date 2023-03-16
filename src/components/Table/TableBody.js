@@ -8,10 +8,23 @@ export default function TableBody({
   komponen,
   profile,
   studentScore,
-  editMode,
+  detailUser,
 }) {
   const router = useRouter();
   console.log(data);
+
+  if (detailUser) {
+    return (
+      <tbody>
+        <tr>
+          {cols.map((col, index) => {
+            return <td className="py-3  border border-gray/50 px-4 relative z-10">{data[col]}</td>;
+          })}
+        </tr>
+      </tbody>
+    );
+  }
+
   if (studentScore) {
     return (
       <tbody>
@@ -37,7 +50,11 @@ export default function TableBody({
                   </td>
                 ))}
                 <td className="py-3  border border-gray/50 px-4 relative z-10">
-                  <Button onClick={() => router.push(`${router.asPath}/${item.id}`)}>Edit</Button>
+                  <Button
+                    onClick={() => router.push(`${router.asPath}/${item.id}`)}
+                  >
+                    Edit
+                  </Button>
                 </td>
               </tr>
             )

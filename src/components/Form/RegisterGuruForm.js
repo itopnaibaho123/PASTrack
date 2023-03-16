@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { FormModalContext } from "../context/FormModalContext";
 import Button from "../Button";
 
-export default function RegisterGuruForm({ handleSubmit, children, onClick }) {
+export default function RegisterGuruForm({ handleSubmit, children }) {
     const { formData, setFormData } = useContext(FormModalContext);
     useEffect(() =>{
         setFormData((previous) => ({
@@ -24,7 +24,7 @@ export default function RegisterGuruForm({ handleSubmit, children, onClick }) {
         <div className="max-w-[375px] w-full flex-1 flex flex-col justify-center mx-auto">
           <div className="px-2">{children}</div>
           <div className="px-2">
-            <Button full variant="primary" onClick={onClick}>
+            <Button full variant="primary">
               Register
             </Button>
           </div>

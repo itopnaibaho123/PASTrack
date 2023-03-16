@@ -7,7 +7,7 @@ export default function RegisterSiswaForm({handleSubmit, children}) {
     useEffect(() =>{
         setFormData((previous) => ({
             ...previous,
-            ['role']: "MURID"
+            ['role']: "GURU"
         }))
     },[])
   return (
