@@ -12,7 +12,7 @@ export default function Siswa() {
   return (
     <div>
       <div className="flex flex-col flex-wrap place-items-center">
-        <img width={600} height={600} src="assets/PASTrack.svg"></img>
+        <img width={600} height={600} src="/assets/PASTrack.svg"></img>
         <Button variant="ghost" onClick={() => router.back()}>
           Back
         </Button>
@@ -21,6 +21,7 @@ export default function Siswa() {
       <FormModalContextProvider>
         <RegisterSiswaForm
           handleSubmit={async (formData, setFormData) => {
+            console.log(formData)
             try {
               const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_ROUTE}api/register/student`,
@@ -67,14 +68,7 @@ export default function Siswa() {
             placeholder="NISN"
             required
           />
-          <Input
-            label={"role"}
-            name={"role"}
-            disabled={true}
-            inputvalue={'MURID'}
-            required
-
-          />
+          
         </RegisterSiswaForm>
       </FormModalContextProvider>
     </div>

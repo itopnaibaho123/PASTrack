@@ -5,29 +5,15 @@ import TableHead from "@/components/Table/TableHead";
 import { B, H3, P } from "@/components/Typography";
 import { useRouter } from "next/router";
 import React from "react";
-
-const data = [
-  {
-    id: 1,
-    "Komponen Penilaian": "Tugas 1",
-    "Bobot Penilaian": 10,
-  },
-  { id: 2, "Komponen Penilaian": "Tugas 1", "Bobot Penilaian": 10 },
-  { id: 3, "Komponen Penilaian": "Tugas 1", "Bobot Penilaian": 10 },
-  { id: 4, "Komponen Penilaian": "Tugas 1", "Bobot Penilaian": 10 },
-  {
-    id: 5,
-    "Komponen Penilaian": "Tugas 1",
-    "Bobot Penilaian": 10,
-  },
-];
-
-export default function index() {
+import { KOMPONEN } from "@/components/Hooks/Komponen";
+import { getListKomponen } from "@/components/Hooks/Komponen";
+import checkRole from "@/components/Helper/CheckRole";
+export default function index(props) {
   const router = useRouter();
   const kalkulasi = () => {
     let a = 0;
-    data.map((item, index) => {
-      a = a + item["Bobot Penilaian"];
+    props.komponen.map((item, index) => {
+      a = a + item["bobot"];
     });
 
     return a;
@@ -35,7 +21,7 @@ export default function index() {
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
       <div>
-        <img width={600} height={300} src="assets/PASTrack.svg"></img>
+      <img width={600} height={600} src="/assets/PASTrack.svg"/>
       </div>
       <div className="flex justify-center gap-3">
         <Button onClick={() => router.back()}>Back</Button>
@@ -53,9 +39,9 @@ export default function index() {
         <Table>
           <TableHead cols={["Komponen Penilaian", "Bobot Penilaian"]} />
           <TableBody
-            cols={["Komponen Penilaian", "Bobot Penilaian"]}
+            cols={["title", "bobot"]}
             komponen={true}
-            data={data}
+            data={props.komponen}
           />
         </Table>
       </div>
@@ -65,4 +51,36 @@ export default function index() {
       </div>
     </div>
   );
+}
+export async function getServerSideProps(context) {
+  // context.req.query
+  const authentications = checkRole(context, ["GURU"]);
+  if (!authentications.tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const { role, token } = context.req.cookies;
+  if (authentications.rolesTrue) {
+    if (role === "GURU") {
+      const komponen = await getListKomponen(`${KOMPONEN}${context.query.idMatpel}`, token);
+
+      return {
+        props: {
+          role: role,
+          komponen: komponen,
+        },
+      };
+    } 
+  } else {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }

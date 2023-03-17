@@ -58,6 +58,7 @@ export default function index(props) {
         <Logout />
         <Profile/>
         <Button onClick={gantiPassword}>Change Password</Button>
+        <Button onClick={() => router.push(`${router.asPath}/pelajaran`)}>Pelajaran</Button>
       </div>
     );
   }

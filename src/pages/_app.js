@@ -1,12 +1,13 @@
 import Sidebar from "@/components/Sidebar";
 import "@/styles/globals.css";
 import Footer from "@/components/Footer";
+import { getCookie } from "@/components/Helper/cookies";
 export default function App({ Component, pageProps }) {
+ 
   return (
     <div className="h-screen w-screen">
       <div className='"flex h-full w-full'>
-        {/* <Sidebar /> */}
-        
+        {/* <Sidebar />       */}
         <div className="">
           <Component {...pageProps} />
         </div>

@@ -23,7 +23,7 @@ export default function list(props) {
     <>
       <div className="flex flex-col p-5 place-items-center">
         <div className="flex flex-col">
-          <img width={300} height={300} src="assets/PASTrack.svg"></img>
+          <img  src="/assets/PASTrack.svg"/>
           <div className="flex p-4">
             <Button onClick={() => router.back()}>Back</Button>
             <div className="grow text-center">

@@ -9,7 +9,7 @@ export default function Select({ label, children, name, placeholder }) {
         <select
           placeholder="test"
           className="px-3 py-1.5 flex-1 !outline-none"
-          value={formData.name}
+          value={formData[name]}
           onChange={(e) => {
             setFormData((previous) => ({
               ...previous,

@@ -51,7 +51,7 @@ export default function TableBody({
                 ))}
                 <td className="py-3  border border-gray/50 px-4 relative z-10">
                   <Button
-                    onClick={() => router.push(`${router.asPath}/${item.id}`)}
+                    onClick={() => router.push(`${router.asPath}/${item.kode}`)}
                   >
                     Edit
                   </Button>
@@ -113,7 +113,7 @@ export default function TableBody({
                     <div className="flex gap-2">
                       <Button
                         onClick={() =>
-                          router.push(`${router.asPath}/${item.id}`)
+                          router.push(`${router.asPath}/${item.kode}`)
                         }
                       >
                         Edit

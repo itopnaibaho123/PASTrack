@@ -2,10 +2,12 @@ import FormModalContextProvider from "@/components/context/FormModalContext";
 import FormGantiPassword from "@/components/Form/FormGantiPassword";
 import React from "react";
 import Input from "@/components/Input";
-import { getCookie } from "@/components/Helper/cookies";
+import { clearCookie, getCookie } from "@/components/Helper/cookies";
 import { B } from "@/components/Typography";
+import { useRouter } from "next/router";
 
 export default function () {
+  const router = useRouter()
   return (
     <>
       <div>
@@ -21,9 +23,9 @@ export default function () {
               } else {
                 try {
                   const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_ROUTE}api/changepassword/${getCookie('username')}`,
+                    `${process.env.NEXT_PUBLIC_API_ROUTE}api/user/changePassword/${getCookie('username')}`,
                     {
-                      method: "POST",
+                      method: "PUT",
                       body: JSON.stringify(formData),
                       headers: {
                         "Content-Type": "application/json",
@@ -31,9 +33,13 @@ export default function () {
                       },
                     }
                   );
-                  
+                  console.log(res)
                   if (res.ok) {
+                    console.log("Sukses")
+                    clearCookie();
                     router.push("/");
+                  } else if(res.status=== 406){
+                    console.log("Password Lama Salah")
                   }
                 } catch (err) {
                   // console.log(err)

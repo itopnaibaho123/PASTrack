@@ -12,7 +12,7 @@ export default function Guru() {
   return (
     <div>
       <div className="flex flex-col flex-wrap place-items-center">
-        <img width={600} height={600} src="assets/PASTrack.svg"></img>
+      <img width={600} height={600} src="/assets/PASTrack.svg"></img>
         <Button variant="ghost" onClick={() => router.back()}>
           Back
         </Button>
@@ -38,6 +38,7 @@ export default function Guru() {
               );
               console.log(res)
               if (res.ok) {
+                setFormData({})
                 router.push("/");
               }
             } catch (err) {
@@ -72,13 +73,7 @@ export default function Guru() {
             required
             type="number"
           />
-          <Input
-            label={"Role"}
-            name={"role"}
-            required
-            disabled={true}
-            inputvalue={"GURU"}
-          />
+          
         </RegisterGuruForm>
       </FormModalContextProvider>
     </div>

@@ -4,11 +4,29 @@ import React from "react";
 import Input from "@/components/Input";
 import Select from "@/components/DropDown/Select";
 import Textarea from "@/components/Textarea";
+import { MATPEL_GURU } from "@/components/Hooks/Matpel";
+import { postMatpel } from "@/components/Hooks/Matpel";
+import { getCookie } from "@/components/Helper/cookies";
+import { useRouter } from "next/router";
 export default function CreatePelajaran() {
+  const router = useRouter()
   return (
     <div>
       <FormModalContextProvider>
-        <FormCreateMataPelajaran>
+        <FormCreateMataPelajaran handleSubmit={async (formData, setFormData) => {
+          try {
+            console.log(formData)
+             const res = await postMatpel(`${MATPEL_GURU}${getCookie('username')}`, formData, getCookie('token'))
+            console.log(res)
+            if(res.ok){
+              router.back()
+            }
+          } catch(err) {
+            console.log(err)
+          }finally {
+            setFormData({})
+          }
+        }}>
           <Input
             type="text"
             label={"Nama"}
@@ -18,7 +36,7 @@ export default function CreatePelajaran() {
           />
           <Textarea
             label={"Description"}
-            name={"description"}
+            name={"desc"}
             placeholder={"Description"}
             required
           />
@@ -31,22 +49,22 @@ export default function CreatePelajaran() {
           <Input
             type="date"
             label={"Akhir Tahun Ajaran"}
-            name={"awalTahunAjaran"}
+            name={"akhirTahunAjaran"}
             required
           />
           <Select
             label={"peminatan"}
-            nama={"peminatan"}
+            name={"namaPeminatan"}
             placeholder="Pilih Peminatan"
           >
-            {["Matematika", "Ipa"]}
+            {["MATEMATIKA", "IPA"]}
           </Select>
           <Select
             label={"Semester"}
-            nama={"semester"}
+            name={"semester"}
             placeholder="Pilih semester"
           >
-            {["Genap", "Ganjil"]}
+            {["GENAP", "GANJIL"]}
           </Select>
         </FormCreateMataPelajaran>
       </FormModalContextProvider>

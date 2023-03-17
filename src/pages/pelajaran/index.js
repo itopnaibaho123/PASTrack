@@ -3,7 +3,10 @@ import { H1, H3 } from "@/components/Typography";
 import React from "react";
 import Button from "@/components/Button";
 import { useRouter } from "next/router";
-export default function index() {
+import { MATPEL_GURU } from "@/components/Hooks/Matpel";
+import { getAllMatpel } from "@/components/Hooks/Matpel";
+import checkRole from "@/components/Helper/CheckRole";
+export default function index(props) {
   const router = useRouter();
   return (
     <div className="flex flex-col p-5">
@@ -22,23 +25,49 @@ export default function index() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 py-2">
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        <CardSubject />
-        
+        {props.matpel.map((matkul, index) => {
+          return (
+            <CardSubject
+              namaMataPelajaran={matkul.namaMataPelajaran}
+              deskripsi={matkul.desc}
+              id={matkul.id}
+            />
+          );
+        })}
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  // context.req.query
+  const authentications = checkRole(context, ["GURU"]);
+  if (!authentications.tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const { role, token, username } = context.req.cookies;
+
+  if (authentications.rolesTrue) {
+    if (role === "GURU") {
+      const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
+      return {
+        props: {
+          role: role,
+          matpel: matpel,
+        },
+      };
+    } 
+  } else {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }

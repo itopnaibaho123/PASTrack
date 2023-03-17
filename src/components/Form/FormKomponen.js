@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../Button';
+import { FormModalContext } from '../context/FormModalContext';
 
 export default function FormKomponen({handleSubmit, children}) {
+    const {formData, setFormData} = useContext(FormModalContext)
     return (
         <>
           <form
