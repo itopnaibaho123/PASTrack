@@ -4,10 +4,11 @@ import Footer from "@/components/Footer";
 import { getCookie } from "@/components/Helper/cookies";
 export default function App({ Component, pageProps }) {
  
+  /*layouting*/
   return (
-    <div className="h-screen w-screen">
-      <div className='"flex h-full w-full'>
-        {/* <Sidebar />       */}
+    <div className="min-h-screen flex flex-col">
+      <div className='flex flex-col md:flex-row flex-1'>
+        <Sidebar />      
         <div className="">
           <Component {...pageProps} />
         </div>
