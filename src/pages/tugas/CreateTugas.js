@@ -10,31 +10,7 @@ export default function CreatePostinganTugas() {
   return (
     <div>
       <FormModalContextProvider>
-        <FormCreatePostinganTugas 
-        onClick={() => router.back()}
-          handleSubmit={async (formData, setFormData) => {
-            // setIsError(false);
-            try {
-              const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_ROUTE}/api/postingan/`,
-                {
-                  method: "POST",
-                  body: JSON.stringify(formData),
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${getCookie('token')}`,
-                  },
-                }
-              );
-              if (res.ok) {
-                router.push("/");
-              }
-            } catch (err) {
-              // console.log(err)
-            } finally {
-              setFormData({});
-            }
-          }}>
+        <FormCreatePostinganTugas>
           <Input
             type="text"
             label={"Judul"}
