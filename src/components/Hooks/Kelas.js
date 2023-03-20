@@ -33,4 +33,30 @@ const postKelas = async(url, formData, token) => {
   return response;
 }
 
-export {postKelas, getAllKelas}
+const postMatpelKelas = async (id, formData, token) => {
+  try {
+    const response = await axios.post(`${KELAS}addMatpel/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+const getKelas = async (id, token) => {
+  const response = await axios.get(`${KELAS}${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+export {postKelas, postMatpelKelas, getAllKelas, getKelas}

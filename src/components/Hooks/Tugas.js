@@ -58,4 +58,23 @@ const updateTugas = async(url, formData, token) => {
       return response;
 }
 
-export {postTugas, getAllTugas, getTugas, updateTugas}
+const deleteTugas = async (url, token) => {
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+    throw new Error('Failed to delete the tugas');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export {postTugas, getAllTugas, getTugas, updateTugas, deleteTugas}

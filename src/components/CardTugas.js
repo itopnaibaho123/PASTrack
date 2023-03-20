@@ -2,6 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import Button from "./Button";
 import { B, H2, H3, P } from "./Typography";
+import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
+import { deleteTugas } from "@/components/Hooks/Tugas";
+import { getCookie } from "@/components/Helper/cookies";
+
 export default function ({
 	kodePostingan,
 	judulPostingan,
@@ -11,8 +15,21 @@ export default function ({
 }) {
 
 	// bikin function delete 
-  const router = useRouter()
-  return (
+	
+    const router = useRouter()
+	const handleDelete = async () => {
+		const token = getCookie("token");
+		try {
+		  await deleteTugas(`${POSTINGAN_TUGAS}${kodePostingan}`, token);
+		  router.push("/postingan");
+		} catch (error) {
+			/* Disini masih error logic */
+		  console.error(error);
+		  alert("Failed to delete the postingan");
+		}
+	  };
+	
+    return (
 			<div className="align-middle inline-block min-w-full shadow overflow-hidden">
 				{/* create grid 2 card */}
 					<div className="grid grid-cols-1 gap-y-4">
@@ -31,8 +48,9 @@ export default function ({
                                                     <div className="py-1">
                                                         <Button onClick={()=> router.push(`${router.asPath}/edit/${kodePostingan}`)}>Edit Tugas</Button>
                                                     </div>
+													/* This Button Hapus Tugas */
                                                     <div className="mt-2">
-                                                         <Button onClick={()=> router.push(`${router.asPath}/4`)}>Hapus Tugas</Button>
+													<Button onClick={handleDelete}>Hapus Tugas</Button>
                                                     </div>
 												</div>
 											</div>
