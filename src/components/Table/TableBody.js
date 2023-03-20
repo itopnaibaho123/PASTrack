@@ -45,13 +45,13 @@ export default function TableBody({
                     }`}
                   >
                     {col === "kalkulasiBobotNilai" &&
-                      (item["bobotPenilaian"] * item["nilai"]) / 100}
-                    {item[col]}
+                      (item["bobot"] * item["nilai"]) / 100}
+                    { col !== "kalkulasiBobotNilai" &&item[col]}
                   </td>
                 ))}
                 <td className="py-3  border border-gray/50 px-4 relative z-10">
                   <Button
-                    onClick={() => router.push(`${router.asPath}/${item.kode}`)}
+                    onClick={() => router.push(`${router.asPath}/${item.id}`)}
                   >
                     Edit
                   </Button>

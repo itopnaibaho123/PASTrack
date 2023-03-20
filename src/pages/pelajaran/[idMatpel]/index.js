@@ -31,6 +31,7 @@ export default function index(props) {
             <StudentCard
               nama = {student.nama}
               username={student.username}
+              key={index}
             />
           );
         })}

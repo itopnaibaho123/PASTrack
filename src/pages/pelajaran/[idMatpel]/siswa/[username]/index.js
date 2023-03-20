@@ -5,40 +5,24 @@ import TableBody from "@/components/Table/TableBody";
 import TableHead from "@/components/Table/TableHead";
 import React from "react";
 import Button from "@/components/Button";
-import { useState } from "react";
+import checkRole from "@/components/Helper/CheckRole";
 import { useRouter } from "next/router";
 import { H3 } from "@/components/Typography";
-const datum = [
-  {
-    id: 1,
-    komponenPenilaian: "tugas 1",
-    bobotPenilaian: 30,
-    nilai: 20,
-  },
-  {
-    id: 2,
-    komponenPenilaian: "tugas 2",
-    bobotPenilaian: 20,
-    nilai: 70,
-  },
-  {
-    id: 3,
-    komponenPenilaian: "tugas 3",
-    bobotPenilaian: 25,
-    nilai: 90,
-  },
-];
+import {
+  getListKomponenSiswa,
+  KOMPONENSISWA,
+} from "@/components/Hooks/KomponenSiswa";
 
-export default function komponen() {
+export default function komponen(props) {
   const columnsKomponen = [
-    "Komponen Penilaian",
+    "Nama Komponen",
     "Bobot Penilaian",
     "Nilai",
     "Kalkulasi Bobot Nilai",
   ];
   const columnsForIterate = [
-    "komponenPenilaian",
-    "bobotPenilaian",
+    "namaKomponen",
+    "bobot",
     "nilai",
     "kalkulasiBobotNilai",
   ];
@@ -56,10 +40,46 @@ export default function komponen() {
           <TableBody
             cols={columnsForIterate}
             studentScore={true}
-            data={datum}
+            data={props.komponen}
           />
         </Table>
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  // context.req.query
+  const authentications = checkRole(context, ["GURU"]);
+  if (!authentications.tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const { role, token } = context.req.cookies;
+  if (authentications.rolesTrue) {
+    if (role === "GURU") {
+      const komponen = await getListKomponenSiswa(
+        `${KOMPONENSISWA}${context.query.idMatpel}/siswa/${context.query.username}`,
+        token
+      );
+
+      return {
+        props: {
+          role: role,
+          komponen: komponen,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }

@@ -1,11 +1,16 @@
 import axios from "axios";
 const API_ROUTE = process.env.NEXT_PUBLIC_API_ROUTE;
 
-export const KOMPONEN = API_ROUTE + "api/matpel/";
+export const KOMPONENSISWA = API_ROUTE + "api/matpel/";
 
-const getListKomponen = async (url, token) => {
+
+const KomponenSiswaAPI  = (idMatpel, kodeKomponen, username) => {
+    return `${KOMPONENSISWA}${idMatpel}/komponen/${kodeKomponen}/siswa/${username}`
+}
+
+const getDetailKomponenSiswa = async (url, token) => {
   
-  const response = await axios.get(`${url}/komponen`, {
+  const response = await axios.get(`${url}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,19 +21,7 @@ const getListKomponen = async (url, token) => {
   return data;
 };
 
-const addNewKomponen = async(url, formData, token) => {
-  const response = await fetch(`${url}`, {
-    method: "POST",
-    body: JSON.stringify(formData),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    }
-  })
-  return response;
-}
-
-const updateKomponen = async(url, formData, token) => {
+const updateKomponenSiswa = async(url, formData, token) => {
     const response = await fetch(url, {
         method: "PUT",
         body: JSON.stringify(formData),
@@ -39,7 +32,7 @@ const updateKomponen = async(url, formData, token) => {
       })
       return response;
 }
-const getKomponen = async (url, token) => {
+const getListKomponenSiswa = async (url, token) => {
   
     const response = await axios.get(url, {
       headers: {
@@ -52,4 +45,4 @@ const getKomponen = async (url, token) => {
   };
 
 
-export {getListKomponen, addNewKomponen, updateKomponen, getKomponen}
+export {getDetailKomponenSiswa, updateKomponenSiswa, getListKomponenSiswa, KomponenSiswaAPI}

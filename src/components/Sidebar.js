@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { clearCookie, getCookie, getRoles } from "@/components/Helper/cookies";
+import { useCookie } from "./Hooks/useCookie";
 
 export default function Sidebar() {
  const router = useRouter();
@@ -117,6 +118,8 @@ export default function Sidebar() {
  ];
 
  const [activeMenu, setActiveMenu] = useState("");
+ const role = useCookie('role');
+ const username = useCookie('username');
 
  return (
   <aside className="bg-gray-100 w-full md:w-60">
@@ -126,9 +129,9 @@ export default function Sidebar() {
    </div>
    <div className="flex flex-col justify-center items-center p-4">
     <h4 className="font-bold">Built by C07 - SandBox</h4>
-    <p className="text-sm font-bold text-blue-800 mt-4">username@gmail.com</p>
+    <p className="text-sm font-bold text-blue-800 mt-4">{username}</p>
     <button className="bg-blue-800 text-white rounded-full py-1 px-2 mt-4 text-sm font-light">
-     Admin
+     {role}
     </button>
     <div className="w-full h-0.5 bg-blue-800 rounded-full mt-4"></div>
    </div>

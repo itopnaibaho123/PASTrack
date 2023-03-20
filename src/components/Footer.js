@@ -20,13 +20,13 @@ export default function Footer() {
                 </div>
 
                 <div className="flex gap-8">
-                    <img className= "h-[20px] w-[20px]"src="assets/faceboook-circle.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/twitter.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/youtube.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/instagram.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/bxl-linkedin.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/Line.svg"></img>
-                    <img className= "h-[20px] w-[20px]"src="assets/Medium.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/faceboook-circle.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/twitter.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/youtube.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/instagram.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/bxl-linkedin.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/Line.svg"></img>
+                    <img className= "h-[20px] w-[20px]"src="/assets/Medium.svg"></img>
                 </div>
             </div>
         </footer>

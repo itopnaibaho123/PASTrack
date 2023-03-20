@@ -23,19 +23,8 @@ export default function Input({
   type = "text",
   inputvalue
 }) {
-  const datum = [
-    {
-      'tugas': 'tugas 1',
-      'nilai': 80
-    },
-    {
-      'tugas': 'tugas 1',
-      'nilai': 80
-    }
-  ]
   // const [form, setForm] = useState()
   const { setFormData, formData } = useContext(FormModalContext);
-
   return (
     <div className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`}>
       <label htmlFor={name}>

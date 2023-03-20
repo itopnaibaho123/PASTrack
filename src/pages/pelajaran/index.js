@@ -29,8 +29,9 @@ export default function index(props) {
           return (
             <CardSubject
               namaMataPelajaran={matkul.namaMataPelajaran}
-              deskripsi={matkul.desc}
+              deskripsi={matkul.deskripsi}
               id={matkul.id}
+              key={index}
             />
           );
         })}
@@ -40,7 +41,6 @@ export default function index(props) {
 }
 
 export async function getServerSideProps(context) {
-  // context.req.query
   const authentications = checkRole(context, ["GURU"]);
   if (!authentications.tokenTrue) {
     return {
@@ -55,6 +55,7 @@ export async function getServerSideProps(context) {
   if (authentications.rolesTrue) {
     if (role === "GURU") {
       const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
+  
       return {
         props: {
           role: role,

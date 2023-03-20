@@ -18,7 +18,7 @@ export default function Select({ label, children, name, placeholder }) {
           }}
         >
           {children.map((item, index) => {
-            return <option value={item}>{item}</option>;
+            return <option value={item[placeholder]} key={index}>{item[placeholder]}</option>;
           })}
         </select>
       </div>
