@@ -159,7 +159,7 @@ export default function Sidebar() {
     {
       href: "/registrasi",
       title: "Registrasi",
-      available: ["GURU", "ADMIN", "MURID", "ORANGTUA"],
+      available: ["ADMIN"],
       submenus: [
         {
           href: `/registrasi/Guru`,
