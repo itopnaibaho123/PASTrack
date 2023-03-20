@@ -2,7 +2,15 @@ import { useRouter } from "next/router";
 import React from "react";
 import Button from "./Button";
 import { B, H2, H3, P } from "./Typography";
-export default function () {
+export default function ({
+	kodePostingan,
+	judulPostingan,
+	mataPelajaran, 
+	tanggalDeadline,
+	deskripsi
+}) {
+
+	// bikin function delete 
   const router = useRouter()
   return (
 			<div className="align-middle inline-block min-w-full shadow overflow-hidden">
@@ -12,14 +20,16 @@ export default function () {
 							<div className="flex justify-between items-center">
 								<div className="flex items-center">
 									<div className="flex">
-										<div className="flex flex-col w-full">
-											<h1 className="text-xl font-medium"> NAMA PR </h1>
-												<p className="text-gray-500"> DESKRIPSI </p>
+										<div className="flex flex-col">
+											<h1 className="text-xl font-medium"> {judulPostingan} </h1>
+											<h1 className="text-xl font-medium"> {mataPelajaran}</h1>
+											<h1 className="text-xl font-medium"> {tanggalDeadline}</h1>
+												<p className="text-gray-500"> {deskripsi} </p>
 												</div>
 												{/* button end */}
 												<div className="flex flex-col w-full items-end justify-end">
                                                     <div className="py-1">
-                                                        <Button onClick={()=> router.push(`${router.asPath}/4`)}>Edit Tugas</Button>
+                                                        <Button onClick={()=> router.push(`${router.asPath}/edit/${kodePostingan}`)}>Edit Tugas</Button>
                                                     </div>
                                                     <div className="mt-2">
                                                          <Button onClick={()=> router.push(`${router.asPath}/4`)}>Hapus Tugas</Button>

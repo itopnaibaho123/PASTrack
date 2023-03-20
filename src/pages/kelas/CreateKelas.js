@@ -4,6 +4,9 @@ import React from "react";
 import Input from "@/components/Input";
 import Select from "@/components/DropDown/Select";
 import Textarea from "@/components/Textarea";
+import { KELAS } from "@/components/Hooks/Kelas";
+import { postKelas } from "@/components/Hooks/Kelas";
+import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 
 export default function CreateKelas() {
@@ -11,7 +14,20 @@ export default function CreateKelas() {
   return (
     <div>
       <FormModalContextProvider>
-        <FormCreateKelas>
+        <FormCreateKelas handleSubmit={async (formData, setFormData) => {
+          try {
+            console.log(formData)
+             const res = await postKelas(`${KELAS}`, formData, getCookie('token'))
+            console.log(res)
+            if(res.ok){
+              router.back()
+            }
+          } catch(err) {
+            console.log(err)
+          }finally {
+            setFormData({})
+          }
+        }}>
           <Input
             type="text"
             label={"Nama Kelas"}
@@ -19,12 +35,13 @@ export default function CreateKelas() {
             placeholder={"Nama Kelas"}
             required
           />
-          <Input
+          <Select
             label={"Semester"}
             name={"semester"}
-            placeholder={"Semester"}
-            required
-          />
+            placeholder="Semester"
+          >
+            {["GENAP", "GANJIL"]}
+          </Select>
           <Input
             type="date"
             label={"Awal Tahun Ajaran"}
@@ -39,10 +56,10 @@ export default function CreateKelas() {
           />
           <Select
             label={"Wali Kelas"}
-            name={"guru"}
+            name={"usernameGuru"}
             placeholder="Wali Kelas"
           >
-            {["VIO", "KARLINA"]}
+            {["guru2", "guru1"]}
           </Select>
         </FormCreateKelas>
       </FormModalContextProvider>

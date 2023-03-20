@@ -2,9 +2,7 @@ import Button from "@/components/Button";
 
 export default function SubjectAddPage() {
 	const subjects = ["Matematika", "Bahasa Indonesia", "Bahasa Inggris", "IPA", "IPS"];
-
 	return (
-
 			<div className="bg-white p-16">
 				<div className="flex justify-between items-center mb-8">
 					<div className="">
