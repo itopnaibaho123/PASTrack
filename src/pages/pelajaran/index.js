@@ -54,7 +54,7 @@ export async function getServerSideProps(context) {
 
   if (authentications.rolesTrue) {
     if (role === "GURU") {
-      const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
+      const matpel = await getAllMatpel(`http://localhost:8080/api/matpel/guru/${username}`, token);
   
       return {
         props: {
