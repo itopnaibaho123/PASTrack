@@ -39,7 +39,7 @@ export default function detailKelas() {
       <div className="bg-blue-100 p-16">
 				<div className="flex justify-between items-center mb-8">
 					<div className="max-w-xl">
-						<h1 className="text-2xl font-medium">{namaKelas}</h1>
+						<h1 className="text-2xl font-medium">IPA 1</h1>
 						<p className="mt-4">
 							Ini adalah kelas IPA 1. Dengan peminatan IPA.
 						</p>

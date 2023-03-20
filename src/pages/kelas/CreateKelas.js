@@ -10,24 +10,38 @@ import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 
 export default function CreateKelas() {
-    const router = useRouter()
+  const semester = [
+    { id: 1, nama: "GENAP" },
+    {
+      id: 2,
+      nama: "GANJIL",
+    },
+  ];
+
+  const router = useRouter();
   return (
     <div>
       <FormModalContextProvider>
-        <FormCreateKelas handleSubmit={async (formData, setFormData) => {
-          try {
-            console.log(formData)
-             const res = await postKelas(`${KELAS}`, formData, getCookie('token'))
-            console.log(res)
-            if(res.ok){
-              router.back()
+        <FormCreateKelas
+          handleSubmit={async (formData, setFormData) => {
+            try {
+              console.log(formData);
+              const res = await postKelas(
+                `${KELAS}`,
+                formData,
+                getCookie("token")
+              );
+              console.log(res);
+              if (res.ok) {
+                router.back();
+              }
+            } catch (err) {
+              console.log(err);
+            } finally {
+              setFormData({});
             }
-          } catch(err) {
-            console.log(err)
-          }finally {
-            setFormData({})
-          }
-        }}>
+          }}
+        >
           <Input
             type="text"
             label={"Nama Kelas"}
@@ -35,12 +49,8 @@ export default function CreateKelas() {
             placeholder={"Nama Kelas"}
             required
           />
-          <Select
-            label={"Semester"}
-            name={"semester"}
-            placeholder="Semester"
-          >
-            {["GENAP", "GANJIL"]}
+          <Select label={"Semester"} name={"semester"} placeholder="nama">
+            {semester}
           </Select>
           <Input
             type="date"
