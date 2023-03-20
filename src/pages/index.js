@@ -29,46 +29,8 @@ export default function index(props) {
   if(props.role==="ADMIN"){
 
     return (
-      <div className="">
-        <p>Index</p>
-        <Logout />
-        <Profile/>
-        <Button onClick={setAllProfile}>See All Profile</Button>
-        <Button onClick={gantiPassword}>Change Password</Button>
-        <Button onClick={registerGuru}>Register Guru</Button>
-        <Button onClick={registerSiswa}>Register Siswa</Button>
-        <Button onClick={() => router.push(`${router.asPath}/pelajaran`)}>Pelajaran</Button>
-      </div>
-    );
-  }
-  if (props.role ==="SISWA"){
-    return (
-      <div className="">
-        <p>Index</p>
-        <Logout />
-        <Profile/>
-        <Button onClick={gantiPassword}>Change Password</Button>
-      </div>
-    );
-  }
-  if(props.role==="GURU"){
-    return (
-      <div className="">
-        <p>Index</p>
-        <Logout />
-        <Profile/>
-        <Button onClick={gantiPassword}>Change Password</Button>
-        <Button onClick={() => router.push(`${router.asPath}/pelajaran`)}>Pelajaran</Button>
-      </div>
-    );
-  }
-  if(props.role==="ORANGTUA"){
-    return (
-      <div className="">
-        <p>Index</p>
-        <Logout />
-        <Profile/>
-        <Button onClick={gantiPassword}>Change Password</Button>
+      <div className="ml-auto mr-auto px-56">
+        <img width={1400} height={1400} src="assets/PASTrack.svg"></img>
       </div>
     );
   }
