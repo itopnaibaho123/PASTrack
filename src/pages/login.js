@@ -13,7 +13,6 @@ export default function login() {
       <div className=" grid place-items-center py-32">
         <FormModalContextProvider>
           <LoginForm
-            formLabel={<img src="/assets/logo/LumbaAuth.svg" alt="Lumba" />}
             buttonLabel="Show Modal"
             submitLabel="Save Changes"
             handleSubmit={async (formData, setFormData) => {
