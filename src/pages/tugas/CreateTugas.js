@@ -3,14 +3,30 @@ import FormCreatePostinganTugas from "@/components/Form/FormCreatePostinganTugas
 import React from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
+import { postTugas } from "@/components/Hooks/Tugas";
+import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 
 export default function CreatePostinganTugas() {
-    const router = useRouter()
+  const router = useRouter()
   return (
     <div>
       <FormModalContextProvider>
-        <FormCreatePostinganTugas>
+        <FormCreatePostinganTugas handleSubmit={async (formData, setFormData) => {
+          try {
+            console.log(formData)
+             const res = await postTugas(`${POSTINGAN_TUGAS}`, formData, getCookie('token'))
+            console.log(res)
+            if(res.ok){
+              router.back()
+            }
+          } catch(err) {
+            console.log(err)
+          }finally {
+            setFormData({})
+          }
+        }}>
           <Input
             type="text"
             label={"Judul"}
