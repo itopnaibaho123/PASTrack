@@ -5,32 +5,18 @@ import Button from "@/components/Button";
 import Table from "@/components/Table";
 import TableBody from "@/components/Table/TableBody";
 import TableHead from "@/components/Table/TableHead";
+import { getMatpelByKelas } from "@/components/Hooks/Matpel";
+import { getSiswaByKelas, getKelas } from "@/components/Hooks/Murid";
+import { API_KELAS } from "@/components/Hooks/Murid";
+import checkRole from "@/components/Helper/CheckRole";
 
-export default function detailKelas() {
+export default function detailKelas(props) {
   const router = useRouter();
 	const id = router.query.id;
 
 	// TODO: get class detail
-	const subjects = [
-		"Matematika",
-		"Bahasa Indonesia",
-		"Bahasa Inggris",
-		"IPA",
-		"IPS",
-		"Seni Budaya",
-	];
-	const students = [
-		"Amelia",
-		"Bella",
-		"Karlina",
-		"Sintia",
-		"Sabyna",
-		"Udin",
-		"Ainun",
-		"Caryn",
-		"Kylie",
-		"Dyta",
-	];
+	const matpel = props.matpel;
+	const students = props.students;
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
       <div>
@@ -39,9 +25,10 @@ export default function detailKelas() {
       <div className="bg-blue-100 p-16">
 				<div className="flex justify-between items-center mb-8">
 					<div className="max-w-xl">
-						<h1 className="text-2xl font-medium">IPA 1</h1>
+						<h1 className="text-2xl font-medium">{props.kelas.namaKelas}</h1>
 						<p className="mt-4">
-							Ini adalah kelas IPA 1. Dengan peminatan IPA.
+							{/* Ini adalah kelas IPA 1. Dengan peminatan IPA. */}
+							{`ni adalah kelas ${props.kelas.namaKelas}. Dengan Peminatan IPA`}
 						</p>
 					</div>
 					<Button
@@ -52,9 +39,9 @@ export default function detailKelas() {
 				</div>
 				{/* subject chips */}
 				<div className="flex flex-wrap gap-2">
-					{subjects.map((s) => (
+					{matpel.map((s) => (
 						<div className="bg-white text-emerald-500 border border-blue-500 px-4 py-2 rounded-lg">
-							{s}
+							{s.namaMataPelajaran}
 						</div>
 					))}
 				</div>
@@ -76,7 +63,7 @@ export default function detailKelas() {
 						<div className="flex justify-between items-center mb-8 border border-gray-500 rounded-lg">
 							<ul className="w-full">
 								{students.map((s) => (
-									<li className="border-b border-gray-500 w-full py-2 px-4">{s}</li>
+									<li className="border-b border-gray-500 w-full py-2 px-4">{s.nama}</li>
 								))}
 							</ul>
 						</div>
@@ -91,3 +78,40 @@ export default function detailKelas() {
     </div>
   );
 }
+
+export async function getServerSideProps(context) {
+	const authentications = checkRole(context, ["ADMIN"]);
+	if (!authentications.tokenTrue) {
+	  return {
+		redirect: {
+		  destination: "/login",
+		  permanent: false,
+		},
+	  };
+	}
+	const { role, token } = context.req.cookies;
+  
+	if (authentications.rolesTrue) {
+	  if (role === "ADMIN") {
+		const students = await getSiswaByKelas(`${API_KELAS}${context.query.id}/siswa`, token);
+		const matpel = await getMatpelByKelas(`${API_KELAS}${context.query.id}/matpel`, token);
+		const kelas = await getKelas(`${API_KELAS}${context.query.id}`, token);
+		
+		return {
+		  props: {
+			role: role,
+			students: students,
+			matpel: matpel,
+			kelas: kelas
+		  },
+		};
+	  }
+	} else {
+	  return {
+		redirect: {
+		  destination: "/",
+		  permanent: false,
+		},
+	  };
+	}
+  }

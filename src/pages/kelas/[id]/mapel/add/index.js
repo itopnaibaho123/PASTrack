@@ -1,47 +1,105 @@
 import Button from "@/components/Button";
+import { ALL_MATPEL, ADD_MATPEL_TO_KELAS } from "@/components/Hooks/Matpel";
+import checkRole from "@/components/Helper/CheckRole";
+import { getAllMatpelByKelas, postMatpelToKelas } from "@/components/Hooks/Matpel";
+import FormCheckboxContextProvider from "@/components/context/FormCheckboxContext";
+import FormCheckboxSiswa from "@/components/Form/FormCheckboxSiswa";
+import Checkbox from "@/components/Checkbox";
+import { getCookie } from "@/components/Helper/cookies";
+import { useRouter } from "next/router";
 
-export default function SubjectAddPage() {
-	const subjects = ["Matematika", "Bahasa Indonesia", "Bahasa Inggris", "IPA", "IPS"];
-	return (
-			<div className="bg-white p-16">
-				<div className="flex justify-between items-center mb-8">
-					<div className="">
-						<h1 className="text-2xl font-medium">Tambah Mata Pelajaran</h1>
-						<p className="mt-4">
-							Daftar Mata Pelajaran yang bisa diambil
-						</p>
-					</div>
-				</div>
-				<div className="flex flex-col">
-					{/* create form */}
-					<form>
-						{/* checkbox */}
-						<div className="mb-4">
-							<div className="flex flex-col">
-								{subjects.map((subject) => (
-									<label className="flex items-center" key={subject}>
-										<input
-											className="mr-2 accent-blue-500 w-4 h-4"
-											type="checkbox"
-											name="subject"
-											value={subject}
-										/>
-										<span className="text-gray-700">{subject}</span>
-									</label>
-								))}
-							</div>
-						</div>
-						{/* button */}
-						<div className="flex justify-end mt-8">
-                        <Button
-                            variant="secondary"
-                            onClick={() => router.push("/kelas/CreateKelas")}
-                            >
-                            Simpan
-                        </Button>
-						</div>
-					</form>
-				</div>
-			</div>
-	);
+export default function SubjectAddPage(props) {
+  const mataPelajaran = props.matpel;
+  const router = useRouter()
+  const  id  = router.query.id
+
+  return (
+    <div className="bg-white p-16">
+      <div className="flex justify-between items-center mb-8">
+        <div className="">
+          <h1 className="text-2xl font-medium">Tambah Mata Pelajaran</h1>
+          <p className="mt-4">Daftar Mata Pelajaran yang bisa diambil</p>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        {/* create form */}
+        <FormCheckboxContextProvider>
+          <FormCheckboxSiswa
+            handleSubmit={async (formData, setFormData) => {
+              try {
+                console.log(formData);
+                const res = await postMatpelToKelas(
+                  `${ADD_MATPEL_TO_KELAS}${id}`,
+                  formData,
+                  getCookie("token")
+                );
+                console.log(res);
+                if (res.ok) {
+                  router.back();
+                }
+              } catch (err) {
+                console.log(err);
+              } finally {
+                setFormData([]);
+              }
+            }}
+          >
+            <div className="mb-4">
+              <div className="flex flex-col">
+                {/* checkbox */}
+                {mataPelajaran.map((matpel) => (
+                  <Checkbox
+                    name={"namaMatpel"}
+                    value={matpel.namaMataPelajaran}
+                    id={matpel.id}
+                    username={matpel.namaMataPelajaran}
+                  />
+                ))}
+              </div>
+            </div>
+            {/* button */}
+            <div className="flex justify-end mt-8">
+              <Button
+                variant="primary"
+                onClick={() => router.push("/kelas/CreateKelas")}
+              >
+                Simpan
+              </Button>
+            </div>
+          </FormCheckboxSiswa>
+        </FormCheckboxContextProvider>
+      </div>
+    </div>
+  );
+}
+export async function getServerSideProps(context) {
+  const authentications = checkRole(context, ["ADMIN"]);
+  if (!authentications.tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const { role, token } = context.req.cookies;
+
+  if (authentications.rolesTrue) {
+    if (role === "ADMIN") {
+      const matpel = await getAllMatpelByKelas(`${ALL_MATPEL}`, token);
+      return {
+        props: {
+          role: role,
+          matpel: matpel,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }

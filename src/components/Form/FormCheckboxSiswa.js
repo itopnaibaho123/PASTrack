@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import Button from '../Button';
 // import { FormModalContext } from '../context/FormModalContext';
 import { FormCheckboxContext } from '../context/FormCheckboxContext';
-export default function FormCreateKelas ({handleSubmit,children}) {
+export default function FormCheckboxSiswa ({handleSubmit,children}) {
   const { formData, setFormData } = useContext(FormCheckboxContext);
 
   return (
