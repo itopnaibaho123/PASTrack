@@ -18,6 +18,22 @@ export default function CreateKelas() {
     },
   ];
 
+  const guru = [
+    { id: 1, nama: "guru1" },
+    {
+      id: 2,
+      nama: "guru2",
+    },
+  ];
+
+  // const usernameGuru = [
+  //   { id: 1, nama: "GENAP" },
+  //   {
+  //     id: 2,
+  //     nama: "GANJIL",
+  //   },
+  // ];
+
   const router = useRouter();
   return (
     <div>
@@ -67,9 +83,9 @@ export default function CreateKelas() {
           <Select
             label={"Wali Kelas"}
             name={"usernameGuru"}
-            placeholder="Wali Kelas"
+            placeholder="nama"
           >
-            {["guru2", "guru1"]}
+            {guru}
           </Select>
         </FormCreateKelas>
       </FormModalContextProvider>

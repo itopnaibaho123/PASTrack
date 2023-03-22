@@ -22,7 +22,7 @@ export default function ({
       <P>Awal Tahun Pelajaran: {awalTahunAjaran}</P>
       
       <div className="py-4">
-         <Button onClick={()=> router.push(`${router.asPath}/{id}`)}>Detail Kelas</Button>
+         <Button onClick={()=> router.push(`${router.asPath}/${id}`)}>Detail Kelas</Button>
     </div>
     </div>
   );

@@ -45,7 +45,7 @@ export default function detailKelas() {
 						</p>
 					</div>
 					<Button
-						href={`/classes/${id}/subjects/add`}
+						onClick={() => router.push(`${router.asPath}/mapel/add`)}
 						className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">
 						Tambah Mata Pelajaran
 					</Button>
@@ -66,7 +66,7 @@ export default function detailKelas() {
 							<h1 className="text-2xl font-medium">Daftar Siswa</h1>
 						</div>
 						<Button
-							href={`/classes/${id}/students/add`}
+							onClick={() => router.push(`${router.asPath}/siswa/add`)}
 							className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg">
 							Tambah Siswa
 						</Button>
