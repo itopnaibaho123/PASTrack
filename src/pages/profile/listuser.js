@@ -9,6 +9,7 @@ import TableBody from "@/components/Table/TableBody";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import { H3 } from "@/components/Typography";
+
 export default function list(props) {
   const router = useRouter();
   if (!props.data) {
@@ -23,9 +24,8 @@ export default function list(props) {
     <>
       <div className="flex flex-col p-5 place-items-center">
         <div className="flex flex-col">
-          <img  src="/assets/PASTrack.svg"/>
+          <img src="/assets/PASTrack.svg" />
           <div className="flex p-4">
-            <Button onClick={() => router.back()}>Back</Button>
             <div className="grow text-center">
               <H3>List All User</H3>
             </div>
@@ -36,6 +36,9 @@ export default function list(props) {
             <TableHead cols={keys} />
             <TableBody data={props.data} cols={keys} profile={true} />
           </Table>
+        </div>
+        <div className="flex flex-col items-center mt-4">
+          <Button onClick={() => router.back()}>Back</Button>
         </div>
       </div>
     </>

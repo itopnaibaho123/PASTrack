@@ -188,21 +188,6 @@ export default function Sidebar() {
           />
         </svg>
       ),
-    },
-    {
-      href: "/profile",
-      title: "Profile",
-      available: ["GURU", "ADMIN", "MURID", "ORANGTUA"],
-      submenus: [
-        {
-          href: `/profile`,
-          title: "Profile",
-        },
-        {
-          href: `/profile/${username}/EditProfile`,
-          title: "Edit Profile",
-        },
-      ],
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +222,7 @@ export default function Sidebar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   return (
-    <aside className="bg-gray-100 w-full md:w-60">
+    <div className="sidebar-container">
       {/* logo */}
       <div className="flex justify-center items-center h-20">
         <img src="/assets/PASTrack.svg" alt="PASTrack" />
@@ -361,6 +346,13 @@ export default function Sidebar() {
           Logout
         </button>
       </div>
-    </aside>
+      <style jsx>{`
+        .sidebar-container {
+          width: 320px; 
+          height: 100vh;
+          background: #F2F2F2;
+        }
+      `}</style>
+      </div>
   );
 }
