@@ -13,7 +13,7 @@ export default function ({
 }) {
   const router = useRouter()
   return (
-    <div className="py-8 px-8 bg-orange-200 justify-center w-min-w-[230px] max-w-md max-h-[300px] ring-2 ring-orange-400">
+    <div className="py-2 px-3 bg-blue-100 justify-center w-min-w-[230px] max-w-md max-h-[300px] ring-2 ring-blue-200 rounded p-4 shadow overflow-hidden">
       <div className="py-5">
         <H3>Kelas: {namaKelas}</H3>
       </div>

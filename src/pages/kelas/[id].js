@@ -28,7 +28,7 @@ export default function detailKelas(props) {
 						<h1 className="text-2xl font-medium">{props.kelas.namaKelas}</h1>
 						<p className="mt-4">
 							{/* Ini adalah kelas IPA 1. Dengan peminatan IPA. */}
-							{`ni adalah kelas ${props.kelas.namaKelas}. Dengan Peminatan IPA`}
+							{`Ini adalah kelas ${props.kelas.namaKelas}. Dengan Peminatan IPA`}
 						</p>
 					</div>
 					<Button

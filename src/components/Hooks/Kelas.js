@@ -8,6 +8,8 @@ import { getCookie } from "../Helper/cookies";
 const API_ROUTE = process.env.NEXT_PUBLIC_API_ROUTE;
 
 export const KELAS = API_ROUTE + "api/kelas/";
+export const LIST_MATPEL_KELAS = API_ROUTE + "api/kelas/allMatpel";
+export const ADD_MATPEL_TO_KELASS = KELAS + "addMatpel/";
 
 const getAllKelas= async (url, token) => {
   
@@ -33,19 +35,16 @@ const postKelas = async(url, formData, token) => {
   return response;
 }
 
-const postMatpelKelas = async (id, formData, token) => {
-  try {
-    const response = await axios.post(`${KELAS}addMatpel/${id}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.error);
-  }
+const postMatpelKelas = async (url, formData, token) => {
+  const response = await fetch(`${url}`, {
+    method: "PUT",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
 };
 
 const getKelas = async (id, token) => {
@@ -59,4 +58,15 @@ const getKelas = async (id, token) => {
   return data;
 };
 
-export {postKelas, postMatpelKelas, getAllKelas, getKelas}
+const getAllListMatpel = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+export {postKelas, postMatpelKelas, getAllKelas, getKelas, getAllListMatpel}
