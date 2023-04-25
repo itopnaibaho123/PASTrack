@@ -52,6 +52,7 @@ export default function SubjectAddPage(props) {
                     name={"namaMatpel"}
                     value={matpel.namaMataPelajaran}
                     id={matpel.id}
+                    idMatpel={matpel.id} // Menambahkan properti "idMatpel"
                     username={matpel.namaMataPelajaran}
                   />
                 ))}
@@ -72,6 +73,7 @@ export default function SubjectAddPage(props) {
     </div>
   );
 }
+
 export async function getServerSideProps(context) {
   const authentications = checkRole(context, ["ADMIN"]);
   if (!authentications.tokenTrue) {

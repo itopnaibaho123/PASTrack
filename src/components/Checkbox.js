@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { B, H2, H3, P } from "./Typography";
 import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
@@ -9,13 +9,14 @@ import { useContext } from "react";
 // import FormModalContextProvider from "./context/FormModalContext";
 import { FormCheckboxContext } from "./context/FormCheckboxContext";
 
-export default function Checkbox({ name, value, id, username }) {
+export default function Checkbox({ name, value, id, username, idMatpel }) {
   const { setFormData, formData } = useContext(FormCheckboxContext);
+  const [idMatpelState, setIdMatpelState] = useState(idMatpel);
 
   function onCheck(e) {
     const { value, checked, name } = e.target;
     if (checked) {
-      setFormData((prev) => [...prev, { [name]: value }]);
+      setFormData((prev) => [...prev, { [name]: value, idMatpel: idMatpelState }]);
     } else {
       setFormData(formData.filter((valCheck) => valCheck[name] !== value));
     }
