@@ -11,11 +11,10 @@ export default function index(props) {
   const router = useRouter();
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col text-center items-center">
-        <H3>Daftar Tugas</H3>
-        <img width={250} height={250} src="assets/PASTrack.svg"></img>
+      <div className="flex flex-col text-center items-center py-4">
+        <H3>Daftar Postingan Tugas</H3>
       </div>
-      <div className="flex justify-center gap-2 ">
+      <div className="flex justify-center gap-2 pb-4">
         <Button onClick={() => router.back()}>Kembali</Button>
         <Button
           variant="secondary"
@@ -45,7 +44,7 @@ export default function index(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context, ["ADMIN"]);
+  const authentications = checkRole(context, ["ADMIN", "GURU"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -57,7 +56,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if (role === "ADMIN") {
+    if (role === "ADMIN", "GURU") {
       const postingan = await getAllTugas(`${POSTINGAN_TUGAS}`, token);
       return {
         props: {
