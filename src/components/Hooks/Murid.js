@@ -20,6 +20,7 @@ const getAllSiswa = async (url, token) => {
   const { data } = response;
   return data;
 };
+
 const addSiswaToKelas = async (url, formData, token) => {
   const response = await fetch(url, {
     method: "PUT",
@@ -31,6 +32,7 @@ const addSiswaToKelas = async (url, formData, token) => {
   });
   return response;
 };
+
 const getSiswaByKelas = async (url, token) => {
   const response = await axios.get(url, {
     headers: {

@@ -7,7 +7,7 @@ export default function RegisterGuruForm({ handleSubmit, children }) {
     useEffect(() =>{
         setFormData((previous) => ({
             ...previous,
-            ['role']: "guru"
+            ['role']: "GURU"
         }))
     },[])
   return (

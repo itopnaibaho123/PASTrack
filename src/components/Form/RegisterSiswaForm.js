@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react'
-import { useContext } from 'react';
-import { FormModalContext } from '../context/FormModalContext';
-import Button from '../Button';
-export default function RegisterSiswaForm({handleSubmit, children}) {
+import { useContext, useEffect } from "react";
+import { FormModalContext } from "../context/FormModalContext";
+import Button from "../Button";
+
+export default function RegisterSiswaForm({ handleSubmit, children }) {
     const { formData, setFormData } = useContext(FormModalContext);
     useEffect(() =>{
         setFormData((previous) => ({

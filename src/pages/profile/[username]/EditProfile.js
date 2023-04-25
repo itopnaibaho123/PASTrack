@@ -5,6 +5,7 @@ import EditProfileForm from "@/components/Form/EditProfileForm";
 import { useRouter } from "next/router";
 import Input from "@/components/Input";
 import { getCookie } from "@/components/Helper/cookies";
+import { H1, H3 } from "@/components/Typography";
 import axios from "axios";
 import { FormModalContext } from "@/components/context/FormModalContext";
 
@@ -33,7 +34,10 @@ export default function EditProfile(props) {
 
   
   return (
-    <div>
+    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <div className="flex flex-col text-center items-center py-4">
+        <H3>Edit Profile</H3>
+      </div>
       <FormModalContextProvider>
         <EditProfileForm
           handleSubmit={async (formData, setFormData) => {
@@ -64,8 +68,8 @@ export default function EditProfile(props) {
           }}
         >
           <Input
-            label="nama"
-            name= "nama"
+            label="Edit Nama"
+            name= "Nama"
             placeholder="Type New Name"
             required
             inputvalue={dataObject.nama}

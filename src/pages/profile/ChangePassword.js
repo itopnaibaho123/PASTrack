@@ -4,14 +4,16 @@ import React from "react";
 import Input from "@/components/Input";
 import { clearCookie, getCookie } from "@/components/Helper/cookies";
 import { B } from "@/components/Typography";
+import { H1, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 
 export default function () {
   const router = useRouter()
   return (
-    <>
-      <div>
-        <B>Ganti Password</B>
+    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <div className="flex flex-col text-center items-center py-4">
+        <H3>Ganti Password</H3>
+      </div>
         <FormModalContextProvider>
           <FormGantiPassword
             handleSubmit={async (formData, setFormData) => {
@@ -50,21 +52,21 @@ export default function () {
             }}
           >
             <Input
-              label={"password lama"}
+              label={"Password Lama"}
               name={"passwordLama"}
               placeholder="Ketik Password Lama"
               required
               type="password"
             />
             <Input
-              label={"password baru"}
+              label={"Password Baru"}
               name={"passwordBaru"}
               placeholder="Ketik Password Baru"
               required
               type="password"
             />
             <Input
-              label={"ulangi password baru"}
+              label={"Konfirmasi Password Baru"}
               name={"ulangiPasswordBaru"}
               placeholder="Ketik Ulang Password Baru"
               required
@@ -73,6 +75,5 @@ export default function () {
           </FormGantiPassword>
         </FormModalContextProvider>
       </div>
-    </>
   );
 }

@@ -4,22 +4,27 @@ import Footer from "@/components/Footer";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import { useCookie } from "@/components/Hooks/useCookie";
+
 export default function App({ Component, pageProps }) {
   const { pathname } = useRouter();
-  
+
   /*layouting*/
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex flex-col md:flex-row flex-1">
-        {pathname !== "/login" && <Sidebar/>}
-        <div className="">
-          <Component {...pageProps} />
+      {pathname !== "/login" && (
+        <div className="flex flex-col md:flex-row flex-1">
+          <Sidebar />
+          <div className="flex-1">
+            <Component {...pageProps} />
+          </div>
         </div>
-      </div>
+      )}
+      {pathname === "/login" && <Component {...pageProps} />}
       <Footer />
     </div>
   );
 }
+
 
 {
   /* <div class="h-screen w-screen bg-black">

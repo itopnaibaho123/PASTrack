@@ -39,18 +39,11 @@ export default function profile(props) {
   return (
     <div className="p-8 flex flex-col gap-4 place-items-center">
       <div className="grow flex">
-        <Button
-          onClick={() => {
-            router.back();
-          }}
-        >
-          Go back
-        </Button>
         <H3>Detail User</H3>
       </div>
       <div className="w-fit bg-background rounded-xl">
         <Table>
-          <TableHead cols={["username", "nama", "role"]} detailUser={true} />
+          <TableHead cols={["Username", "Nama", "Role"]} detailUser={true} />
           <TableBody
             cols={["username", "nama", "role"]}
             data={profile}
@@ -58,14 +51,21 @@ export default function profile(props) {
           />
         </Table>
       </div>
-      <div className="">
-        <Button
-          variant="secondary"
-          onClick={() => router.push("/profile/ChangePassword")}
-        >
-          Ganti Password
-        </Button>
-      </div>
+      <div className="flex gap-4">
+    <Button
+      variant="secondary"
+      onClick={() => router.push("/profile/ChangePassword")}
+    >
+      Ganti Password
+    </Button>
+    <Button
+      onClick={() => {
+        router.back();
+      }}
+    >
+      Go back
+    </Button>
+  </div>
     </div>
   );
 }
