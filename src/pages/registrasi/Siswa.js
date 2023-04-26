@@ -6,9 +6,13 @@ import Input from "@/components/Input";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
+import { getListAngkatan } from "@/components/Hooks/Angkatan";
+import checkRole from "@/components/Helper/CheckRole";
+import Select from "@/components/DropDown/Select";
 
-export default function Siswa() {
+export default function Siswa(props) {
   const router = useRouter();
+  console.log(props.angkatan)
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
       <div className="flex flex-col flex-wrap place-items-center">
@@ -20,8 +24,9 @@ export default function Siswa() {
       <FormModalContextProvider>
         <RegisterSiswaForm
           handleSubmit={async (formData, setFormData) => {
-            console.log(formData)
+            
             try {
+              console.log(formData)
               const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_ROUTE}api/register/student`,
                 {
@@ -67,9 +72,37 @@ export default function Siswa() {
             placeholder="NISN"
             required
           />
+          <Select
+            label={"Angkatan"}
+            name={"angkatan"}
+            placeholder="id"
+          >
+            {props.angkatan}
+          </Select>
           
         </RegisterSiswaForm>
       </FormModalContextProvider>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const authentications = checkRole(context);
+  if (!authentications.tokenTrue) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const angkatan = await getListAngkatan();
+  const { role, username } = context.req.cookies;
+  return {
+    props: {
+      id: username,
+      role: role,
+      angkatan: angkatan
+    },
+  };
 }

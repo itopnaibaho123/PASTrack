@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { PEMINATAN } from "@/components/Hooks/Peminatan";
 import { getListPeminatan } from "@/components/Hooks/Peminatan";
 import checkRole from "@/components/Helper/CheckRole";
+import { getListSemester } from "@/components/Hooks/Semester";
 
 const semester = [
   { id: 1, nama: "GANJIL" },
@@ -20,13 +21,13 @@ const semester = [
 
 export default function CreatePelajaran(props) {
   const router = useRouter();
-  console.log(semester)
-  console.log(props.peminatan);
+
   return (
     <div>
       <FormModalContextProvider>
         <FormCreateMataPelajaran
           handleSubmit={async (formData, setFormData) => {
+            console.log(formData)
             try {
               console.log(formData);
               const res = await postMatpel(
@@ -58,31 +59,20 @@ export default function CreatePelajaran(props) {
             placeholder={"Description"}
             required
           />
-          <Input
-            label={"Awal Tahun Ajaran"}
-            name={"awalTahunAjaran"}
-            type="date"
-            required
-          />
-          <Input
-            type="date"
-            label={"Akhir Tahun Ajaran"}
-            name={"akhirTahunAjaran"}
-            required
-          />
           <Select
             label={"peminatan"}
             name={"namaPeminatan"}
-            placeholder="namaPeminatan"
+            placeholder="id"
           >
             {props.peminatan}
           </Select>
           <Select
             label={"Semester"}
-            name={"semester"}
-            placeholder="nama"
+            name="semester"
+            placeholder="id"
+            semester = {true}
           >
-            {semester}
+            {props.semester}
           </Select>
         </FormCreateMataPelajaran>
       </FormModalContextProvider>
@@ -104,10 +94,12 @@ export async function getServerSideProps(context) {
   if (authentications.rolesTrue) {
     if (role === "GURU") {
       const peminatan = await getListPeminatan(`${PEMINATAN}`, token);
+      const semester = await getListSemester();
       return {
         props: {
           role: role,
           peminatan: peminatan,
+          semester:semester
         },
       };
     }
