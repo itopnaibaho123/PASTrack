@@ -31,7 +31,7 @@ export default function index(props) {
               judulPostingan={tugas.judulPostingan}
               mataPelajaran={tugas.mataPelajaran}
               tanggalDeadline={tugas.tanggalDeadline}
-              deskripsi={tugas.deskrispi}
+              deskripsi={tugas.deskripsi}
               kodePostingan={tugas.kodePostingan}
             />
           );
