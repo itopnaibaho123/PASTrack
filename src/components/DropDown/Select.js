@@ -11,9 +11,9 @@ export default function Select({ label, children, name, placeholder, semester = 
       var stringTanggalBuka = tanggalBuka.getDate() + "/" +tanggalBuka.getMonth() + "/" + tanggalBuka.getFullYear() + " - "
       var stringTanggalTutup = tanggalTutup.getDate() + "/" +tanggalTutup.getMonth() + "/" + tanggalTutup.getFullYear()
       if(item['semester'] === false){
-        return "Genap " + String( stringTanggalBuka )+ "/" + String(stringTanggalTutup)
+        return "Genap " + String(stringTanggalBuka) + String(stringTanggalTutup)
       } else{
-        return "Ganjil " + String(stringTanggalBuka) + "/" + String(stringTanggalTutup)
+        return "Ganjil " + String(stringTanggalBuka)  + String(stringTanggalTutup)
       
       }
     }

@@ -6,8 +6,10 @@ import { useRouter } from "next/router";
 import { MATPEL_GURU } from "@/components/Hooks/Matpel";
 import { getAllMatpel } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
+import { getListSemester } from "@/components/Hooks/Semester";
 export default function index(props) {
   const router = useRouter();
+  console.log(props.semester)
   return (
     <div className="flex flex-col p-5">
       <div className="flex flex-col text-center items-center">
@@ -26,10 +28,15 @@ export default function index(props) {
 
       <div className="flex flex-wrap justify-center gap-2 py-2">
         {props.matpel.map((matkul, index) => {
+          const semester = props.semester.find((s) => s.id === matkul.semester.id);
+          console.log(semester)
+          const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
+          const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
           return (
             <CardSubject
               namaMataPelajaran={matkul.namaMataPelajaran}
               deskripsi={matkul.deskripsi}
+              semester={`Semester: ${semester.semester ? 'Ganjil' : 'Genap'} ${awalSemester} - ${akhirSemester}`}
               id={matkul.id}
               key={index}
             />
@@ -55,11 +62,13 @@ export async function getServerSideProps(context) {
   if (authentications.rolesTrue) {
     if (role === "GURU") {
       const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
-  
+      const semester = await getListSemester();
+
       return {
         props: {
           role: role,
           matpel: matpel,
+          semester: semester
         },
       };
     } 

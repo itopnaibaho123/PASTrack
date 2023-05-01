@@ -8,11 +8,13 @@ import { useCookie } from "@/components/Hooks/useCookie";
 export default function App({ Component, pageProps }) {
   const { pathname } = useRouter();
 
+
   /*layouting*/
   return (
     <div className="min-h-screen flex flex-col">
       {pathname !== "/login" && (
         <div className="flex flex-col md:flex-row flex-1">
+          
           <Sidebar />
           <div className="flex-1">
             <Component {...pageProps} />
