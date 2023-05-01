@@ -10,6 +10,7 @@ const API_ROUTE = process.env.NEXT_PUBLIC_API_ROUTE;
 export const KELAS = API_ROUTE + "api/kelas/";
 export const LIST_MATPEL_KELAS = API_ROUTE + "api/kelas/allMatpel";
 export const ADD_MATPEL_TO_KELASS = KELAS + "addMatpel/";
+export const LIST_SEMESTER_KELAS = API_ROUTE + "api/kelas/allSemester";
 
 const getAllKelas= async (url, token) => {
   
@@ -69,4 +70,15 @@ const getAllListMatpel = async (url, token) => {
   return data;
 };
 
-export {postKelas, postMatpelKelas, getAllKelas, getKelas, getAllListMatpel}
+const getAllListSemester = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+export {postKelas, postMatpelKelas, getAllKelas, getKelas, getAllListMatpel, getAllListSemester}

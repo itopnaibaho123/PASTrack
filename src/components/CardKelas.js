@@ -5,11 +5,10 @@ import { B, H2, H3, P } from "./Typography";
 
 
 export default function ({
-	id,
+  id,
   namaKelas,
   semester,
-  awalTahunAjaran,
-  akhirTahunAjaran
+  namaGuru,
 }) {
   const router = useRouter()
   return (
@@ -18,12 +17,10 @@ export default function ({
         <H3>Kelas: {namaKelas}</H3>
       </div>
       <P>Semester: {semester}</P>
-      <P>Akhir Tahun Pelajaran: {akhirTahunAjaran}</P>
-      <P>Awal Tahun Pelajaran: {awalTahunAjaran}</P>
-      
+      <P>Wali Kelas: {namaGuru}</P>
       <div className="py-4">
          <Button onClick={()=> router.push(`${router.asPath}/${id}`)}>Detail Kelas</Button>
-    </div>
+      </div>
     </div>
   );
 }

@@ -12,11 +12,12 @@ import { useRouter } from "next/router";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
+import { getListSemester } from "@/components/Hooks/Semester";
 
-const semester = [
-  { id: 1, nama: "GANJIL" },
-  { id: 2, nama: "GENAP" },
-];
+// const semester = [
+//   { id: 1, nama: "GANJIL" },
+//   { id: 2, nama: "GENAP" },
+// ];
 
 export default function CreateKelas(props) {
 
@@ -55,21 +56,14 @@ export default function CreateKelas(props) {
             placeholder={"Nama Kelas"}
             required
           />
-          <Select label={"Semester"} name={"semester"} placeholder="nama">
-            {semester}
+          <Select
+            label={"Semester"}
+            name="semesterId"
+            placeholder="id"
+            semester = {true}
+          >
+            {props.semester}
           </Select>
-          <Input
-            type="date"
-            label={"Awal Tahun Ajaran"}
-            name={"awalTahunAjaran"}
-            required
-          />
-          <Input
-            type="date"
-            label={"Akhir Tahun Ajaran"}
-            name={"akhirTahunAjaran"}
-            required
-          />
           <SelectGuru
             label={"Wali Kelas"}
             name={"usernameGuru"}
@@ -98,10 +92,12 @@ export async function getServerSideProps(context) {
   if (authentications.rolesTrue) {
     if (role === "ADMIN") {
       const list_guru = await getListGuru(`${GURU_KELAS}`, token);
+      const semester = await getListSemester();
       return {
         props: {
           role: role,
           list_guru: list_guru,
+          semester: semester,
         },
       };
     }
