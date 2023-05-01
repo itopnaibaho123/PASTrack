@@ -39,10 +39,10 @@ export default function CardTugas({
             <div className="flex items-center">
               <div className="flex">
                 <div className="flex flex-col">
-                  <h1 className="text-xl font-medium"> {judulPostingan} </h1>
-                  <h1 className="text-xl font-medium"> {mataPelajaran}</h1>
-                  <h1 className="text-xl font-medium"> {tanggalDeadline}</h1>
-                  <p className="text-gray-500"> {deskripsi} </p>
+                  <h1 className="text-xl font-medium"> Tugas: {judulPostingan} </h1>
+                  <h1 className="text-xl font-medium"> Mata Pelajaran: {mataPelajaran}</h1>
+                  <h1 className="text-xl font-medium"> Due Date: {tanggalDeadline}</h1>
+                  <h1 className="text-gray-500"> Deskripsi Tugas: {deskripsi} </h1>
                 </div>
                 <div className="flex flex-col w-full items-end justify-end">
                   <div className="py-1">
