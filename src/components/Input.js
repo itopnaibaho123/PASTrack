@@ -32,7 +32,7 @@ export default function Input({
       </label>
       <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
         <input
-          max={100}
+          max={9999999999}
           min={0}
           className={` px-3 py-1.5 flex-1 !outline-none ${variants[variant]}`}
           id={name}

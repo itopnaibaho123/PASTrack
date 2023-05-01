@@ -71,6 +71,7 @@ export default function Siswa(props) {
             name={"studentNumber"}
             placeholder="NISN"
             required
+            type="number"
           />
           <Select
             label={"Angkatan"}

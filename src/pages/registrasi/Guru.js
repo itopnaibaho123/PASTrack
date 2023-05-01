@@ -70,6 +70,7 @@ export default function Guru() {
             name={"guruId"}
             placeholder="NIP"
             required
+            type="number"
           />
           
         </RegisterGuruForm>
