@@ -47,18 +47,18 @@ export default function components() {
         </div>
       </div>
       <div className="ml-4">
-        <Modals
+        {/* <Modals
           buttonName="delete"
           desc="This is Explain Modals"
           title="modals"
           onClick={test}
-        ></Modals>
+        ></Modals> */}
       </div>
       <div className="mt-4">
-        <Toast variant="success">Success message</Toast>
+        {/* <Toast variant="success">Success message</Toast> */}
       </div>
       <div className="mt-4">
-        <Toast variant="error">Error message</Toast>
+        {/* <Toast variant="error">Error message</Toast> */}
       </div>
       <div className="ml-4">
         <Card
@@ -72,6 +72,16 @@ export default function components() {
       </div>
       <div className="mt-4">
         <Sidebar></Sidebar>
+      </div>
+      <div className="flex flex-col h-full transition duration-300 overflow-x-hidden relative bg-white z-40">
+        <div className="max-w-[375px] w-full flex-1 flex flex-col justify-center mx-auto">
+          <div className="px-2">test</div>
+          <div className="px-2">
+            <Button full variant="primary">
+              Register
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="max-w-[364px]">
         {/* <Input 
