@@ -12,7 +12,6 @@ export default function Guru() {
   return (
     <div>
       <div className="flex flex-col flex-wrap place-items-center">
-      <img width={600} height={600} src="/assets/PASTrack.svg"></img>
         <Button variant="ghost" onClick={() => router.back()}>
           Back
         </Button>
