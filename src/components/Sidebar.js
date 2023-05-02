@@ -93,7 +93,7 @@ export default function Sidebar() {
     {
       href: "/pelajaran",
       title: "Mata Pelajaran",
-      available: ["GURU"],
+      available: ["GURU", "MURID"],
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +280,7 @@ export default function Sidebar() {
     },
     {
       href: "/registrasi",
-      title: "Registrasi",
+      title: "Registrasi User",
       available: ["ADMIN"],
       submenus: [
         {
