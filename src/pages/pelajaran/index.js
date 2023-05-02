@@ -14,16 +14,17 @@ export default function index(props) {
     <div className="flex flex-col p-5">
       <div className="flex flex-col text-center items-center">
         <H3>Kelola Mata Pelajaran</H3>
-        <img width={600} height={600} src="assets/PASTrack.svg"></img>
       </div>
       <div className="flex justify-center gap-2 ">
         <Button onClick={() => router.back()}>Kembali</Button>
+        {props.role === "GURU" && (
         <Button
           variant="secondary"
           onClick={() => router.push("/pelajaran/CreatePelajaran")}
         >
-          Tambah Kelas
+          Tambah Mata Pelajaran
         </Button>
+         )}
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 py-2">
@@ -48,7 +49,7 @@ export default function index(props) {
 }
 
 export async function getServerSideProps(context) {
-  const authentications = checkRole(context, ["GURU"]);
+  const authentications = checkRole(context, ["GURU", "MURID"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -60,7 +61,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if (role === "GURU") {
+    if (role === "GURU", "MURID") {
       const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
       const semester = await getListSemester();
 

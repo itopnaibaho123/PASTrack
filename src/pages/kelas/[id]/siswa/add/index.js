@@ -57,12 +57,6 @@ export default function StudentAddPage(props) {
             </div>
             {/* button */}
             <div className="flex justify-end mt-8">
-              <Button
-                variant="primary"
-                onClick={() => router.push("/kelas/CreateKelas")}
-              >
-                Simpan
-              </Button>
             </div>
           </FormCheckboxSiswa>
         </FormCheckboxContextProvider>
