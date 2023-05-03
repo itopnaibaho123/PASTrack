@@ -83,7 +83,7 @@ export async function getServerSideProps(context) {
           list_kelas: list_kelas,
           semester: semester,
           list_guru: list_guru,
-  },
+  }
 };
 
     }

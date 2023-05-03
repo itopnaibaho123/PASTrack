@@ -69,7 +69,7 @@ export default function EditProfile(props) {
         >
           <Input
             label="Edit Nama"
-            name= "Nama"
+            name= "nama"
             placeholder="Type New Name"
             required
             inputvalue={dataObject.nama}

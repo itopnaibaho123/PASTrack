@@ -27,25 +27,48 @@ export default function komponen(props) {
     "kalkulasiBobotNilai",
   ];
   const router = useRouter();
-  return (
-    <div className="flex flex-col place-items-center p-5 gap-5">
-      <div className="flex gap-2">
-        <Button onClick={() => router.back()}>Back</Button>
-        <H3>Nilai Siswa</H3>
-      </div>
 
-      <div className="bg-background rounded-xl w-fit">
-        <Table>
-          <TableHead cols={columnsKomponen} studentScore={true} />
-          <TableBody
-            cols={columnsForIterate}
-            studentScore={true}
-            data={props.komponen}
-          />
-        </Table>
+  if(props.role === "MURID"){
+    return (
+      <div className="flex flex-col place-items-center p-5 gap-5">
+        <div className="flex gap-2">
+          <Button onClick={() => router.back()}>Back</Button>
+          <H3>Nilai Siswa</H3>
+        </div>
+  
+        <div className="bg-background rounded-xl w-fit">
+          <Table>
+            <TableHead detailUser={true} cols={columnsKomponen}/>
+            <TableBody
+              cols={columnsForIterate}
+              data={props.komponen}
+              detailUser={true}
+            />
+          </Table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }else {
+    return (
+      <div className="flex flex-col place-items-center p-5 gap-5">
+        <div className="flex gap-2">
+          <Button onClick={() => router.back()}>Back</Button>
+          <H3>Nilai Siswa</H3>
+        </div>
+  
+        <div className="bg-background rounded-xl w-fit">
+          <Table>
+            <TableHead cols={columnsKomponen} studentScore={true} />
+            <TableBody
+              cols={columnsForIterate}
+              studentScore={true}
+              data={props.komponen}
+            />
+          </Table>
+        </div>
+      </div>
+    );
+  }
 }
 
 export async function getServerSideProps(context) {

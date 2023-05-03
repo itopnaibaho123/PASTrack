@@ -8,7 +8,7 @@ export default function Sidebar() {
   const router = useRouter();
   const logout = () => {
     clearCookie();
-    router.push("/");
+    router.push("/login");
   };
 
   const role = useCookie("role");
@@ -60,7 +60,7 @@ export default function Sidebar() {
     {
       href: "/kelas",
       title: "Kelas",
-      available: ["ADMIN"],
+      available: ["ADMIN", "MURID"],
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
