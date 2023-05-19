@@ -18,6 +18,8 @@ export default function detailKelas(props) {
   // TODO: get class detail
   const matpel = props.matpel;
   const students = props.students;
+  console.log(props.matpel)
+  
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
       <div>
@@ -41,16 +43,16 @@ export default function detailKelas(props) {
         </div>
         {/* subject chips */}
         <div className="flex flex-wrap gap-2">
-          <CardMatpelKelas
+          {/* <CardMatpelKelas
             matpel={matpel}
             role={props.role}
             username={props.username}
-          />
-          {/* {matpel.map((s) => (
+          /> */}
+          {matpel.map((s) => (
             <div className="bg-white text-emerald-500 border border-blue-500 px-4 py-2 rounded-lg">
               {s.namaMataPelajaran}
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
       <div className="bg-white p-16">
@@ -72,7 +74,7 @@ export default function detailKelas(props) {
               <ul className="w-full">
                 {students.map((s) => (
                   <li className="border-b border-gray-500 w-full py-2 px-4">
-                    {s.nama}
+                    {s.namaSiswa}
                   </li>
                 ))}
               </ul>
@@ -112,14 +114,14 @@ export async function getServerSideProps(context) {
         token
       );
       const kelas = await getKelas(`${API_KELAS}${context.query.id}`, token);
-
+      
       return {
         props: {
           role: role,
           students: students,
           matpel: matpel,
           kelas: kelas,
-		  username: username
+		      username: username
         },
       };
     } else if (role === "MURID") {
