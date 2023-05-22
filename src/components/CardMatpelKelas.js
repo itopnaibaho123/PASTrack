@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export default function CardMatpelKelas({ matpel, username, role }) {
+export default function CardMatpelKelas({ matpel, username, role, peminatan }) {
   const router = useRouter();
   if (role === "MURID") {
     console.log(matpel.id)
