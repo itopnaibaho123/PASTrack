@@ -1,8 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FormModalContext } from "../context/FormModalContext";
 
 export default function SelectGuru({ label, children, name, placeholder }) {
   const { setFormData, formData } = useContext(FormModalContext);
+
+  useEffect(() => {
+    
+    setFormData((previous) => ({
+      ...previous,
+      [name]: children[0].username 
+    }))
+  }, [])
 
   return (
     <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>

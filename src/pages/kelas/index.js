@@ -34,7 +34,9 @@ export default function Index(props) {
           const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
           const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
           // get guru from props.list_guru and find guru by username
-          const guru = props.list_guru.find((g) => g.username === kls.usernameGuru);
+          const guru = props.list_guru.find(
+            (g) => g.username === kls.usernameGuru
+          );
 
           // add "namaGuru" property to kls object
           kls.namaGuru = guru ? guru.nama : "-";
@@ -44,10 +46,12 @@ export default function Index(props) {
               key={kls.idKelas}
               id={kls.idKelas}
               namaKelas={kls.namaKelas}
-              semester={`Semester: ${semester.semester ? 'Ganjil' : 'Genap'} ${awalSemester} - ${akhirSemester}`}
+              semester={`Semester: ${
+                semester.semester ? "Ganjil" : "Genap"
+              } ${awalSemester} - ${akhirSemester}`}
               namaGuru={guru ? guru.nama : "-"}
             />
-          );          
+          );
         })}
       </div>
     </div>
@@ -84,9 +88,11 @@ export async function getServerSideProps(context) {
           list_kelas: list_kelas,
           semester: semester,
           list_guru: list_guru,
-  }
-};
-
+        },
+      };
+    }
+    else if(role === "MURID"){
+      
     }
   } else {
     return {
