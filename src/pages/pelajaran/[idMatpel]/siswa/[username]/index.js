@@ -27,7 +27,7 @@ export default function komponen(props) {
     "kalkulasiBobotNilai",
   ];
   const router = useRouter();
-
+  console.log(props.komponen)
   if(props.role === "MURID"){
     return (
       <div className="flex flex-col place-items-center p-5 gap-5">

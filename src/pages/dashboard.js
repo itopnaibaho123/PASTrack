@@ -3,6 +3,7 @@ import checkRole from "@/components/Helper/CheckRole";
 import { P, B, H2, H3 } from "@/components/Typography";
 import Button from "@/components/Button";
 import { getListAngkatan } from "@/components/Hooks/Angkatan";
+import { getAllRank } from "@/components/Hooks/DashboardSiswa";
 
 let dashboardTitle = "";
 
@@ -107,27 +108,26 @@ const studentRanking = [
   { name: "Bina", class: "IPA 2", rank: 4 },
 ];
 
-export default function dashboard({
-  role,
-  angkatan,
-  averageScoreAngkatan,
-  averageScoreMatpel,
-  token,
-}) {
+export default function dashboard(props) {
   const [lblavgAngkatan, setlblAvgAngkatan] = useState([]);
   const [avgAngkatan, setAvgAngkatan] = useState([]);
   const [lblAvgMatpel, setlblAvgMatpel] = useState([]);
   const [avgMatpel, setAvgMatpel] = useState([]);
   const [page, setPage] = useState(1);
   const [rank, setRank] = useState();
+  const [angkatan, setAngkatan] = useState(0)
 
   useEffect(() => {
-    if (role === "GURU") {
+    if (props.role === "GURU") {
       const permittedAvgLabelAngkatan = [];
       const permittedAvgAngkatan = [];
-      for (let i = 0; i < averageScoreAngkatan.length; i++) {
-        permittedAvgLabelAngkatan.push(averageScoreAngkatan[i]["namaAngkatan"]);
-        permittedAvgAngkatan.push(averageScoreAngkatan[i]["averageScore"]);
+      for (let i = 0; i < props.averageScoreAngkatan.length; i++) {
+        permittedAvgLabelAngkatan.push(
+          props.averageScoreAngkatan[i]["namaAngkatan"]
+        );
+        permittedAvgAngkatan.push(
+          props.averageScoreAngkatan[i]["averageScore"]
+        );
       }
 
       setlblAvgAngkatan(permittedAvgLabelAngkatan);
@@ -135,11 +135,13 @@ export default function dashboard({
 
       const permittedAvgLabelMatpel = [];
       const permittedAvgMatpel = [];
-      for (let i = 0; i < averageScoreMatpel.length; i++) {
+      for (let i = 0; i < props.averageScoreMatpel.length; i++) {
         permittedAvgLabelMatpel.push(
-          averageScoreMatpel[i]["matpel"]["namaMataPelajaran"]
+          props.averageScoreMatpel[i]["matpel"]["namaMataPelajaran"]
         );
-        permittedAvgMatpel.push(averageScoreMatpel[i]["nilaiAkhirMatpel"]);
+        permittedAvgMatpel.push(
+          props.averageScoreMatpel[i]["nilaiAkhirMatpel"]
+        );
       }
       setlblAvgMatpel(permittedAvgLabelMatpel);
       setAvgMatpel(permittedAvgMatpel);
@@ -149,9 +151,8 @@ export default function dashboard({
 
   async function fetchRank(page) {
     try {
-    
-      const rankOfData = await getRank(page, getCookie("token"))
-      setRank(rankOfData)
+      const rankOfData = await getRank(page, getCookie("token"));
+      setRank(rankOfData);
     } catch (e) {
       console.log(e);
     }
@@ -160,11 +161,11 @@ export default function dashboard({
   useEffect(() => {
     fetchRank(page);
   }, [page]);
- 
-  console.log(rank)
-  console.log(averageScoreAngkatan)
-  console.log(averageScoreMatpel)
-  if (role === "GURU") {
+
+  console.log(rank);
+  console.log(props.averageScoreAngkatan);
+  console.log(props.averageScoreMatpel);
+  if (props.role === "GURU") {
     dashboardTitle = "DASHBOARD GURU";
     return (
       <div className="ml-auto mr-auto">
@@ -184,7 +185,7 @@ export default function dashboard({
                     name={"angkatan"}
                     placeholder="id"
                   >
-                    {angkatan}
+                    {props.angkatan}
                   </SelectDashboard>
                   <div className="h-40">
                     <HistogramNilaiAngkatan
@@ -248,6 +249,26 @@ export default function dashboard({
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
                 <h3 className="text-xl font-medium mb-4">Ranking Siswa</h3>
+                <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
+                  <label>Angkatan</label>
+                  <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+                    <select
+                      placeholder="Try"
+                      className="px-3 py-1.5 flex-1 !outline-none"
+                      value={angkatan}
+                      onChange={(e) => setAngkatan( e.target.value)}
+                      
+                    >
+                      {props.angkatan.map((item, index) => {
+                        return (
+                          <option value={item["id"]} key={index}>
+                            {item["angkatan"]}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="table-auto w-full">
                     <thead>
@@ -257,14 +278,15 @@ export default function dashboard({
                       </tr>
                     </thead>
                     <tbody>
-                      {rank != null && rank.map((student, index) => (
-                        <tr key={index}>
-                          <td className="border px-4 py-2">
-                            {student["student"]["nama"]}
-                          </td>
-                          <td className="border px-4 py-2">{index + 1}</td>
-                        </tr>
-                      ))}
+                      {rank != null &&
+                        rank.map((student, index) => (
+                          <tr key={index}>
+                            <td className="border px-4 py-2">
+                              {student["student"]["nama"]}
+                            </td>
+                            <td className="border px-4 py-2">{index + 1}</td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                   <div className="flex">
@@ -373,5 +395,6 @@ export async function getServerSideProps(context) {
       },
     };
   } else if (role === "MURID") {
+    const ranking = await getAllRank();
   }
 }

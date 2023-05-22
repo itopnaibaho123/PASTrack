@@ -34,6 +34,7 @@ export default function login() {
                         },
                       }
                     );
+                    console.log(res)
                     if (res.ok) {
                       const json = await res.json();
                       setCookie("token", json.token);
