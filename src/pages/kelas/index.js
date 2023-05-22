@@ -12,7 +12,7 @@ import { GURU_KELAS } from "@/components/Hooks/Guru";
 
 export default function Index(props) {
   const router = useRouter();
-
+  console.log(props.list_kelas)
   return (
     <div className="flex flex-col p-8">
       <div className="flex flex-col text-center items-center">
@@ -30,6 +30,7 @@ export default function Index(props) {
       <div className="flex flex-wrap justify-center gap-2 py-2">
         {props.list_kelas.map((kls) => {
           const semester = props.semester.find((s) => s.id === kls.semesterId);
+          console.log(semester)
           const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
           const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
           // get guru from props.list_guru and find guru by username
