@@ -4,8 +4,9 @@ export default function SelectDashboard({ label, children, name, placeholder, ha
     const { setFormData, formData } = useContext(FormModalContext);
 
     useEffect( () => {
+        console.log(name)
         setFormData(() => ({
-            [name]: children[0].id
+            [name]: children[0][placeholder]
         }))
     }, [])
 

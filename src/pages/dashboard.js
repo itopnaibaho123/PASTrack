@@ -69,39 +69,6 @@ export const options = {
     },
   },
 };
-
-const labels = [
-  "Semester 1",
-  "Semester 2",
-  "Semester 3",
-  "Semester 4",
-  "Semester 5",
-];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "perkembangan",
-      data: [50, 60, 55, 70, 90],
-      borderColor: "rgb(14, 49, 120)",
-      backgroundColor: "rgba(14, 49, 120, 1)",
-    },
-  ],
-};
-
-export const data2 = {
-  labels,
-  datasets: [
-    {
-      label: "perkembangan",
-      data: ["50", "60", "55", "70", "90"],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 213, 3, 1)",
-    },
-  ],
-};
-
 // Data untuk tabel ranking siswa
 const studentRanking = [
   { name: "Chris", class: "IPA 2", rank: 1 },
@@ -118,6 +85,10 @@ export default function dashboard(props) {
   const [page, setPage] = useState(1);
   const [rank, setRank] = useState();
   const [angkatan, setAngkatan] = useState(1);
+  const [angkatanDist, setAngkatanDist] = useState(1);
+  const [distribusi, setDistribusi] = useState({});
+  const [distribusiLabel, setDistribusiLabel] = useState([]);
+  const [distribusiValue, setDistribusiValue] = useState([]);
 
   useEffect(() => {
     if (props.role === "GURU") {
@@ -151,28 +122,52 @@ export default function dashboard(props) {
     }
   }, []);
 
-  
-
   async function fetchRank(page) {
     try {
-      console.log(angkatan)
+     
       const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function fetchDistribusi(angkatan) {
+    try {
       
+      const dataDistribusi = await getListDataHisto(
+        angkatan,
+        getCookie("token")
+      );
+      const unpermitLabelDistribusi = []
+      const unpermitValueDistribusi = []
+      for (const key in dataDistribusi){
+          
+          unpermitLabelDistribusi.push(key)
+          unpermitValueDistribusi.push(dataDistribusi[key])
+      }
+
+      setDistribusiLabel(unpermitLabelDistribusi)
+      setDistribusiValue(unpermitValueDistribusi)
+
+      
+
     } catch (e) {
       console.log(e);
     }
   }
 
   useEffect(() => {
-    fetchRank(page,angkatan);
+    fetchRank(page, angkatan);
   }, [page]);
 
   useEffect(() => {
-    fetchRank(page,angkatan);
+    fetchRank(page, angkatan);
   }, [angkatan]);
 
-  
+  useEffect(() => {
+    fetchDistribusi(angkatanDist);
+  }, [angkatanDist]);
   
   if (props.role === "GURU") {
     dashboardTitle = "DASHBOARD GURU";
@@ -188,27 +183,44 @@ export default function dashboard(props) {
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
-                <FormModalContextProvider>
-                  <h3 className="text-xl font-medium mb-4">
-                    Bar Chart DIstribusi Nilai Angkatan
-                  </h3>
-                  <SelectDashboard
-                    label={"Angkatan"}
-                    name={"angkatan"}
-                    placeholder="id"
-                  >
-                    {props.angkatan}
-                  </SelectDashboard>
-                  <div className="h-40">
-                    <HistogramNilaiAngkatan
-                      options={optionsBar}
-                      name={"angkatan"}
-                      kategori={"Distribusi Nilai Angkatan"}
-                    />
-                    {/* <Bar options={optionsBar} data={data} />
-                     */}
+                <h3 className="text-xl font-medium mb-4">
+                  Bar Chart DIstribusi Nilai Angkatan
+                </h3>
+                <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
+                  <label>Angkatan</label>
+                  <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+                    <select
+                      placeholder="Try"
+                      className="px-3 py-1.5 flex-1 !outline-none"
+                      value={angkatanDist}
+                      onChange={(e) => {
+                        setAngkatanDist(e.target.value);
+                      }}
+                    >
+                      {props.angkatan.map((item, index) => {
+                        return (
+                          <option value={item["id"]} key={index}>
+                            {item["angkatan"]}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </div>
-                </FormModalContextProvider>
+                </div>
+                <Bar
+                  options={optionsBar}
+                  data={{
+                    labels: distribusiLabel,
+                    datasets: [
+                      {
+                        label: "Distribusi Nilai Angkatan",
+                        data: distribusiValue,
+                        borderColor: "rgb(14, 49, 120)",
+                        backgroundColor: "rgba(14, 49, 120, 1)",
+                      },
+                    ],
+                  }}
+                />
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
@@ -269,8 +281,8 @@ export default function dashboard(props) {
                       className="px-3 py-1.5 flex-1 !outline-none"
                       value={angkatan}
                       onChange={(e) => {
-                        setAngkatan(e.target.value)
-                        setPage(1)
+                        setAngkatan(e.target.value);
+                        setPage(1);
                       }}
                     >
                       {props.angkatan.map((item, index) => {
@@ -299,8 +311,12 @@ export default function dashboard(props) {
                             <td className="border px-4 py-2">
                               {student["student"]["nama"]}
                             </td>
-                            <td className="border px-4 py-2">{student["ranking"]}</td>
-                            <td className="border px-4 py-2">{student["averageScore"]}</td>
+                            <td className="border px-4 py-2">
+                              {student["ranking"]}
+                            </td>
+                            <td className="border px-4 py-2">
+                              {student["averageScore"]}
+                            </td>
                           </tr>
                         ))}
                     </tbody>
