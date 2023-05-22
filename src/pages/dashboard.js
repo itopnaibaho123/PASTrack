@@ -116,7 +116,7 @@ export default function dashboard(props) {
   const [avgMatpel, setAvgMatpel] = useState([]);
   const [page, setPage] = useState(1);
   const [rank, setRank] = useState();
-  const [angkatan, setAngkatan] = useState(0)
+  const [angkatan, setAngkatan] = useState(1);
 
   useEffect(() => {
     if (props.role === "GURU") {
@@ -150,22 +150,29 @@ export default function dashboard(props) {
     }
   }, []);
 
+  
+
   async function fetchRank(page) {
     try {
-      const rankOfData = await getRank(page, getCookie("token"));
+      console.log(angkatan)
+      const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
+      
     } catch (e) {
       console.log(e);
     }
   }
 
   useEffect(() => {
-    fetchRank(page);
+    fetchRank(page,angkatan);
   }, [page]);
 
-  console.log(rank);
-  console.log(props.averageScoreAngkatan);
-  console.log(props.averageScoreMatpel);
+  useEffect(() => {
+    fetchRank(page,angkatan);
+  }, [angkatan]);
+
+  
+  
   if (props.role === "GURU") {
     dashboardTitle = "DASHBOARD GURU";
     return (
@@ -260,8 +267,10 @@ export default function dashboard(props) {
                       placeholder="Try"
                       className="px-3 py-1.5 flex-1 !outline-none"
                       value={angkatan}
-                      onChange={(e) => setAngkatan( e.target.value)}
-                      
+                      onChange={(e) => {
+                        setAngkatan(e.target.value)
+                        setPage(1)
+                      }}
                     >
                       {props.angkatan.map((item, index) => {
                         return (
@@ -288,7 +297,7 @@ export default function dashboard(props) {
                             <td className="border px-4 py-2">
                               {student["student"]["nama"]}
                             </td>
-                            <td className="border px-4 py-2">{index + 1}</td>
+                            <td className="border px-4 py-2">{student["ranking"]}</td>
                           </tr>
                         ))}
                     </tbody>
@@ -350,8 +359,10 @@ export default function dashboard(props) {
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
-                <h3 className="text-xl font-medium mb-4">Ranking Angkatan Setiap Semester</h3>
-                <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-green-200">
+                <h3 className="text-xl font-medium mb-4">
+                  Ranking Angkatan Setiap Semester
+                </h3>
+                <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-yellow-200">
                   {angkatanRankAllSemester}
                 </div>
               </div>
@@ -411,13 +422,13 @@ export async function getServerSideProps(context) {
       },
     };
   } else if (role === "MURID") {
-    const ranking = await getAllRank();
+    const ranking = await getAllRank(username, token);
     return {
       props: {
         role: role,
         ranking: ranking,
-        token: token
-      }
-    }
+        token: token,
+      },
+    };
   }
 }
