@@ -213,11 +213,23 @@ export default function dashboard(props) {
                     labels: distribusiLabel,
                     datasets: [
                       {
+                        order: 0,
+                        label: "Garis Distribusi Nilai Angkatan",
+                        data: distribusiValue,
+                        type: 'line',
+                        backgroundColor: "rgb(255,213,3)",
+                        borderColor: "rgba(255,213,3,1)",
+                        
+                        
+                      },
+                      {
+                        order: 1,
                         label: "Distribusi Nilai Angkatan",
                         data: distribusiValue,
                         borderColor: "rgb(14, 49, 120)",
                         backgroundColor: "rgba(14, 49, 120, 1)",
                       },
+                      
                     ],
                   }}
                 />
@@ -241,6 +253,7 @@ export default function dashboard(props) {
                           borderColor: "rgb(255,99,132)",
                           backgroundColor: "rgba(255,213,3,1)",
                         },
+                        
                       ],
                     }}
                   />
