@@ -9,7 +9,7 @@ export default function Footer() {
                 <div>
 
                     <div className="pb-4 w-fit">
-                        <img src="assets/PASTrack.svg"></img>
+                        <img src="/assets/PASTrack.svg"></img>
                     </div>
                     <div className="pb-2">
                         <P>© 2023 PROPENSI C07. All rights reserved.</P>
