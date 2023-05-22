@@ -30,12 +30,9 @@ export default function Index(props) {
       <div className="flex flex-wrap justify-center gap-2 py-2">
         {props.list_kelas.map((kls) => {
           const semester = props.semester.find((s) => s.id === kls.semesterId);
-          const awalSemester = new Date(
-            semester.awalTahunAjaran
-          ).toLocaleDateString("id-ID");
-          const akhirSemester = new Date(
-            semester.akhirTahunAjaran
-          ).toLocaleDateString("id-ID");
+          console.log(semester)
+          const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
+          const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
           // get guru from props.list_guru and find guru by username
           const guru = props.list_guru.find(
             (g) => g.username === kls.usernameGuru
