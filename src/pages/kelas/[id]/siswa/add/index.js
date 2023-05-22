@@ -7,12 +7,16 @@ import { getAllSiswa, addSiswaToKelas } from "@/components/Hooks/Murid";
 import checkRole from "@/components/Helper/CheckRole";
 import { useRouter } from "next/router";
 import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
 export default function StudentAddPage(props) {
   const router = useRouter();
   const students = props.students;
   const id = router.query.id;
   return (
     <div className="bg-white p-16">
+      <Head>
+        <title>{`Page Input Siswa`}</title>
+      </Head>
       <div className="flex justify-between items-center mb-8">
         <div className="">
           <h1 className="text-2xl font-medium">Tambah Siswa</h1>

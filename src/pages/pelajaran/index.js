@@ -7,11 +7,16 @@ import { MATPEL_GURU } from "@/components/Hooks/Matpel";
 import { getAllMatpel } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
+import Head from "next/head";
+
 export default function index(props) {
   const router = useRouter();
   console.log(props.semester)
   return (
     <div className="flex flex-col p-5">
+      <Head>
+        <title>{`Page List Mata pelajaran`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center">
         <H3>Kelola Mata Pelajaran</H3>
       </div>

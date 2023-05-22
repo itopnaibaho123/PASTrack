@@ -6,11 +6,16 @@ import { clearCookie, getCookie } from "@/components/Helper/cookies";
 import { B } from "@/components/Typography";
 import { H1, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
+import Head from "next/head";
+
 
 export default function () {
   const router = useRouter()
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Change Password`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Ganti Password</H3>
       </div>

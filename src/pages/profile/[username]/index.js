@@ -8,6 +8,8 @@ import { getCookie } from "@/components/Helper/cookies";
 import Table from "@/components/Table";
 import TableHead from "@/components/Table/TableHead";
 import TableBody from "@/components/Table/TableBody";
+import Head from "next/head";
+
 export default function EditProfile(props) {
   const [profile, setProfile] = useState({});
  
@@ -41,6 +43,9 @@ export default function EditProfile(props) {
   console.log(profile);
   return (
     <div className="p-8 flex flex-col gap-4 place-items-center">
+      <Head>
+        <title>{`Profile ${props.id}`}</title>
+      </Head>
       <div className="grow flex">
         <Button
           onClick={() => {

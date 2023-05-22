@@ -10,6 +10,7 @@ import { getSiswaByKelas, getKelas } from "@/components/Hooks/Murid";
 import { API_KELAS } from "@/components/Hooks/Murid";
 import checkRole from "@/components/Helper/CheckRole";
 import CardMatpelKelas from "@/components/CardMatpelKelas";
+import Head from "next/head";
 
 export default function detailKelas(props) {
   const router = useRouter();
@@ -22,6 +23,9 @@ export default function detailKelas(props) {
   
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
+      <Head>
+        <title>{`Detail Kelas`}</title>
+      </Head>
       <div>
         <img width={250} height={250} src="/assets/PASTrack.svg" />
       </div>

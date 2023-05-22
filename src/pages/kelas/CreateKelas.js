@@ -13,6 +13,7 @@ import checkRole from "@/components/Helper/CheckRole";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
 import { getListSemester } from "@/components/Hooks/Semester";
+import Head from "next/head";
 
 // const semester = [
 //   { id: 1, nama: "GANJIL" },
@@ -25,6 +26,9 @@ export default function CreateKelas(props) {
   console.log(props.list_guru);
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Create Kelas`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Buat Kelas</H3>
       </div>

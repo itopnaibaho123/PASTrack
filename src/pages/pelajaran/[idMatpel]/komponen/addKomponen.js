@@ -9,10 +9,16 @@ import checkRole from "@/components/Helper/CheckRole";
 import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { addNewKomponen } from "@/components/Hooks/Komponen";
 import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
+
+
 export default function addKomponen(props) {
   const router = useRouter();
   return (
     <div>
+      <Head>
+        <title>{`Page Add Komponen`}</title>
+      </Head>
       <Button onClick={() => router.back()}>Back</Button>
       <FormModalContextProvider>
         <FormKomponen

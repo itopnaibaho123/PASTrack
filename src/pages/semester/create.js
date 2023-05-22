@@ -9,16 +9,20 @@ import Button from "@/components/Button";
 import { H3 } from "@/components/Typography";
 import Input from "@/components/Input";
 import EditProfileForm from "@/components/Form/EditProfileForm";
+import Head from "next/head";
 
 const typeSemester = [
-  { "semester": "Genap", "value": false },
-  { "semester": "Ganjil", "value": true },
+  { semester: "Genap", value: false },
+  { semester: "Ganjil", value: true },
 ];
 
 export default function create() {
   const router = useRouter();
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Create Semester`}</title>
+      </Head>
       <div className="flex flex-col flex-wrap place-items-center">
         <Button variant="ghost" onClick={() => router.back()}>
           Back
@@ -59,14 +63,14 @@ export default function create() {
             label={"Awal Tahun Ajaran"}
             name={"awalTahunAjaran"}
             placeholder="TAwal Tahun Ajaran"
-            type= "date"
+            type="date"
             required
           />
           <Input
             label={"Akhir Tahun Ajaran"}
             name={"akhirTahunAjaran"}
             placeholder="Akhir Tahun Ajaran"
-            type= "date"
+            type="date"
             required
           />
           <DropdownSemester
@@ -76,8 +80,7 @@ export default function create() {
             required
           >
             {typeSemester}
-            </DropdownSemester>
-          
+          </DropdownSemester>
         </EditProfileForm>
       </FormModalContextProvider>
     </div>

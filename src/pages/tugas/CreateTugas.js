@@ -8,11 +8,15 @@ import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { postTugas } from "@/components/Hooks/Tugas";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function CreatePostinganTugas() {
   const router = useRouter()
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Create Tugas`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Buat Postingan Tugas</H3>
       </div>

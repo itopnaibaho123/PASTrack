@@ -6,11 +6,15 @@ import { B, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 import React from "react";
 import Button from "@/components/Button";
+import Head from "next/head";
 
 export default function Guru() {
   const router = useRouter();
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Register Guru`}</title>
+      </Head>
       <div className="flex flex-col flex-wrap place-items-center">
         <Button variant="ghost" onClick={() => router.back()}>
           Back

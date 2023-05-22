@@ -12,6 +12,7 @@ import { PEMINATAN } from "@/components/Hooks/Peminatan";
 import { getListPeminatan } from "@/components/Hooks/Peminatan";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
+import Head from "next/head";
 
 const semester = [
   { id: 1, nama: "GANJIL" },
@@ -24,6 +25,9 @@ export default function CreatePelajaran(props) {
 
   return (
     <div>
+      <Head>
+        <title>{`Create Pelajaran`}</title>
+      </Head>
       <FormModalContextProvider>
         <FormCreateMataPelajaran
           handleSubmit={async (formData, setFormData) => {

@@ -33,6 +33,7 @@ import {
 
 import { useCookie } from "@/components/Hooks/useCookie";
 import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
 
 ChartJS.register(
   CategoryScale,
@@ -169,6 +170,9 @@ export default function dashboard(props) {
     dashboardTitle = "DASHBOARD GURU";
     return (
       <div className="ml-auto mr-auto">
+        <Head>
+          <title>{`dashboard ${props.role}`}</title>
+        </Head>
         <h2 className="text-center my-4 text-2xl font-bold">
           {dashboardTitle}
         </h2>
@@ -315,10 +319,14 @@ export default function dashboard(props) {
     );
   } else if (props.role === "MURID") {
     dashboardTitle = "DASHBOARD MURID";
-    const kelasRank = 5; // contoh nilai ranking kelas
-    const angkatanRank = 10; // contoh nilai ranking angkatan
+    const kelasRank = props.ranking.rankingKelasCurrentSemester; // contoh nilai ranking kelas
+    const angkatanRank = props.ranking.rankingAngkatanCurrentSemester; // contoh nilai ranking angkatan
+    const angkatanRankAllSemester = props.ranking.rankingAngkatanAllSemester;
     return (
       <div className="ml-auto mr-auto">
+        <Head>
+          <title>{`dashboard ${props.role}`}</title>
+        </Head>
         <h2 className="text-center my-4 text-2xl font-bold">
           {dashboardTitle}
         </h2>
@@ -337,6 +345,14 @@ export default function dashboard(props) {
                 <h3 className="text-xl font-medium mb-4">Ranking Angkatan</h3>
                 <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-green-200">
                   {angkatanRank}
+                </div>
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+              <div className="bg-white rounded-lg shadow-md p-5">
+                <h3 className="text-xl font-medium mb-4">Ranking Angkatan Setiap Semester</h3>
+                <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-green-200">
+                  {angkatanRankAllSemester}
                 </div>
               </div>
             </div>
@@ -396,5 +412,12 @@ export async function getServerSideProps(context) {
     };
   } else if (role === "MURID") {
     const ranking = await getAllRank();
+    return {
+      props: {
+        role: role,
+        ranking: ranking,
+        token: token
+      }
+    }
   }
 }

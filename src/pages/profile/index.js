@@ -8,6 +8,9 @@ import Button from "@/components/Button";
 import Table from "@/components/Table";
 import TableHead from "@/components/Table/TableHead";
 import TableBody from "@/components/Table/TableBody";
+import Head from "next/head";
+
+
 export default function profile(props) {
   const router = useRouter();
   // const { id } = router.query;
@@ -38,6 +41,9 @@ export default function profile(props) {
   }, []);
   return (
     <div className="p-8 flex flex-col gap-4 place-items-center">
+      <Head>
+        <title>{`Detail User`}</title>
+      </Head>
       <div className="grow flex">
         <H3>Detail User</H3>
       </div>

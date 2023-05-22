@@ -9,12 +9,16 @@ import Button from "@/components/Button";
 import { getListAngkatan } from "@/components/Hooks/Angkatan";
 import checkRole from "@/components/Helper/CheckRole";
 import Select from "@/components/DropDown/Select";
+import Head from "next/head";
 
 export default function Siswa(props) {
   const router = useRouter();
   console.log(props.angkatan)
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Register Siswa`}</title>
+      </Head>
       <div className="flex flex-col flex-wrap place-items-center">
         <Button variant="ghost" onClick={() => router.back()}>
           Back

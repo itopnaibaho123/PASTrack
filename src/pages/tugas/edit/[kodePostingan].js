@@ -9,20 +9,24 @@ import { useRouter } from "next/router";
 import { getCookie } from "@/components/Helper/cookies";
 import { getTugas, updateTugas } from "@/components/Hooks/Tugas";
 import checkRole from "@/components/Helper/CheckRole";
-
+import Head from "next/head";
 /* untuk edit postingan tugas */
 export default function ubahTugas(props) {
   const router = useRouter();
   return (
-        <div>
-          <FormModalContextProvider>
-            <FormCreatePostinganTugas handleSubmit={async (formData, setFormData) => {
+    <div>
+      <Head>
+        <title>{`Detail Tugas`}</title>
+      </Head>
+      <FormModalContextProvider>
+        <FormCreatePostinganTugas
+          handleSubmit={async (formData, setFormData) => {
             try {
               console.log(formData);
               const res = await updateTugas(
                 `${POSTINGAN_TUGAS}${props.kodePostingan}`,
                 formData,
-                getCookie('token')
+                getCookie("token")
               );
               console.log(res);
               if (res.ok) {
@@ -33,42 +37,42 @@ export default function ubahTugas(props) {
             } finally {
               setFormData({});
             }
-          }}>
-              <Input
-                type="text"
-                label={"Judul"}
-                name={"judulPostingan"}
-                placeholder={"Judul Postingan Tugas"}
-                inputvalue={props.data["judulPostingan"]}
-                required
-              />
-              <Input
-                label={"Mata Pelajaran"}
-                name={"mataPelajaran"}
-                placeholder={"Mata Pelajaran Terkait"}
-                inputvalue={props.data["mataPelajaran"]}
-                required
-              />
-              <Input
-                type="date-time"
-                label={"Tanggal"}
-                name={"tanggalDeadline"}
-                inputvalue={props.data["tanggalDeadline"]}
-                required
-              />
-              <Textarea
-                label={"Deskripsi"}
-                name={"deskripsi"}
-                placeholder={"Deskripsi Penugasan"}
-                inputvalue={props.data["deskripsi"]}
-                required
-              />
-            </FormCreatePostinganTugas>
-          </FormModalContextProvider>
-        </div>
-      );
+          }}
+        >
+          <Input
+            type="text"
+            label={"Judul"}
+            name={"judulPostingan"}
+            placeholder={"Judul Postingan Tugas"}
+            inputvalue={props.data["judulPostingan"]}
+            required
+          />
+          <Input
+            label={"Mata Pelajaran"}
+            name={"mataPelajaran"}
+            placeholder={"Mata Pelajaran Terkait"}
+            inputvalue={props.data["mataPelajaran"]}
+            required
+          />
+          <Input
+            type="date-time"
+            label={"Tanggal"}
+            name={"tanggalDeadline"}
+            inputvalue={props.data["tanggalDeadline"]}
+            required
+          />
+          <Textarea
+            label={"Deskripsi"}
+            name={"deskripsi"}
+            placeholder={"Deskripsi Penugasan"}
+            inputvalue={props.data["deskripsi"]}
+            required
+          />
+        </FormCreatePostinganTugas>
+      </FormModalContextProvider>
+    </div>
+  );
 }
-
 
 export async function getServerSideProps(context) {
   // context.req.query
@@ -106,4 +110,3 @@ export async function getServerSideProps(context) {
     };
   }
 }
-    
