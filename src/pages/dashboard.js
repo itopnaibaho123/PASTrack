@@ -28,6 +28,7 @@ import HistogramNilaiAngkatan from "@/components/Dashboard/HistogramNilaiAngkata
 import {
   getAverageScorePerAngkatan,
   getAverageScorePerMatpel,
+  getListDataHisto,
   getRank,
 } from "@/components/Hooks/DashboardGuru";
 
@@ -288,6 +289,7 @@ export default function dashboard(props) {
                       <tr>
                         <th className="px-4 py-2">Nama Siswa</th>
                         <th className="px-4 py-2">Ranking</th>
+                        <th className="px-4 py-2">Average Score</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -298,6 +300,7 @@ export default function dashboard(props) {
                               {student["student"]["nama"]}
                             </td>
                             <td className="border px-4 py-2">{student["ranking"]}</td>
+                            <td className="border px-4 py-2">{student["averageScore"]}</td>
                           </tr>
                         ))}
                     </tbody>
@@ -411,6 +414,7 @@ export async function getServerSideProps(context) {
       token
     );
     const dataAverageScorePerAngkatan = await getAverageScorePerAngkatan(token);
+    // const dataDistribusi = await getListDataHisto(4, token);
 
     return {
       props: {
