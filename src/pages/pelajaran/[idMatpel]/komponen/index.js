@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Table from "@/components/Table";
-import TableBody from "@/components/Table/TableBody";
+import TableBodyKomponen from "@/components/Table/TableBodyKomponen";
 import TableHead from "@/components/Table/TableHead";
 import { B, H3, P } from "@/components/Typography";
 import { useRouter } from "next/router";
@@ -21,7 +21,6 @@ export default function index(props) {
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
       <div>
-      <img width={600} height={600} src="/assets/PASTrack.svg"/>
       </div>
       <div className="flex justify-center gap-3">
         <Button onClick={() => router.back()}>Back</Button>
@@ -38,7 +37,7 @@ export default function index(props) {
       <div className="w-fit bg-background rounded-xl">
         <Table>
           <TableHead cols={["Komponen Penilaian", "Bobot Penilaian"]} />
-          <TableBody
+          <TableBodyKomponen
             cols={["title", "bobot"]}
             komponen={true}
             data={props.komponen}

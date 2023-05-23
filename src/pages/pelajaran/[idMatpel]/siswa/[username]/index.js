@@ -1,7 +1,7 @@
 import FormModalContextProvider from "@/components/context/FormModalContext";
 import FormKomponen from "@/components/Form/FormKomponen";
 import Table from "@/components/Table";
-import TableBody from "@/components/Table/TableBody";
+import TableBodyKomponen from "@/components/Table/TableBodyKomponen";
 import TableHead from "@/components/Table/TableHead";
 import React from "react";
 import Button from "@/components/Button";
@@ -27,6 +27,7 @@ export default function komponen(props) {
     "kalkulasiBobotNilai",
   ];
   const router = useRouter();
+  console.log(props.komponen)
 
   if(props.role === "MURID"){
     return (
@@ -39,7 +40,7 @@ export default function komponen(props) {
         <div className="bg-background rounded-xl w-fit">
           <Table>
             <TableHead detailUser={true} cols={columnsKomponen}/>
-            <TableBody
+            <TableBodyKomponen
               cols={columnsForIterate}
               data={props.komponen}
               detailUser={true}
@@ -59,7 +60,7 @@ export default function komponen(props) {
         <div className="bg-background rounded-xl w-fit">
           <Table>
             <TableHead cols={columnsKomponen} studentScore={true} />
-            <TableBody
+            <TableBodyKomponen
               cols={columnsForIterate}
               studentScore={true}
               data={props.komponen}
@@ -73,7 +74,7 @@ export default function komponen(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context, ["GURU"]);
+  const authentications = checkRole(context, ["GURU", "MURID"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -84,7 +85,7 @@ export async function getServerSideProps(context) {
   }
   const { role, token } = context.req.cookies;
   if (authentications.rolesTrue) {
-    if (role === "GURU") {
+    if (role === "GURU", "MURID") {
       const komponen = await getListKomponenSiswa(
         `${KOMPONENSISWA}${context.query.idMatpel}/siswa/${context.query.username}`,
         token

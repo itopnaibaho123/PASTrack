@@ -13,8 +13,7 @@ export default function index(props) {
     <>
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-col text-center items-center gap-4">
-          <H3>list murid mata pelajaran Matematika</H3>
-          <img width={600} height={300} src="/assets/PASTrack.svg"/>
+          <H3>Daftar Murid Mata Pelajaran</H3>
           <div className="flex justify-center gap-3">
             <Button onClick={() => router.back()}>Back</Button>
             <Button

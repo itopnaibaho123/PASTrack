@@ -7,6 +7,7 @@ import Textarea from "@/components/Textarea";
 import { MATPEL_GURU } from "@/components/Hooks/Matpel";
 import { postMatpel } from "@/components/Hooks/Matpel";
 import { getCookie } from "@/components/Helper/cookies";
+import { H1, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 import { PEMINATAN } from "@/components/Hooks/Peminatan";
 import { getListPeminatan } from "@/components/Hooks/Peminatan";
@@ -24,6 +25,9 @@ export default function CreatePelajaran(props) {
 
   return (
     <div>
+      <div className="flex flex-col text-center items-center py-4">
+        <H3>Buat Mata Pelajaran</H3>
+      </div>
       <FormModalContextProvider>
         <FormCreateMataPelajaran
           handleSubmit={async (formData, setFormData) => {
@@ -60,7 +64,7 @@ export default function CreatePelajaran(props) {
             required
           />
           <Select
-            label={"peminatan"}
+            label={"Peminatan"}
             name={"namaPeminatan"}
             placeholder="id"
           >

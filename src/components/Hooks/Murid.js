@@ -9,6 +9,8 @@ const API_ROUTE = process.env.NEXT_PUBLIC_API_ROUTE;
 export const API_KELAS = API_ROUTE + "api/kelas/";
 export const GET_ALL_SISWA = API_KELAS + "allSiswa";
 export const ADD_SISWA_TO_KELAS = API_KELAS + "addMurid/";
+export const KLS_MURID = API_ROUTE + "api/kelas/siswa/allKelas/"
+export const CURRENT_KLS_MURID = API_ROUTE + "api/kelas/siswa/currentClass/"
 
 const getAllSiswa = async (url, token) => {
   const response = await axios.get(url, {
@@ -55,4 +57,27 @@ const getKelas = async (url, token) => {
   return data;
 };
 
-export { getAllSiswa, addSiswaToKelas, getSiswaByKelas, getKelas };
+
+const getCurrentKelasMurid = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+const getAllKelasByMurid = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+export { getAllSiswa, addSiswaToKelas, getSiswaByKelas, getKelas, getCurrentKelasMurid, getAllKelasByMurid };

@@ -9,11 +9,18 @@ import checkRole from "@/components/Helper/CheckRole";
 import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { addNewKomponen } from "@/components/Hooks/Komponen";
 import { getCookie } from "@/components/Helper/cookies";
+import { H1, H3 } from "@/components/Typography";
+
 export default function addKomponen(props) {
   const router = useRouter();
   return (
     <div>
+      <div className="flex flex-col text-center items-center py-4">
+        <H3>Buat Komponen Penilaian</H3>
+      </div>
+      <div className="flex justify-center">
       <Button onClick={() => router.back()}>Back</Button>
+      </div>
       <FormModalContextProvider>
         <FormKomponen
           handleSubmit={async (formData, setFormData) => {
@@ -69,6 +76,7 @@ export default function addKomponen(props) {
     </div>
   );
 }
+
 export async function getServerSideProps(context) {
   // context.req.query
   const authentications = checkRole(context, ["GURU"]);
