@@ -46,8 +46,9 @@ const getAllRank = async (username, token) => {
     return data;
   };
   const getListPerkembanganNilai = async (username,idPeminatan, token) => {
-    const APIS = `${DASHBOARD}${username}/perkembangan?namaPeminatan=${idPeminatan}`
-   
+    const APIS = `${DASHBOARD}${username}/perkembangan/${idPeminatan}`
+    console.log(APIS)
+    console.log(token)
     const response = await axios.get(APIS,{
       headers: {
         "Content-Type": "application/json",

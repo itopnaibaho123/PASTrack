@@ -160,10 +160,10 @@ export default function dashboard(props) {
       console.log(e);
     }
   }
-  async function fetchNilaiPeminatan(username,angkatan) {
+  async function fetchNilaiPeminatan(username,peminatan) {
     try {
-      console.log(getCookie("token"))
-      const dataNilai = await getListPerkembanganNilai(username, angkatan, getCookie("token"));
+ 
+      const dataNilai = await getListPerkembanganNilai(username, peminatan, getCookie("token"));
       const unpermitLabelPeminatan = [];
       const unpermitValuePeminatan = [];
       console.log(dataNilai)
