@@ -72,7 +72,7 @@ export default function ubahTugas(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context, ["ADMIN"]);
+  const authentications = checkRole(context, ["ADMIN", "GURU"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -83,7 +83,7 @@ export async function getServerSideProps(context) {
   }
   const { role, token } = context.req.cookies;
   if (authentications.rolesTrue) {
-    if (role === "ADMIN") {
+    if (role === "ADMIN", "GURU") {
       const postingan = await getTugas(
         `${POSTINGAN_TUGAS}${context.query.kodePostingan}`,
         token
