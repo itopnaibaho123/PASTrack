@@ -17,4 +17,46 @@ const getAllRank = async (username, token) => {
     return data;
   };
 
-export {getAllRank}
+
+  const getPencapaianNilai = async (username, token) => {
+    const APIS = `${DASHBOARD}${username}/avg-linechart`
+   
+    const response = await axios.get(APIS,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    const { data } = response;
+    return data;
+  };
+
+  const getPeminatanMurid = async (username, token) => {
+    const APIS = `${DASHBOARD}peminatan/${username}`
+   
+    const response = await axios.get(APIS,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    const { data } = response;
+    return data;
+  };
+  const getListPerkembanganNilai = async (username,idPeminatan, token) => {
+    const APIS = `${DASHBOARD}${username}/perkembangan?namaPeminatan=${idPeminatan}`
+   
+    const response = await axios.get(APIS,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    const { data } = response;
+    return data;
+  };
+
+export {getAllRank, getPencapaianNilai, getPeminatanMurid, getListPerkembanganNilai}

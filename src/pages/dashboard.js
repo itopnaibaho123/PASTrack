@@ -3,9 +3,12 @@ import checkRole from "@/components/Helper/CheckRole";
 import { P, B, H2, H3 } from "@/components/Typography";
 import Button from "@/components/Button";
 import { getListAngkatan } from "@/components/Hooks/Angkatan";
-import { getAllRank } from "@/components/Hooks/DashboardSiswa";
-
-let dashboardTitle = "";
+import {
+  getAllRank,
+  getListPerkembanganNilai,
+  getPencapaianNilai,
+  getPeminatanMurid
+} from "@/components/Hooks/DashboardSiswa";
 
 import {
   Chart as ChartJS,
@@ -20,11 +23,7 @@ import {
 } from "chart.js";
 
 import { Line, Bar } from "react-chartjs-2";
-import FormModalContextProvider, {
-  FormModalContext,
-} from "@/components/context/FormModalContext";
-import SelectDashboard from "@/components/DropDown/SelectDashboard";
-import HistogramNilaiAngkatan from "@/components/Dashboard/HistogramNilaiAngkatan";
+
 import {
   getAverageScorePerAngkatan,
   getAverageScorePerMatpel,
@@ -32,9 +31,13 @@ import {
   getRank,
 } from "@/components/Hooks/DashboardGuru";
 
-import { useCookie } from "@/components/Hooks/useCookie";
 import { getCookie } from "@/components/Helper/cookies";
 import Head from "next/head";
+
+
+let dashboardTitle = "";
+
+
 
 ChartJS.register(
   CategoryScale,
@@ -48,6 +51,7 @@ ChartJS.register(
 );
 
 export const optionsBar = {
+  tension: 0.4,
   responsive: true,
   plugins: {
     title: {
@@ -69,13 +73,6 @@ export const options = {
     },
   },
 };
-// Data untuk tabel ranking siswa
-const studentRanking = [
-  { name: "Chris", class: "IPA 2", rank: 1 },
-  { name: "Dyta", class: "IPA 2", rank: 2 },
-  { name: "Viona", class: "IPA 2", rank: 3 },
-  { name: "Bina", class: "IPA 2", rank: 4 },
-];
 
 export default function dashboard(props) {
   const [lblavgAngkatan, setlblAvgAngkatan] = useState([]);
@@ -86,9 +83,13 @@ export default function dashboard(props) {
   const [rank, setRank] = useState();
   const [angkatan, setAngkatan] = useState(1);
   const [angkatanDist, setAngkatanDist] = useState(1);
-  const [distribusi, setDistribusi] = useState({});
   const [distribusiLabel, setDistribusiLabel] = useState([]);
   const [distribusiValue, setDistribusiValue] = useState([]);
+  const [averageLineLabel, setAverageLineLabel] = useState([]);
+  const [averageLineValue, setAverageLineValue] = useState([]);
+  const [peminatan, setPeminatan] = useState(props.peminatan !== undefined ? props.peminatan[0]['id'] : '');
+  const [peminatanLineLabel, setPeminatanLineLabel] = useState([]);
+  const [peminatanLineValue, setpeminatanLineValue] = useState([]);
 
   useEffect(() => {
     if (props.role === "GURU") {
@@ -119,12 +120,20 @@ export default function dashboard(props) {
       setlblAvgMatpel(permittedAvgLabelMatpel);
       setAvgMatpel(permittedAvgMatpel);
     } else if (props.role === "MURID") {
+      const permittedAvgLabel = [];
+      const permittedAvgValue = [];
+
+      for (let i = 0; i < props.pencapaianNilai.length; i++) {
+        permittedAvgLabel.push(props.pencapaianNilai[i]["semester"]);
+        permittedAvgValue.push(props.pencapaianNilai[i]["avgScore"]);
+      }
+      setAverageLineLabel(permittedAvgLabel);
+      setAverageLineValue(permittedAvgValue);
     }
   }, []);
 
   async function fetchRank(page) {
     try {
-     
       const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
     } catch (e) {
@@ -134,24 +143,37 @@ export default function dashboard(props) {
 
   async function fetchDistribusi(angkatan) {
     try {
-      
       const dataDistribusi = await getListDataHisto(
         angkatan,
         getCookie("token")
       );
-      const unpermitLabelDistribusi = []
-      const unpermitValueDistribusi = []
-      for (const key in dataDistribusi){
-          
-          unpermitLabelDistribusi.push(key)
-          unpermitValueDistribusi.push(dataDistribusi[key])
+      const unpermitLabelDistribusi = [];
+      const unpermitValueDistribusi = [];
+      for (const key in dataDistribusi) {
+        unpermitLabelDistribusi.push(key);
+        unpermitValueDistribusi.push(dataDistribusi[key]);
       }
 
-      setDistribusiLabel(unpermitLabelDistribusi)
-      setDistribusiValue(unpermitValueDistribusi)
+      setDistribusiLabel(unpermitLabelDistribusi);
+      setDistribusiValue(unpermitValueDistribusi);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function fetchNilaiPeminatan(username,angkatan) {
+    try {
+      console.log(getCookie("token"))
+      const dataNilai = await getListPerkembanganNilai(username, angkatan, getCookie("token"));
+      const unpermitLabelPeminatan = [];
+      const unpermitValuePeminatan = [];
+      console.log(dataNilai)
+      for (let i = 0; i < dataNilai.length; i++) {
+        unpermitLabelPeminatan.push(dataNilai[i]["semester"]);
+        unpermitValuePeminatan.push(dataNilai[i]["nilaiAkhir"]);
+      }
 
-      
-
+      setPeminatanLineLabel(unpermitLabelPeminatan);
+      setpeminatanLineValue(unpermitValuePeminatan);
     } catch (e) {
       console.log(e);
     }
@@ -166,9 +188,14 @@ export default function dashboard(props) {
   }, [angkatan]);
 
   useEffect(() => {
+    
     fetchDistribusi(angkatanDist);
   }, [angkatanDist]);
-  
+
+  useEffect(() => {
+    fetchNilaiPeminatan(props.username, peminatan)
+  }, [peminatan]);
+
   if (props.role === "GURU") {
     dashboardTitle = "DASHBOARD GURU";
     return (
@@ -216,11 +243,9 @@ export default function dashboard(props) {
                         order: 0,
                         label: "Garis Distribusi Nilai Angkatan",
                         data: distribusiValue,
-                        type: 'line',
-                        backgroundColor: "rgb(255,213,3)",
+                        type: "line",
+                        backgroundColor: "rgb(255,213,3 )",
                         borderColor: "rgba(255,213,3,1)",
-                        
-                        
                       },
                       {
                         order: 1,
@@ -229,7 +254,6 @@ export default function dashboard(props) {
                         borderColor: "rgb(14, 49, 120)",
                         backgroundColor: "rgba(14, 49, 120, 1)",
                       },
-                      
                     ],
                   }}
                 />
@@ -253,7 +277,6 @@ export default function dashboard(props) {
                           borderColor: "rgb(255,99,132)",
                           backgroundColor: "rgba(255,213,3,1)",
                         },
-                        
                       ],
                     }}
                   />
@@ -359,6 +382,7 @@ export default function dashboard(props) {
       </div>
     );
   } else if (props.role === "MURID") {
+    
     dashboardTitle = "DASHBOARD MURID";
     const kelasRank = props.ranking.rankingKelasCurrentSemester; // contoh nilai ranking kelas
     const angkatanRank = props.ranking.rankingAngkatanCurrentSemester; // contoh nilai ranking angkatan
@@ -392,8 +416,10 @@ export default function dashboard(props) {
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
                 <h3 className="text-xl font-medium mb-4">
-                  Ranking Angkatan Setiap Semester
-                </h3>
+                  Ranking di Semester Ini
+                  
+                </h3> 
+                
                 <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-yellow-200">
                   {angkatanRankAllSemester}
                 </div>
@@ -401,17 +427,67 @@ export default function dashboard(props) {
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
-                <h3 className="text-xl font-medium mb-4">Line Chart 1</h3>
+                <h3 className="text-xl font-medium mb-4">Rata-Rata Pencapaian Mata Pelajaran</h3>
+                <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
+                  <label>Peminatan</label>
+                  <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+                    <select
+                      placeholder="Try"
+                      className="px-3 py-1.5 flex-1 !outline-none"
+                      value={peminatan}
+                      onChange={(e) => {
+                        setPeminatan(e.target.value);
+                      }}
+                    >
+                      {props.peminatan.map((item, index) => {
+                        return (
+                          <option value={item["id"]} key={index}>
+                            {item["namaPeminatan"]}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="h-40">
-                  <Line options={options} data={data2} />
+                  <Line
+                    options={options}
+                    data={{
+                      labels: peminatanLineLabel,
+                      datasets: [
+                        {
+                          label: "Perkembangan Nilai Per Semester",
+                          data: peminatanLineValue,
+                          backgroundColor: "rgb(255,213,3 )",
+                          borderColor: "rgba(255,213,3,1)",
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
-                <h3 className="text-xl font-medium mb-4">Line Chart 2</h3>
+                <h3 className="text-xl font-medium mb-4">
+                  Rata-Rata Pencapaian Semester
+                </h3>
+
                 <div className="h-40">
-                  <Line options={options} data={data2} />
+                  <Line
+                    options={options}
+                    data={{
+                      labels: averageLineLabel,
+                      datasets: [
+                        {
+                          label: "Perkembangan Nilai Per Semester",
+                          data: averageLineValue,
+                          backgroundColor: "rgb(255,213,3 )",
+                          borderColor: "rgba(255,213,3,1)",
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -456,11 +532,16 @@ export async function getServerSideProps(context) {
     };
   } else if (role === "MURID") {
     const ranking = await getAllRank(username, token);
+    const pencapaianNilai = await getPencapaianNilai(username, token);
+    const peminatan = await getPeminatanMurid(username, token);
     return {
       props: {
         role: role,
         ranking: ranking,
         token: token,
+        pencapaianNilai: pencapaianNilai,
+        peminatan: peminatan,
+        username: username,
       },
     };
   }
