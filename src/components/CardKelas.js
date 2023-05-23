@@ -16,7 +16,7 @@ export default function ({
       <div className="py-5">
         <H3>Kelas: {namaKelas}</H3>
       </div>
-      <P>Semester: {semester}</P>
+      <P>{semester}</P>
       <P>Wali Kelas: {namaGuru}</P>
       <div className="py-4">
          <Button onClick={()=> router.push(`${router.asPath}/${id}`)}>Detail Kelas</Button>

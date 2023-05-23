@@ -17,8 +17,7 @@ export default function index(props) {
         <title>{`Mata Pelajaran`}</title>
       </Head>
         <div className="flex flex-col text-center items-center gap-4">
-          <H3>list murid mata pelajaran Matematika</H3>
-          <img width={600} height={300} src="/assets/PASTrack.svg"/>
+          <H3>Daftar Murid Mata Pelajaran</H3>
           <div className="flex justify-center gap-3">
             <Button onClick={() => router.back()}>Back</Button>
             <Button

@@ -2,17 +2,15 @@ import { useRouter } from "next/router";
 import { H1, H3 } from "@/components/Typography";
 import React from "react";
 import Button from "@/components/Button";
-import Table from "@/components/Table";
-import TableBody from "@/components/Table/TableBody";
-import TableHead from "@/components/Table/TableHead";
 import { getMatpelByKelas } from "@/components/Hooks/Matpel";
 import { getSiswaByKelas, getKelas } from "@/components/Hooks/Murid";
 import { API_KELAS } from "@/components/Hooks/Murid";
 import checkRole from "@/components/Helper/CheckRole";
 import CardMatpelKelas from "@/components/CardMatpelKelas";
-import Head from "next/head";
+import { PEMINATAN } from "@/components/Hooks/Peminatan";
+import { getListPeminatan } from "@/components/Hooks/Peminatan";
 
-export default function detailKelas(props) {
+export default function detailKelasWalas(props) {
   const router = useRouter();
   const id = router.query.id;
 
@@ -64,7 +62,7 @@ export default function detailKelas(props) {
 }
 
 export async function getServerSideProps(context) {
-  const authentications = checkRole(context, ["ADMIN"]);
+  const authentications = checkRole(context, ["ADMIN", "GURU"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -76,7 +74,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if (role === "ADMIN") {
+    if (role === "ADMIN", "GURU") {
       const students = await getSiswaByKelas(
         `${API_KELAS}${context.query.id}/siswa`,
         token
@@ -86,17 +84,19 @@ export async function getServerSideProps(context) {
         token
       );
       const kelas = await getKelas(`${API_KELAS}${context.query.id}`, token);
-      
+      const peminatan = await getListPeminatan(`${PEMINATAN}`, token);
+
       return {
         props: {
           role: role,
           students: students,
           matpel: matpel,
           kelas: kelas,
+          peminatan: peminatan,
 		      username: username
         },
       };
-    } else if (role === "MURID") {
+    } else if (role === "MURID", "GURU") {
       const students = await getSiswaByKelas(
         `${API_KELAS}${context.query.id}/siswa`,
         token

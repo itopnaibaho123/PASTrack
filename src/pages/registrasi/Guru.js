@@ -5,22 +5,24 @@ import Input from "@/components/Input";
 import { B, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 import React from "react";
+import { FaChevronLeft } from "react-icons/fa";
 import Button from "@/components/Button";
 import Head from "next/head";
 
 export default function Guru() {
   const router = useRouter();
+  const handleBack = () => {
+    router.push("/profile/listuser");
+  };
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-      <Head>
-        <title>{`Register Guru`}</title>
-      </Head>
-      <div className="flex flex-col flex-wrap place-items-center">
-        <Button variant="ghost" onClick={() => router.back()}>
-          Back
-        </Button>
-        <H3>Register Guru</H3>
-      </div>
+    <div className="flex justify-between items-center mb-4">
+      <Button variant="ghost" onClick={handleBack}>
+        <FaChevronLeft className="mr-2" />
+      </Button>
+      <H3>Register Siswa</H3>
+      <div style={{ width: "32px" }}></div> {/* Spacing for alignment */}
+    </div>
       <FormModalContextProvider>
         <RegisterGuruForm
           onClick={() => router.back()}
@@ -58,13 +60,13 @@ export default function Guru() {
             required
           />
           <Input
-            label={"password"}
+            label={"Password"}
             name={"password"}
             placeholder="Type password"
             required
           />
           <Input
-            label={"nama"}
+            label={"Nama"}
             name={"nama"}
             placeholder="Type name"
             required

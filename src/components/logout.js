@@ -14,7 +14,7 @@ export default function Logout({ isVisible, setIsVisible }) {
     <div
     >
         <Button onClick={logout}>
-            logout
+            Logout
         </Button>
 
     </div>

@@ -50,6 +50,8 @@ const getAllMatpelByKelas = async (url, token) => {
   const response = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
+      'maxContentLength': Infinity,
+      'maxBodyLength': Infinity
     },
   });
 
