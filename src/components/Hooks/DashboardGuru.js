@@ -41,9 +41,9 @@ const getListDataHisto = async (id, token) => {
     return data;
   };
 
-  const getRank = async (page, token) => {
+  const getRank = async (angkatan, page, token) => {
   
-    const response = await axios.get(`${DASHBOARD}rankingSiswa/4/${page}/5`, {
+    const response = await axios.get(`${DASHBOARD}rankingSiswa/${angkatan}/${page}/5`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -7,6 +7,7 @@ import FormCheckboxSiswa from "@/components/Form/FormCheckboxSiswa";
 import Checkbox from "@/components/Checkbox";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function SubjectAddPage(props) {
   const mataPelajaran = props.matpel;
@@ -15,6 +16,9 @@ export default function SubjectAddPage(props) {
 
   return (
     <div className="bg-white p-16">
+      <Head>
+        <title>{`Page Input Matpel`}</title>
+      </Head>
       <div className="flex justify-between items-center mb-8">
         <div className="">
           <h1 className="text-2xl font-medium">Tambah Mata Pelajaran</h1>

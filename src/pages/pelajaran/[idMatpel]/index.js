@@ -6,12 +6,16 @@ import React from "react";
 import { MATPEL_LIST_SISWA } from "@/components/Hooks/Matpel";
 import { getListSiswa } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
+import Head from "next/head";
 
 export default function index(props) {
   const router = useRouter();
   return (
     <>
       <div className="flex flex-col gap-3 p-5">
+      <Head>
+        <title>{`Mata Pelajaran`}</title>
+      </Head>
         <div className="flex flex-col text-center items-center gap-4">
           <H3>Daftar Murid Mata Pelajaran</H3>
           <div className="flex justify-center gap-3">

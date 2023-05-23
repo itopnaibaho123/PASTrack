@@ -35,8 +35,7 @@ export default function HistogramNilaiAngkatan(options, name, kategori) {
       const token = getCookie("token");
       // const username = getCookie("username")
       //   console.log(token)
-      const tempData = await getListDataHisto(1, token);
-      
+      const tempData = await getListDataHisto(id, token);
       setData(tempData);
         
     //   const labels = Object.keys(data);
@@ -62,11 +61,14 @@ export default function HistogramNilaiAngkatan(options, name, kategori) {
 
   useEffect(() => {
     // if (typeof window !== undefined) {
+      console.log(name)
       fetchData(formData[name]);
     // }
   }, [formData]);
 //   const labels = kategori
 //   const data = Object.values(data)
+
+
 
 const labels = [
     "Semester 1",

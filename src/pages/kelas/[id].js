@@ -10,6 +10,7 @@ import { getSiswaByKelas, getKelas } from "@/components/Hooks/Murid";
 import { API_KELAS } from "@/components/Hooks/Murid";
 import checkRole from "@/components/Helper/CheckRole";
 import CardMatpelKelas from "@/components/CardMatpelKelas";
+import Head from "next/head";
 
 export default function detailKelas(props) {
   const router = useRouter();

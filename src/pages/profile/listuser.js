@@ -9,6 +9,7 @@ import TableBody from "@/components/Table/TableBody";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import { H3 } from "@/components/Typography";
+import Head from "next/head";
 
 export default function list(props) {
   const router = useRouter();
@@ -23,6 +24,9 @@ export default function list(props) {
   return (
     <>
       <div className="flex flex-col p-5 place-items-center">
+      <Head>
+        <title>{`Users Page`}</title>
+      </Head>
         <div className="flex flex-col">
           <img src="/assets/PASTrack.svg" />
           <div className="flex p-4">

@@ -13,6 +13,7 @@ import {
 } from "@/components/Hooks/KomponenSiswa";
 import { getCookie } from "@/components/Helper/cookies";
 import checkRole from "@/components/Helper/CheckRole";
+import Head from "next/head";
 export default function index(props, komponen, username) {
   const [path, setPath] = useState({});
 
@@ -20,6 +21,9 @@ export default function index(props, komponen, username) {
 
   return (
     <div>
+      <Head>
+        <title>{`Edit Komponen Siswa`}</title>
+      </Head>
       <Button onClick={() => router.back()}>Back</Button>
       <FormModalContextProvider>
         <FormKomponen

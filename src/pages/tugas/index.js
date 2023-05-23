@@ -6,11 +6,15 @@ import { useRouter } from "next/router";
 import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { getAllTugas } from "@/components/Hooks/Tugas";
 import checkRole from "@/components/Helper/CheckRole";
+import Head from "next/head";
 
 export default function index(props) {
   const router = useRouter();
   return (
     <div className="flex flex-col">
+      <Head>
+        <title>{`List Tugas`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Daftar Postingan Tugas</H3>
       </div>

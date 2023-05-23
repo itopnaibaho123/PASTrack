@@ -3,6 +3,7 @@ import checkRole from "@/components/Helper/CheckRole";
 import { P, B, H2, H3 } from "@/components/Typography";
 import Button from "@/components/Button";
 import { getListAngkatan } from "@/components/Hooks/Angkatan";
+import { getAllRank } from "@/components/Hooks/DashboardSiswa";
 
 let dashboardTitle = "";
 
@@ -27,11 +28,13 @@ import HistogramNilaiAngkatan from "@/components/Dashboard/HistogramNilaiAngkata
 import {
   getAverageScorePerAngkatan,
   getAverageScorePerMatpel,
+  getListDataHisto,
   getRank,
 } from "@/components/Hooks/DashboardGuru";
 
 import { useCookie } from "@/components/Hooks/useCookie";
 import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
 
 ChartJS.register(
   CategoryScale,
@@ -66,39 +69,6 @@ export const options = {
     },
   },
 };
-
-const labels = [
-  "Semester 1",
-  "Semester 2",
-  "Semester 3",
-  "Semester 4",
-  "Semester 5",
-];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "perkembangan",
-      data: [50, 60, 55, 70, 90],
-      borderColor: "rgb(14, 49, 120)",
-      backgroundColor: "rgba(14, 49, 120, 1)",
-    },
-  ],
-};
-
-export const data2 = {
-  labels,
-  datasets: [
-    {
-      label: "perkembangan",
-      data: ["50", "60", "55", "70", "90"],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 213, 3, 1)",
-    },
-  ],
-};
-
 // Data untuk tabel ranking siswa
 const studentRanking = [
   { name: "Chris", class: "IPA 2", rank: 1 },
@@ -107,27 +77,30 @@ const studentRanking = [
   { name: "Bina", class: "IPA 2", rank: 4 },
 ];
 
-export default function dashboard({
-  role,
-  angkatan,
-  averageScoreAngkatan,
-  averageScoreMatpel,
-  token,
-}) {
+export default function dashboard(props) {
   const [lblavgAngkatan, setlblAvgAngkatan] = useState([]);
   const [avgAngkatan, setAvgAngkatan] = useState([]);
   const [lblAvgMatpel, setlblAvgMatpel] = useState([]);
   const [avgMatpel, setAvgMatpel] = useState([]);
   const [page, setPage] = useState(1);
   const [rank, setRank] = useState();
+  const [angkatan, setAngkatan] = useState(1);
+  const [angkatanDist, setAngkatanDist] = useState(1);
+  const [distribusi, setDistribusi] = useState({});
+  const [distribusiLabel, setDistribusiLabel] = useState([]);
+  const [distribusiValue, setDistribusiValue] = useState([]);
 
   useEffect(() => {
-    if (role === "GURU") {
+    if (props.role === "GURU") {
       const permittedAvgLabelAngkatan = [];
       const permittedAvgAngkatan = [];
-      for (let i = 0; i < averageScoreAngkatan.length; i++) {
-        permittedAvgLabelAngkatan.push(averageScoreAngkatan[i]["namaAngkatan"]);
-        permittedAvgAngkatan.push(averageScoreAngkatan[i]["averageScore"]);
+      for (let i = 0; i < props.averageScoreAngkatan.length; i++) {
+        permittedAvgLabelAngkatan.push(
+          props.averageScoreAngkatan[i]["namaAngkatan"]
+        );
+        permittedAvgAngkatan.push(
+          props.averageScoreAngkatan[i]["averageScore"]
+        );
       }
 
       setlblAvgAngkatan(permittedAvgLabelAngkatan);
@@ -135,11 +108,13 @@ export default function dashboard({
 
       const permittedAvgLabelMatpel = [];
       const permittedAvgMatpel = [];
-      for (let i = 0; i < averageScoreMatpel.length; i++) {
+      for (let i = 0; i < props.averageScoreMatpel.length; i++) {
         permittedAvgLabelMatpel.push(
-          averageScoreMatpel[i]["matpel"]["namaMataPelajaran"]
+          props.averageScoreMatpel[i]["matpel"]["namaMataPelajaran"]
         );
-        permittedAvgMatpel.push(averageScoreMatpel[i]["nilaiAkhirMatpel"]);
+        permittedAvgMatpel.push(
+          props.averageScoreMatpel[i]["nilaiAkhirMatpel"]
+        );
       }
       setlblAvgMatpel(permittedAvgLabelMatpel);
       setAvgMatpel(permittedAvgMatpel);
@@ -149,25 +124,58 @@ export default function dashboard({
 
   async function fetchRank(page) {
     try {
-    
-      const rankOfData = await getRank(page, getCookie("token"))
-      setRank(rankOfData)
+     
+      const rankOfData = await getRank(angkatan, page, getCookie("token"));
+      setRank(rankOfData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function fetchDistribusi(angkatan) {
+    try {
+      
+      const dataDistribusi = await getListDataHisto(
+        angkatan,
+        getCookie("token")
+      );
+      const unpermitLabelDistribusi = []
+      const unpermitValueDistribusi = []
+      for (const key in dataDistribusi){
+          
+          unpermitLabelDistribusi.push(key)
+          unpermitValueDistribusi.push(dataDistribusi[key])
+      }
+
+      setDistribusiLabel(unpermitLabelDistribusi)
+      setDistribusiValue(unpermitValueDistribusi)
+
+      
+
     } catch (e) {
       console.log(e);
     }
   }
 
   useEffect(() => {
-    fetchRank(page);
+    fetchRank(page, angkatan);
   }, [page]);
- 
-  console.log(rank)
-  console.log(averageScoreAngkatan)
-  console.log(averageScoreMatpel)
-  if (role === "GURU") {
+
+  useEffect(() => {
+    fetchRank(page, angkatan);
+  }, [angkatan]);
+
+  useEffect(() => {
+    fetchDistribusi(angkatanDist);
+  }, [angkatanDist]);
+  
+  if (props.role === "GURU") {
     dashboardTitle = "DASHBOARD GURU";
     return (
       <div className="ml-auto mr-auto">
+        <Head>
+          <title>{`dashboard ${props.role}`}</title>
+        </Head>
         <h2 className="text-center my-4 text-2xl font-bold">
           {dashboardTitle}
         </h2>
@@ -175,27 +183,56 @@ export default function dashboard({
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
-                <FormModalContextProvider>
-                  <h3 className="text-xl font-medium mb-4">
-                    Bar Chart DIstribusi Nilai Angkatan
-                  </h3>
-                  <SelectDashboard
-                    label={"Angkatan"}
-                    name={"angkatan"}
-                    placeholder="id"
-                  >
-                    {angkatan}
-                  </SelectDashboard>
-                  <div className="h-40">
-                    <HistogramNilaiAngkatan
-                      options={optionsBar}
-                      name={"angkatan"}
-                      kategori={"Distribusi Nilai Angkatan"}
-                    />
-                    {/* <Bar options={optionsBar} data={data} />
-                     */}
+                <h3 className="text-xl font-medium mb-4">
+                  Bar Chart DIstribusi Nilai Angkatan
+                </h3>
+                <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
+                  <label>Angkatan</label>
+                  <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+                    <select
+                      placeholder="Try"
+                      className="px-3 py-1.5 flex-1 !outline-none"
+                      value={angkatanDist}
+                      onChange={(e) => {
+                        setAngkatanDist(e.target.value);
+                      }}
+                    >
+                      {props.angkatan.map((item, index) => {
+                        return (
+                          <option value={item["id"]} key={index}>
+                            {item["angkatan"]}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </div>
-                </FormModalContextProvider>
+                </div>
+                <Bar
+                  options={optionsBar}
+                  data={{
+                    labels: distribusiLabel,
+                    datasets: [
+                      {
+                        order: 0,
+                        label: "Garis Distribusi Nilai Angkatan",
+                        data: distribusiValue,
+                        type: 'line',
+                        backgroundColor: "rgb(255,213,3)",
+                        borderColor: "rgba(255,213,3,1)",
+                        
+                        
+                      },
+                      {
+                        order: 1,
+                        label: "Distribusi Nilai Angkatan",
+                        data: distribusiValue,
+                        borderColor: "rgb(14, 49, 120)",
+                        backgroundColor: "rgba(14, 49, 120, 1)",
+                      },
+                      
+                    ],
+                  }}
+                />
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
@@ -216,6 +253,7 @@ export default function dashboard({
                           borderColor: "rgb(255,99,132)",
                           backgroundColor: "rgba(255,213,3,1)",
                         },
+                        
                       ],
                     }}
                   />
@@ -248,23 +286,52 @@ export default function dashboard({
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
               <div className="bg-white rounded-lg shadow-md p-5">
                 <h3 className="text-xl font-medium mb-4">Ranking Siswa</h3>
+                <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
+                  <label>Angkatan</label>
+                  <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
+                    <select
+                      placeholder="Try"
+                      className="px-3 py-1.5 flex-1 !outline-none"
+                      value={angkatan}
+                      onChange={(e) => {
+                        setAngkatan(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      {props.angkatan.map((item, index) => {
+                        return (
+                          <option value={item["id"]} key={index}>
+                            {item["angkatan"]}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="table-auto w-full">
                     <thead>
                       <tr>
                         <th className="px-4 py-2">Nama Siswa</th>
                         <th className="px-4 py-2">Ranking</th>
+                        <th className="px-4 py-2">Average Score</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {rank != null && rank.map((student, index) => (
-                        <tr key={index}>
-                          <td className="border px-4 py-2">
-                            {student["student"]["nama"]}
-                          </td>
-                          <td className="border px-4 py-2">{index + 1}</td>
-                        </tr>
-                      ))}
+                      {rank != null &&
+                        rank.map((student, index) => (
+                          <tr key={index}>
+                            <td className="border px-4 py-2">
+                              {student["student"]["nama"]}
+                            </td>
+                            <td className="border px-4 py-2">
+                              {student["ranking"]}
+                            </td>
+                            <td className="border px-4 py-2">
+                              {student["averageScore"]}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                   <div className="flex">
@@ -293,10 +360,14 @@ export default function dashboard({
     );
   } else if (props.role === "MURID") {
     dashboardTitle = "DASHBOARD MURID";
-    const kelasRank = 5; // contoh nilai ranking kelas
-    const angkatanRank = 10; // contoh nilai ranking angkatan
+    const kelasRank = props.ranking.rankingKelasCurrentSemester; // contoh nilai ranking kelas
+    const angkatanRank = props.ranking.rankingAngkatanCurrentSemester; // contoh nilai ranking angkatan
+    const angkatanRankAllSemester = props.ranking.rankingAngkatanAllSemester;
     return (
       <div className="ml-auto mr-auto">
+        <Head>
+          <title>{`dashboard ${props.role}`}</title>
+        </Head>
         <h2 className="text-center my-4 text-2xl font-bold">
           {dashboardTitle}
         </h2>
@@ -315,6 +386,16 @@ export default function dashboard({
                 <h3 className="text-xl font-medium mb-4">Ranking Angkatan</h3>
                 <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-green-200">
                   {angkatanRank}
+                </div>
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+              <div className="bg-white rounded-lg shadow-md p-5">
+                <h3 className="text-xl font-medium mb-4">
+                  Ranking Angkatan Setiap Semester
+                </h3>
+                <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-yellow-200">
+                  {angkatanRankAllSemester}
                 </div>
               </div>
             </div>
@@ -362,6 +443,7 @@ export async function getServerSideProps(context) {
       token
     );
     const dataAverageScorePerAngkatan = await getAverageScorePerAngkatan(token);
+    // const dataDistribusi = await getListDataHisto(4, token);
 
     return {
       props: {
@@ -373,5 +455,13 @@ export async function getServerSideProps(context) {
       },
     };
   } else if (role === "MURID") {
+    const ranking = await getAllRank(username, token);
+    return {
+      props: {
+        role: role,
+        ranking: ranking,
+        token: token,
+      },
+    };
   }
 }

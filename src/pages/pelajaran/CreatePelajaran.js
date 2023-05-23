@@ -13,6 +13,7 @@ import { PEMINATAN } from "@/components/Hooks/Peminatan";
 import { getListPeminatan } from "@/components/Hooks/Peminatan";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
+import Head from "next/head";
 
 const semester = [
   { id: 1, nama: "GANJIL" },

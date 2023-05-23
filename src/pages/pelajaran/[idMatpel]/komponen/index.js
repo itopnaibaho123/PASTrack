@@ -8,6 +8,9 @@ import React from "react";
 import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { getListKomponen } from "@/components/Hooks/Komponen";
 import checkRole from "@/components/Helper/CheckRole";
+import Head from "next/head";
+
+
 export default function index(props) {
   const router = useRouter();
   const kalkulasi = () => {
@@ -20,6 +23,9 @@ export default function index(props) {
   };
   return (
     <div className="flex flex-col place-items-center p-10 gap-4">
+      <Head>
+        <title>{`Page List Komponen`}</title>
+      </Head>
       <div>
       </div>
       <div className="flex justify-center gap-3">

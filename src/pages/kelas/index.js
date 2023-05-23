@@ -9,12 +9,16 @@ import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
+import Head from "next/head";
 
 export default function Index(props) {
   const router = useRouter();
   console.log(props.list_kelas)
   return (
     <div className="flex flex-col p-8">
+      <Head>
+        <title>{`Page List Kelas`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center">
         <H3>Daftar Kelas</H3>
       </div>
@@ -90,9 +94,7 @@ export async function getServerSideProps(context) {
           list_guru: list_guru,
         },
       };
-    }
-    else if(role === "MURID"){
-      
+    } else if (role === "MURID") {
     }
   } else {
     return {

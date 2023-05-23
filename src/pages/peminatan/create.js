@@ -9,11 +9,15 @@ import Button from '@/components/Button';
 import { H3 } from '@/components/Typography';
 import FormKomponen from '@/components/Form/FormKomponen';
 import { getCookie } from '@/components/Helper/cookies';
+import Head from 'next/head';
 
 export default function Create() {
   const router = useRouter();
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Page Create Peminatan`}</title>
+      </Head>
       <div className="flex flex-col flex-wrap place-items-center">
         <Button variant="ghost" onClick={() => router.back()}>
           Back

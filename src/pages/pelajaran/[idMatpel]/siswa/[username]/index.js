@@ -8,6 +8,8 @@ import Button from "@/components/Button";
 import checkRole from "@/components/Helper/CheckRole";
 import { useRouter } from "next/router";
 import { H3 } from "@/components/Typography";
+import Head from "next/head";
+
 import {
   getListKomponenSiswa,
   KOMPONENSISWA,
@@ -32,11 +34,14 @@ export default function komponen(props) {
   if(props.role === "MURID"){
     return (
       <div className="flex flex-col place-items-center p-5 gap-5">
+        <Head>
+          <title>{`Page Komponen Student`}</title>
+        </Head>
         <div className="flex gap-2">
           <Button onClick={() => router.back()}>Back</Button>
           <H3>Nilai Siswa</H3>
         </div>
-  
+
         <div className="bg-background rounded-xl w-fit">
           <Table>
             <TableHead detailUser={true} cols={columnsKomponen}/>
@@ -49,14 +54,14 @@ export default function komponen(props) {
         </div>
       </div>
     );
-  }else {
+  } else {
     return (
       <div className="flex flex-col place-items-center p-5 gap-5">
         <div className="flex gap-2">
           <Button onClick={() => router.back()}>Back</Button>
           <H3>Nilai Siswa</H3>
         </div>
-  
+
         <div className="bg-background rounded-xl w-fit">
           <Table>
             <TableHead cols={columnsKomponen} studentScore={true} />

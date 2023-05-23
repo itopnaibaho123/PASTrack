@@ -6,11 +6,15 @@ import checkRole from '@/components/Helper/CheckRole';
 import { H3 } from '@/components/Typography';
 import Button from '@/components/Button';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export default function index(props) {
   const router = useRouter()
   return (
     <div className="flex flex-col p-5">
+      <Head>
+        <title>{`Page Peminatan`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center">
         <H3>Kelola Peminatan</H3>
       </div>

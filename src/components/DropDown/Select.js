@@ -18,6 +18,11 @@ export default function Select({
       }))
       console.log(formData)
     
+    } else{
+      setFormData((previous) => ({
+        ...previous,
+        [name]: children[0][placeholder]
+      }))
     }
   }, [])
   

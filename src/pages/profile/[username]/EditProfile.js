@@ -8,6 +8,7 @@ import { getCookie } from "@/components/Helper/cookies";
 import { H1, H3 } from "@/components/Typography";
 import axios from "axios";
 import { FormModalContext } from "@/components/context/FormModalContext";
+import Head from "next/head";
 
 export default function EditProfile(props) {
   const router = useRouter();
@@ -35,6 +36,9 @@ export default function EditProfile(props) {
   
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <Head>
+        <title>{`Edit Profile ${props.id}`}</title>
+      </Head>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Edit Profile</H3>
       </div>

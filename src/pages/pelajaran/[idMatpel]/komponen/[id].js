@@ -9,10 +9,16 @@ import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { getKomponen, updateKomponen } from "@/components/Hooks/Komponen";
 import checkRole from "@/components/Helper/CheckRole";
 import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
+
+
 export default function detailKomponen(props) {
   const router = useRouter();
   return (
     <div>
+      <Head>
+        <title>{`Page Detail Komponen`}</title>
+      </Head>
       <Button onClick={router.back}>Back</Button>
       <FormModalContextProvider>
         <FormKomponen

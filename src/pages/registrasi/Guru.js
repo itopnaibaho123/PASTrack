@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import Button from "@/components/Button";
+import Head from "next/head";
 
 export default function Guru() {
   const router = useRouter();
