@@ -9,22 +9,25 @@ import Button from "@/components/Button";
 import { getListAngkatan } from "@/components/Hooks/Angkatan";
 import checkRole from "@/components/Helper/CheckRole";
 import Select from "@/components/DropDown/Select";
-import Head from "next/head";
+import { FaChevronLeft } from "react-icons/fa";
+
 
 export default function Siswa(props) {
   const router = useRouter();
   console.log(props.angkatan)
+
+  const handleBack = () => {
+    router.push("/profile/listuser");
+  };
   return (
     <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-      <Head>
-        <title>{`Register Siswa`}</title>
-      </Head>
-      <div className="flex flex-col flex-wrap place-items-center">
-        <Button variant="ghost" onClick={() => router.back()}>
-          Back
-        </Button>
-        <H3>Register Siswa</H3>
-      </div>
+    <div className="flex justify-between items-center mb-4">
+      <Button variant="ghost" onClick={handleBack}>
+        <FaChevronLeft className="mr-2" />
+      </Button>
+      <H3>Register Siswa</H3>
+      <div style={{ width: "32px" }}></div> {/* Spacing for alignment */}
+    </div>
       <FormModalContextProvider>
         <RegisterSiswaForm
           handleSubmit={async (formData, setFormData) => {
@@ -59,13 +62,13 @@ export default function Siswa(props) {
             required
           />
           <Input
-            label={"password"}
+            label={"Password"}
             name={"password"}
             placeholder="Type password"
             required
           />
           <Input
-            label={"nama"}
+            label={"Nama"}
             name={"nama"}
             placeholder="Type name"
             required
