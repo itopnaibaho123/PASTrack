@@ -203,15 +203,15 @@ export default function dashboard(props) {
         <Head>
           <title>{`dashboard ${props.role}`}</title>
         </Head>
-        <h2 className="text-center my-4 text-2xl font-bold">
+        <h2 className="text-center my-4 text-4xl font-bold">
           {dashboardTitle}
         </h2>
-        <div className="bg-gray-100 p-6 rounded-md">
+        <div className="bg-white-100 p-6 rounded-md">
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">
-                  Bar Chart DIstribusi Nilai Angkatan
+                  Bar Chart Distribusi Nilai Angkatan
                 </h3>
                 <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
                   <label>Angkatan</label>
@@ -260,7 +260,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">
                   Bar Chart Score Per Angkatan
                 </h3>
@@ -284,7 +284,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">
                   Bar Score Per Matpel
                 </h3>
@@ -307,7 +307,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">Ranking Siswa</h3>
                 <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
                   <label>Angkatan</label>
@@ -367,12 +367,14 @@ export default function dashboard(props) {
                       </Button>
                     )}
                     <p className="px-4">{page}</p>
+                    <div className="mt-4">
                     <Button
                       varian="secondary"
                       onClick={(e) => setPage(page + 1)}
                     >
                       Next
                     </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -392,13 +394,13 @@ export default function dashboard(props) {
         <Head>
           <title>{`dashboard ${props.role}`}</title>
         </Head>
-        <h2 className="text-center my-4 text-2xl font-bold">
+        <h2 className="text-center my-4 text-4xl font-bold">
           {dashboardTitle}
         </h2>
-        <div className="bg-gray-100 p-6 rounded-md">
+        <div className="bg-white-100 p-6 rounded-md">
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">Ranking Kelas</h3>
                 <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-blue-200">
                   {kelasRank}
@@ -406,7 +408,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">Ranking Angkatan</h3>
                 <div className="text-center text-3xl font-bold p-4 rounded-lg shadow-md bg-green-200">
                   {angkatanRank}
@@ -414,7 +416,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">
                   Ranking di Semester Ini
                   
@@ -426,7 +428,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">Rata-Rata Pencapaian Mata Pelajaran</h3>
                 <div className='className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`'>
                   <label>Peminatan</label>
@@ -468,7 +470,7 @@ export default function dashboard(props) {
               </div>
             </div>
             <div className="w-full md:w-1/2 xl:w-1/3 p-3">
-              <div className="bg-white rounded-lg shadow-md p-5">
+              <div className="bg-white rounded-lg p-5" style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", border: "1px solid #87CEEB" }}>
                 <h3 className="text-xl font-medium mb-4">
                   Rata-Rata Pencapaian Semester
                 </h3>

@@ -20,7 +20,7 @@ export default function detailKelas(props) {
   const matpel = props.matpel;
   const students = props.students;
   console.log(props.matpel)
-  
+
   return (
     <div className="container mx-auto p-10">
       <div className="flex justify-center items-center mb-8">
@@ -45,21 +45,37 @@ export default function detailKelas(props) {
             ))}
           </ul>
         </div>
-        <div className="bg-white p-8 rounded-lg">
-          <h1 className="text-2xl font-medium mb-4">Mata Pelajaran</h1>
-          <div className="flex flex-wrap gap-2">
-            {matpel.map((s) => (
-              <div
-                key={s.id}
-                className="bg-white border border-blue-500 px-4 py-2 rounded-lg text-emerald-500"
-              >
-                {s.namaMataPelajaran}
-              </div>
-            ))}
-          </div>
+        <div className="flex justify-between py-4">
+        <Button
+          onClick={() => router.push(`${router.asPath}/siswa/add`)}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg"
+        >
+          Tambah Siswa
+        </Button>
+      </div>
+      <div className="bg-white p-8 rounded-lg">
+        <h1 className="text-2xl font-medium mb-4">Mata Pelajaran</h1>
+        <div className="flex flex-wrap gap-2">
+          {matpel.map((s) => (
+            <div
+              key={s.id}
+              className="bg-white border border-blue-500 px-4 py-2 rounded-lg text-emerald-500"
+            >
+              {s.namaMataPelajaran}
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between py-4">
+          <Button
+            onClick={() => router.push(`${router.asPath}/mapel/add`)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg"
+          >
+            Tambah Mata Pelajaran
+          </Button>
         </div>
       </div>
     </div>
+    </div >
   );
 }
 
@@ -86,14 +102,14 @@ export async function getServerSideProps(context) {
         token
       );
       const kelas = await getKelas(`${API_KELAS}${context.query.id}`, token);
-      
+
       return {
         props: {
           role: role,
           students: students,
           matpel: matpel,
           kelas: kelas,
-		      username: username
+          username: username
         },
       };
     } else if (role === "MURID") {
