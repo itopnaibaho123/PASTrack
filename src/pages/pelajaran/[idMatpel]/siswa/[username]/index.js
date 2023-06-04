@@ -9,6 +9,7 @@ import checkRole from "@/components/Helper/CheckRole";
 import { useRouter } from "next/router";
 import { H3 } from "@/components/Typography";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 
 import {
   getListKomponenSiswa,
@@ -29,28 +30,47 @@ export default function komponen(props) {
     "kalkulasiBobotNilai",
   ];
   const router = useRouter();
-  console.log(props.komponen)
+  console.log(props.komponen);
 
-  if(props.role === "MURID"){
+  if (props.role === "MURID") {
     return (
-      <div className="flex flex-col place-items-center p-5 gap-5">
-        <Head>
-          <title>{`Page Komponen Student`}</title>
-        </Head>
-        <div className="flex gap-2">
-          <Button onClick={() => router.back()}>Back</Button>
-          <H3>Nilai Siswa</H3>
+      <div>
+        <div className="h-full flex flex-col">
+          <Breadcrumb
+            links={[
+              { label: "Home", href: "/" },
+              { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
+              {
+                label: `Matpel id: ${props.idMatpel}`,
+                href: `/pelajaran/${props.idMatpel}`,
+              },
+              {
+                label: `${props.username}`,
+                href: `${router.asPath}`,
+              },
+            ]}
+            active={props.username}
+          />
         </div>
+        <div className="flex flex-col place-items-center p-5 gap-5">
+          <Head>
+            <title>{`Page Komponen Student`}</title>
+          </Head>
+          <div className="flex gap-2">
+            <Button onClick={() => router.back()}>Back</Button>
+            <H3>Nilai Siswa</H3>
+          </div>
 
-        <div className="bg-background rounded-xl w-fit">
-          <Table>
-            <TableHead detailUser={true} cols={columnsKomponen}/>
-            <TableBodyKomponen
-              cols={columnsForIterate}
-              data={props.komponen}
-              detailUser={true}
-            />
-          </Table>
+          <div className="bg-background rounded-xl w-fit">
+            <Table>
+              <TableHead detailUser={true} cols={columnsKomponen} />
+              <TableBodyKomponen
+                cols={columnsForIterate}
+                data={props.komponen}
+                detailUser={true}
+              />
+            </Table>
+          </div>
         </div>
       </div>
     );
@@ -90,7 +110,7 @@ export async function getServerSideProps(context) {
   }
   const { role, token } = context.req.cookies;
   if (authentications.rolesTrue) {
-    if (role === "GURU", "MURID") {
+    if ((role === "GURU", "MURID")) {
       const komponen = await getListKomponenSiswa(
         `${KOMPONENSISWA}${context.query.idMatpel}/siswa/${context.query.username}`,
         token
@@ -100,6 +120,8 @@ export async function getServerSideProps(context) {
         props: {
           role: role,
           komponen: komponen,
+          idMatpel: context.query.idMatpel,
+          username: context.query.username
         },
       };
     }

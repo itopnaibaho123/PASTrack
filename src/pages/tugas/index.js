@@ -7,43 +7,55 @@ import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { getAllTugas } from "@/components/Hooks/Tugas";
 import checkRole from "@/components/Helper/CheckRole";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function index(props) {
   const router = useRouter();
-  return (
-    <div className="flex flex-col">
-      <Head>
-        <title>{`List Tugas`}</title>
-      </Head>
-      <div className="flex flex-col text-center items-center py-4">
-        <H3>Daftar Postingan Tugas</H3>
-      </div>
-      <div className="flex justify-center gap-2 pb-4">
-        <Button onClick={() => router.back()}>Kembali</Button>
-        <Button
-          variant="secondary"
-          onClick={() => router.push("/tugas/CreateTugas")}
-        >
-          Tambah Tugas
-        </Button>
-      </div>
 
-      <div className="flex flex-wrap justify-center gap-2 py-2">
-        {props.postingan.map((tugas) => {
-          return (
-            <CardTugas
-              judulPostingan={tugas.judulPostingan}
-              mataPelajaran={tugas.mataPelajaran}
-              tanggalDeadline={tugas.tanggalDeadline}
-              deskripsi={tugas.deskripsi}
-              kodePostingan={tugas.kodePostingan}
-            />
-          );
-        })}
+  return (
+    <div>
+      <div className="flex flex-col">
+        <div className="h-full flex flex-col">
+          <Breadcrumb
+            links={[
+              { label: "Home", href: "/" },
+              { label: "Tugas", href: router.asPath },
+            ]}
+            active={"Tugas"}
+          />
+        </div>
+        <Head>
+          <title>{`List Tugas`}</title>
+        </Head>
+        <div className="flex flex-col text-center items-center py-4">
+          <H3>Daftar Postingan Tugas</H3>
+        </div>
+        <div className="flex justify-center gap-2 pb-4">
+          <Button onClick={() => router.back()}>Kembali</Button>
+          <Button
+            variant="secondary"
+            onClick={() => router.push("/tugas/CreateTugas")}
+          >
+            Tambah Tugas
+          </Button>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-2 py-2">
+          {props.postingan.map((tugas) => {
+            return (
+              <CardTugas
+                judulPostingan={tugas.judulPostingan}
+                mataPelajaran={tugas.mataPelajaran}
+                tanggalDeadline={tugas.tanggalDeadline}
+                deskripsi={tugas.deskripsi}
+                kodePostingan={tugas.kodePostingan}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
-
 }
 
 export async function getServerSideProps(context) {
@@ -60,7 +72,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if (role === "ADMIN", "GURU") {
+    if ((role === "ADMIN", "GURU")) {
       const postingan = await getAllTugas(`${POSTINGAN_TUGAS}`, token);
       return {
         props: {
@@ -68,7 +80,7 @@ export async function getServerSideProps(context) {
           postingan: postingan,
         },
       };
-    } 
+    }
   } else {
     return {
       redirect: {
@@ -78,5 +90,3 @@ export async function getServerSideProps(context) {
     };
   }
 }
-
-

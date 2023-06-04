@@ -10,6 +10,8 @@ import { H3 } from "@/components/Typography";
 import Input from "@/components/Input";
 import EditProfileForm from "@/components/Form/EditProfileForm";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 const typeSemester = [
   { semester: "Genap", value: false },
@@ -19,70 +21,84 @@ const typeSemester = [
 export default function create() {
   const router = useRouter();
   return (
-    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-      <Head>
-        <title>{`Create Semester`}</title>
-      </Head>
-      <div className="flex flex-col flex-wrap place-items-center">
-        <Button variant="ghost" onClick={() => router.back()}>
-          Back
-        </Button>
-        <H3>Create Semester</H3>
+    <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+
+            {label: "Home", href: "/"},
+            {label: "Create Semester", href: "/semester/create"}
+          ]}
+          active={"Create Semester"}
+        
+        />
       </div>
-      <FormModalContextProvider>
-        <EditProfileForm
-          onClick={() => router.back()}
-          handleSubmit={async (formData, setFormData) => {
-            console.log(formData);
-            // setIsError(false);
-            try {
-              const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_ROUTE}api/semester/add`,
-                {
-                  method: "POST",
-                  body: JSON.stringify(formData),
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${getCookie("token")}`,
-                  },
+      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+        <Head>
+          <title>{`Create Semester`}</title>
+        </Head>
+        <div className="flex flex-col flex-wrap place-items-center">
+          <Button variant="ghost" onClick={() => router.back()}>
+            Back
+          </Button>
+          <H3>Create Semester</H3>
+        </div>
+        <FormModalContextProvider>
+          <EditProfileForm
+            onClick={() => router.back()}
+            handleSubmit={async (formData, setFormData) => {
+              console.log(formData);
+              // setIsError(false);
+              try {
+                const res = await fetch(
+                  `${process.env.NEXT_PUBLIC_API_ROUTE}api/semester/add`,
+                  {
+                    method: "POST",
+                    body: JSON.stringify(formData),
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${getCookie("token")}`,
+                    },
+                  }
+                );
+                console.log(res);
+                if (res.ok) {
+                  toast.success("Semester Behasil Dibuat")
+                  router.push("/");
                 }
-              );
-              console.log(res);
-              if (res.ok) {
+              } catch (err) {
+                toast.error("Semester Tidak Berhasil Dibuat")
+                // console.log(err)
+              } finally {
                 setFormData({});
-                router.push("/");
               }
-            } catch (err) {
-              // console.log(err)
-            } finally {
-              setFormData({});
-            }
-          }}
-        >
-          <Input
-            label={"Awal Tahun Ajaran"}
-            name={"awalTahunAjaran"}
-            placeholder="TAwal Tahun Ajaran"
-            type="date"
-            required
-          />
-          <Input
-            label={"Akhir Tahun Ajaran"}
-            name={"akhirTahunAjaran"}
-            placeholder="Akhir Tahun Ajaran"
-            type="date"
-            required
-          />
-          <DropdownSemester
-            label={"Semester"}
-            name={"semester"}
-            placeholder="value"
-            required
+            }}
           >
-            {typeSemester}
-          </DropdownSemester>
-        </EditProfileForm>
-      </FormModalContextProvider>
+            <Input
+              label={"Awal Tahun Ajaran"}
+              name={"awalTahunAjaran"}
+              placeholder="TAwal Tahun Ajaran"
+              type="date"
+              required
+            />
+            <Input
+              label={"Akhir Tahun Ajaran"}
+              name={"akhirTahunAjaran"}
+              placeholder="Akhir Tahun Ajaran"
+              type="date"
+              required
+            />
+            <DropdownSemester
+              label={"Semester"}
+              name={"semester"}
+              placeholder="value"
+              required
+            >
+              {typeSemester}
+            </DropdownSemester>
+          </EditProfileForm>
+        </FormModalContextProvider>
+      </div>
     </div>
   );
 }

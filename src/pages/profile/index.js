@@ -9,7 +9,7 @@ import Table from "@/components/Table";
 import TableHead from "@/components/Table/TableHead";
 import TableBody from "@/components/Table/TableBody";
 import Head from "next/head";
-
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function profile(props) {
   const router = useRouter();
@@ -40,38 +40,49 @@ export default function profile(props) {
     fetchData();
   }, []);
   return (
-    <div className="p-8 flex flex-col gap-4 place-items-center">
-      <Head>
-        <title>{`Detail User`}</title>
-      </Head>
-      <div className="grow flex">
-        <H3>Detail User</H3>
+    <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: props.profile["nama"], href: router.asPath },
+          ]}
+          active={props.profile["nama"]}
+        />
       </div>
-      <div className="w-fit bg-background rounded-xl">
-        <Table>
-          <TableHead cols={["Username", "Nama", "Role"]} detailUser={true} />
-          <TableBody
-            cols={["username", "nama", "role"]}
-            data={profile}
-            detailUser={true}
-          />
-        </Table>
+      <div className="p-8 flex flex-col gap-4 place-items-center">
+        <Head>
+          <title>{`Detail User`}</title>
+        </Head>
+        <div className="grow flex">
+          <H3>Detail User</H3>
+        </div>
+        <div className="w-fit bg-background rounded-xl">
+          <Table>
+            <TableHead cols={["Username", "Nama", "Role"]} detailUser={true} />
+            <TableBody
+              cols={["username", "nama", "role"]}
+              data={profile}
+              detailUser={true}
+            />
+          </Table>
+        </div>
+        <div className="flex gap-4">
+          <Button
+            variant="secondary"
+            onClick={() => router.push("/profile/ChangePassword")}
+          >
+            Ganti Password
+          </Button>
+          <Button
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Go back
+          </Button>
+        </div>
       </div>
-      <div className="flex gap-4">
-    <Button
-      variant="secondary"
-      onClick={() => router.push("/profile/ChangePassword")}
-    >
-      Ganti Password
-    </Button>
-    <Button
-      onClick={() => {
-        router.back();
-      }}
-    >
-      Go back
-    </Button>
-  </div>
     </div>
   );
 }

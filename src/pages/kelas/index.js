@@ -10,53 +10,72 @@ import { getListSemester } from "@/components/Hooks/Semester";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function Index(props) {
   const router = useRouter();
-  console.log(props.list_kelas)
+  console.log(props.list_kelas);
   return (
-    <div className="flex flex-col p-8">
-      <Head>
-        <title>{`Page List Kelas`}</title>
-      </Head>
-      <div className="flex flex-col text-center items-center">
-        <H3>Daftar Kelas</H3>
+    <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Kelas", href: "/kelas" },
+           
+          ]}
+          active={"Daftar Kelas"}
+        />
       </div>
-      <div className="flex justify-center gap-2 ">
-        <Button onClick={() => router.back()}>Kembali</Button>
-        <Button
-          variant="secondary"
-          onClick={() => router.push("/kelas/CreateKelas")}
-        >
-          Tambah Kelas
-        </Button>
-      </div>
-      <div className="flex flex-wrap justify-center gap-2 py-2">
-        {props.list_kelas.map((kls) => {
-          const semester = props.semester.find((s) => s.id === kls.semesterId);
-          console.log(semester)
-          const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
-          const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
-          // get guru from props.list_guru and find guru by username
-          const guru = props.list_guru.find(
-            (g) => g.username === kls.usernameGuru
-          );
+      <div className="flex flex-col p-8">
+        <Head>
+          <title>{`Page List Kelas`}</title>
+        </Head>
+        <div className="flex flex-col text-center items-center">
+          <H3>Daftar Kelas</H3>
+        </div>
+        <div className="flex justify-center gap-2 ">
+          <Button onClick={() => router.back()}>Kembali</Button>
+          <Button
+            variant="secondary"
+            onClick={() => router.push("/kelas/CreateKelas")}
+          >
+            Tambah Kelas
+          </Button>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2 py-2">
+          {props.list_kelas.map((kls) => {
+            const semester = props.semester.find(
+              (s) => s.id === kls.semesterId
+            );
+            console.log(semester);
+            const awalSemester = new Date(
+              semester.awalTahunAjaran
+            ).toLocaleDateString("id-ID");
+            const akhirSemester = new Date(
+              semester.akhirTahunAjaran
+            ).toLocaleDateString("id-ID");
+            // get guru from props.list_guru and find guru by username
+            const guru = props.list_guru.find(
+              (g) => g.username === kls.usernameGuru
+            );
 
-          // add "namaGuru" property to kls object
-          kls.namaGuru = guru ? guru.nama : "-";
+            // add "namaGuru" property to kls object
+            kls.namaGuru = guru ? guru.nama : "-";
 
-          return (
-            <CardKelas
-              key={kls.idKelas}
-              id={kls.idKelas}
-              namaKelas={kls.namaKelas}
-              semester={`Semester: ${
-                semester.semester ? "Ganjil" : "Genap"
-              } ${awalSemester} - ${akhirSemester}`}
-              namaGuru={guru ? guru.nama : "-"}
-            />
-          );
-        })}
+            return (
+              <CardKelas
+                key={kls.idKelas}
+                id={kls.idKelas}
+                namaKelas={kls.namaKelas}
+                semester={`Semester: ${
+                  semester.semester ? "Ganjil" : "Genap"
+                } ${awalSemester} - ${akhirSemester}`}
+                namaGuru={guru ? guru.nama : "-"}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

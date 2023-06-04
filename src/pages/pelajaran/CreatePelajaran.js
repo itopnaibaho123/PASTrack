@@ -14,6 +14,8 @@ import { getListPeminatan } from "@/components/Hooks/Peminatan";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 const semester = [
   { id: 1, nama: "GANJIL" },
@@ -26,6 +28,16 @@ export default function CreatePelajaran(props) {
 
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Pelajaran", href: "/pelajaran" },
+            { label: "Create Pelajaran", href: router.asPath },
+          ]}
+          active={"Create Pelajaran"}
+        />
+      </div>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Buat Mata Pelajaran</H3>
       </div>
@@ -42,7 +54,10 @@ export default function CreatePelajaran(props) {
               );
               console.log(res);
               if (res.ok) {
+                toast.success("Pelajaran berhasil dibuat")
                 router.back();
+              }else{
+                toast.error("Pelajaran Gagal Dibuat")
               }
             } catch (err) {
               console.log(err);

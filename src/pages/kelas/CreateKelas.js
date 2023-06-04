@@ -14,69 +14,84 @@ import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
 import { getListSemester } from "@/components/Hooks/Semester";
 import Head from "next/head";
-
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 // const semester = [
 //   { id: 1, nama: "GANJIL" },
 //   { id: 2, nama: "GENAP" },
 // ];
 
 export default function CreateKelas(props) {
-
   const router = useRouter();
   console.log(props.list_guru);
   return (
-    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-      <Head>
-        <title>{`Create Kelas`}</title>
-      </Head>
-      <div className="flex flex-col text-center items-center py-4">
-        <H3>Buat Kelas</H3>
+    <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Kelas", href: "/kelas" },
+            { label: "Create Kelas", href: "/kelas/CreateKelas" },
+          ]}
+          active={"Create Kelas"}
+        />
       </div>
-      <FormModalContextProvider>
-        <FormCreateKelas
-          handleSubmit={async (formData, setFormData) => {
-            try {
-              console.log(formData);
-              const res = await postKelas(
-                `${KELAS}`,
-                formData,
-                getCookie("token")
-              );
-              console.log(res);
-              if (res.ok) {
-                router.back();
+      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+        <Head>
+          <title>{`Create Kelas`}</title>
+        </Head>
+        <div className="flex flex-col text-center items-center py-4">
+          <H3>Buat Kelas</H3>
+        </div>
+        <FormModalContextProvider>
+          <FormCreateKelas
+            handleSubmit={async (formData, setFormData) => {
+              try {
+                console.log(formData);
+                const res = await postKelas(
+                  `${KELAS}`,
+                  formData,
+                  getCookie("token")
+                );
+                console.log(res);
+                if (res.ok) {
+                  toast.success("Berhasil Membuat Kelas")
+                  router.back();
+                }else{
+                  toast.error("Gagal Membuat Kelas")
+                }
+              } catch (err) {
+                toast.error("Gagal Membuat Kelas")
+              } finally {
+                setFormData({});
               }
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setFormData({});
-            }
-          }}
-        >
-          <Input
-            type="text"
-            label={"Nama Kelas"}
-            name={"namaKelas"}
-            placeholder={"Nama Kelas"}
-            required
-          />
-          <Select
-            label={"Semester"}
-            name="semesterId"
-            placeholder="id"
-            semester = {true}
+            }}
           >
-            {props.semester}
-          </Select>
-          <SelectGuru
-            label={"Wali Kelas"}
-            name={"usernameGuru"}
-            placeholder="username"
-          >
-            {props.list_guru}
-          </SelectGuru>
-        </FormCreateKelas>
-      </FormModalContextProvider>
+            <Input
+              type="text"
+              label={"Nama Kelas"}
+              name={"namaKelas"}
+              placeholder={"Nama Kelas"}
+              required
+            />
+            <Select
+              label={"Semester"}
+              name="semesterId"
+              placeholder="id"
+              semester={true}
+            >
+              {props.semester}
+            </Select>
+            <SelectGuru
+              label={"Wali Kelas"}
+              name={"usernameGuru"}
+              placeholder="username"
+            >
+              {props.list_guru}
+            </SelectGuru>
+          </FormCreateKelas>
+        </FormModalContextProvider>
+      </div>
     </div>
   );
 }
