@@ -25,18 +25,28 @@ export default function Index(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const kelasPerPage = 15;
 
-  const filteredKelas = props.list_kelas.filter(
+  const filteredKelas = listKelas.filter(
     (kls) =>
       kls.namaGuru.toLowerCase().includes(searchQueryGuru.toLowerCase()) ||
       kls.namaKelas.toLowerCase().includes(searchQueryKelas.toLowerCase())
-  );
+  )
 
   const handleSearchGuru = (e) => {
-    setSearchQueryGuru(e.target.value);
+    const query = e.target.value.toLowerCase();
+    const filteredKelas = props.list_kelas.filter((kls) =>
+      kls.namaGuru.toLowerCase().includes(query)
+    );
+    setListKelas(filteredKelas);
+    setSearchQueryGuru(query);
   };
 
   const handleSearchKelas = (e) => {
-    setSearchQueryKelas(e.target.value);
+    const query = e.target.value.toLowerCase();
+    const filteredKelas = props.list_kelas.filter((kls) =>
+      kls.namaKelas.toLowerCase().includes(query)
+    );
+    setListKelas(filteredKelas);
+    setSearchQueryKelas(query);
   };
 
   // Calculate pagination values
@@ -55,7 +65,7 @@ export default function Index(props) {
       console.log("Kelas berhasil dihapus!");
 
       // Perbarui daftar kelas setelah penghapusan
-      const updatedKelas = listKelas.filter((kls) => kls.idKelas !== idKelas);
+      const updatedKelas = filteredKelas.filter((kls) => kls.idKelas !== idKelas);
       setListKelas(updatedKelas);
       // Perbarui halaman dengan mengarahkan pengguna ke halaman yang sama
       router.replace(router.asPath);
@@ -170,9 +180,8 @@ export default function Index(props) {
                 return (
                   <tr key={kls.idKelas} className={rowBackgroundColor}>
                     <td className="border p-2">{kls.namaKelas}</td>
-                    <td className="border p-2">{`${
-                      semester.semester ? "Ganjil" : "Genap"
-                    } ${awalSemester} - ${akhirSemester}`}</td>
+                    <td className="border p-2">{`${semester.semester ? "Ganjil" : "Genap"
+                      } ${awalSemester} - ${akhirSemester}`}</td>
                     <td className="border p-2">{guru ? guru.nama : "-"}</td>
                     <td className="border p-2">
                       <div className="flex justify-center gap-2">

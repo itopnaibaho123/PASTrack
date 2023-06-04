@@ -8,42 +8,53 @@ import { P } from "@/components/Typography";
 import TableBody from "@/components/Table/TableBody";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
-import {H2,  H3 } from "@/components/Typography";
+import { H2, H3 } from "@/components/Typography";
 import Head from "next/head";
 import { Road_Rage } from "next/font/google";
 import Breadcrumb from "@/components/Breadcrumb";
 import { FaSearch } from "react-icons/fa";
+
 export default function list(props) {
-  const [listKelas, setListKelas] = useState(props.data); // Menyimpan daftar kelas
-  const [searchQueryNama, setSearchQueryNama] = useState("");
-  const [searchQueryUsername, setSearchQueryUsername] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const kelasPerPage = 15;
+    const [listUser, setListUser] = useState(props.data); // Menyimpan daftar pengguna
+    const [searchQueryNama, setSearchQueryNama] = useState("");
+    const [searchQueryUsername, setSearchQueryUsername] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 15;
+  
+    const handleSearchNama = (e) => {
+      setSearchQueryNama(e.target.value);
+      setCurrentPage(1); // Reset halaman saat melakukan pencarian
+    };
+  
+    const handleSearchUsername = (e) => {
+      setSearchQueryUsername(e.target.value);
+      setCurrentPage(1); // Reset halaman saat melakukan pencarian
+    };
+  
+    useEffect(() => {
+      // Filter daftar pengguna berdasarkan query pencarian
+      const filteredUsers = props.data.filter(
+        (user) =>
+          user.nama.toLowerCase().includes(searchQueryNama.toLowerCase()) &&
+          user.username.toLowerCase().includes(searchQueryUsername.toLowerCase())
+      );
+  
+      setListUser(filteredUsers);
+    }, [searchQueryNama, searchQueryUsername, props.data]);
+  
+    // Calculate pagination values
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = listUser.slice(indexOfFirstUser, indexOfLastUser);
+    const totalPages = Math.ceil(listUser.length / usersPerPage);
+  
+    const paginate = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+  
 
-  const filteredKelas = props.data.filter(
-    (user) =>
-      user.nama.toLowerCase().includes(searchQueryNama.toLowerCase()) ||
-      user.username.toLowerCase().includes(searchQueryUsername.toLowerCase())
-  );
-
-  const handleSearchNama = (e) => {
-    setSearchQueryNama(e.target.value);
-  };
-
-  const handleSearchUsername = (e) => {
-    setSearchQueryUsername(e.target.value);
-  };
-
-  // Calculate pagination values
-  const indexOfLastKelas = currentPage * kelasPerPage;
-  const indexOfFirstKelas = indexOfLastKelas - kelasPerPage;
-  const currentKelas = filteredKelas.slice(indexOfFirstKelas, indexOfLastKelas);
-  const totalPages = Math.ceil(filteredKelas.length / kelasPerPage);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
   const router = useRouter();
+
   if (!props.data) {
     return (
       <div>
@@ -51,7 +62,9 @@ export default function list(props) {
       </div>
     );
   }
+
   let keys = Object.keys(props.data[0]);
+
   return (
     <>
       <div>
@@ -145,9 +158,7 @@ export default function list(props) {
                 </tr>
               </thead>
               <tbody>
-                {currentKelas.map((user, index) => {
-                  
-
+                {currentUsers.map((user, index) => {
                   const rowBackgroundColor =
                     index % 2 === 0 ? "bg-white" : "bg-gray-200";
 
@@ -168,7 +179,9 @@ export default function list(props) {
                           </Button>
                           <Button
                             variant="primary"
-                            onClick={() => router.push(`/profile/${user.username}/EditProfile`)}
+                            onClick={() =>
+                              router.push(`/profile/${user.username}/EditProfile`)
+                            }
                           >
                             Edit User
                           </Button>
