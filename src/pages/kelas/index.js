@@ -3,13 +3,18 @@ import { H2, H3 } from "@/components/Typography";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { KELAS } from "@/components/Hooks/Kelas";
-import { getAllKelas, deleteKelas, HAPUS_KELAS } from "@/components/Hooks/Kelas";
+import {
+  getAllKelas,
+  deleteKelas,
+  HAPUS_KELAS,
+} from "@/components/Hooks/Kelas";
 import { useRouter } from "next/router";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 import { FaSearch } from "react-icons/fa";
 
 export default function Index(props) {
@@ -60,115 +65,160 @@ export default function Index(props) {
   };
 
   return (
-    <div className="flex flex-col p-8">
-      <Head>
-        <title>Page List Kelas</title>
-      </Head>
-      <div className="flex flex-col text-center items-center">
-        <H2>Daftar Kelas</H2>
+    <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Kelas", href: "/kelas" },
+          ]}
+          active={"Daftar Kelas"}
+        />
       </div>
-      <div className="flex justify-center gap-2">
-        <Button onClick={() => router.back()}>Kembali</Button>
-        <Button
-          variant="secondary"
-          onClick={() => router.push("/kelas/CreateKelas")}
-        >
-          Tambah Kelas
-        </Button>
-      </div>
-      <div className="flex flex-wrap justify-start gap-2 py-2">
-        <div className="mb-4">
-          <div className="flex items-center border p-2 rounded-md shadow-sm border-blue-300">
-            <FaSearch className="mr-2 text-blue-500" /> {/* Ikon pencarian */}
-            <input
-              type="text"
-              placeholder="Cari wali kelas..."
-              value={searchQueryGuru}
-              onChange={handleSearchGuru}
-              className="border-none focus:outline-none flex-grow"
-              style={{ backgroundColor: "transparent" }}
-            />
-          </div>
+      <div className="flex flex-col p-8">
+        <Head>
+          <title>Page List Kelas</title>
+        </Head>
+        <div className="flex flex-col text-center items-center">
+          <H2>Daftar Kelas</H2>
         </div>
-        <div className="mb-4">
-          <div className="flex items-center border p-2 rounded-md shadow-sm border-blue-300">
-            <FaSearch className="mr-2 text-blue-500" /> {/* Ikon pencarian */}
-            <input
-              type="text"
-              placeholder="Cari nama kelas..."
-              value={searchQueryKelas}
-              onChange={handleSearchKelas}
-              className="border-none focus:outline-none flex-grow"
-              style={{ backgroundColor: "transparent" }}
-            />
-          </div>
+        <div className="flex justify-center gap-2">
+          <Button onClick={() => router.back()}>Kembali</Button>
+          <Button
+            variant="secondary"
+            onClick={() => router.push("/kelas/CreateKelas")}
+          >
+            Tambah Kelas
+          </Button>
         </div>
-        <table className="w-full border-collapse rounded-full shadow-md">
-          <thead>
-            <tr>
-              <th className="border p-2" style={{ backgroundColor: "#000080", color: "white" }}>Kelas</th>
-              <th className="border p-2" style={{ backgroundColor: "#000080", color: "white" }}>Semester</th>
-              <th className="border p-2" style={{ backgroundColor: "#000080", color: "white" }}>Wali Kelas</th>
-              <th className="border p-2" style={{ backgroundColor: "#000080", color: "white" }}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentKelas.map((kls, index) => {
-              const semester = props.semester.find((s) => s.id === kls.semesterId);
-              const awalSemester = new Date(semester.awalTahunAjaran).toLocaleDateString("id-ID");
-              const akhirSemester = new Date(semester.akhirTahunAjaran).toLocaleDateString("id-ID");
-              const guru = props.list_guru.find((g) => g.username === kls.usernameGuru);
+        <div className="flex flex-wrap justify-start gap-2 py-2">
+          <div className="mb-4">
+            <div className="flex items-center border p-2 rounded-md shadow-sm border-blue-300">
+              <FaSearch className="mr-2 text-blue-500" /> {/* Ikon pencarian */}
+              <input
+                type="text"
+                placeholder="Cari wali kelas..."
+                value={searchQueryGuru}
+                onChange={handleSearchGuru}
+                className="border-none focus:outline-none flex-grow"
+                style={{ backgroundColor: "transparent" }}
+              />
+            </div>
+          </div>
+          <div className="mb-4">
+            <div className="flex items-center border p-2 rounded-md shadow-sm border-blue-300">
+              <FaSearch className="mr-2 text-blue-500" /> {/* Ikon pencarian */}
+              <input
+                type="text"
+                placeholder="Cari nama kelas..."
+                value={searchQueryKelas}
+                onChange={handleSearchKelas}
+                className="border-none focus:outline-none flex-grow"
+                style={{ backgroundColor: "transparent" }}
+              />
+            </div>
+          </div>
+          <table className="w-full border-collapse rounded-full shadow-md">
+            <thead>
+              <tr>
+                <th
+                  className="border p-2"
+                  style={{ backgroundColor: "#000080", color: "white" }}
+                >
+                  Kelas
+                </th>
+                <th
+                  className="border p-2"
+                  style={{ backgroundColor: "#000080", color: "white" }}
+                >
+                  Semester
+                </th>
+                <th
+                  className="border p-2"
+                  style={{ backgroundColor: "#000080", color: "white" }}
+                >
+                  Wali Kelas
+                </th>
+                <th
+                  className="border p-2"
+                  style={{ backgroundColor: "#000080", color: "white" }}
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentKelas.map((kls, index) => {
+                const semester = props.semester.find(
+                  (s) => s.id === kls.semesterId
+                );
+                const awalSemester = new Date(
+                  semester.awalTahunAjaran
+                ).toLocaleDateString("id-ID");
+                const akhirSemester = new Date(
+                  semester.akhirTahunAjaran
+                ).toLocaleDateString("id-ID");
+                const guru = props.list_guru.find(
+                  (g) => g.username === kls.usernameGuru
+                );
 
-              kls.namaGuru = guru ? guru.nama : "-";
+                kls.namaGuru = guru ? guru.nama : "-";
 
-              const rowBackgroundColor = index % 2 === 0 ? "bg-white" : "bg-gray-200";
+                const rowBackgroundColor =
+                  index % 2 === 0 ? "bg-white" : "bg-gray-200";
 
-              return (
-                <tr key={kls.idKelas} className={rowBackgroundColor}>
-                  <td className="border p-2">{kls.namaKelas}</td>
-                  <td className="border p-2">{`${semester.semester ? "Ganjil" : "Genap"
+                return (
+                  <tr key={kls.idKelas} className={rowBackgroundColor}>
+                    <td className="border p-2">{kls.namaKelas}</td>
+                    <td className="border p-2">{`${
+                      semester.semester ? "Ganjil" : "Genap"
                     } ${awalSemester} - ${akhirSemester}`}</td>
-                  <td className="border p-2">{guru ? guru.nama : "-"}</td>
-                  <td className="border p-2">
-                    <div className="flex justify-center gap-2">
-                      <Button
-                        variant="secondary"
-                        onClick={() => router.push(`${router.asPath}/${kls.idKelas}`)}
-                      >
-                        Detail Kelas
-                      </Button>
-                      <Button
-                        variant="delete"
-                        onClick={() => handleDeleteKelas(kls.idKelas)}
-                      >
-                        Hapus Kelas
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {totalPages > 1 && (
-        <div className="flex justify-end mt-4 gap-2"> {/* Use "justify-end" class to align buttons to the right */}
-          <Button
-            variant="secondary"
-            onClick={() => paginate(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            &lt; Previous
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next &gt;
-          </Button>
+                    <td className="border p-2">{guru ? guru.nama : "-"}</td>
+                    <td className="border p-2">
+                      <div className="flex justify-center gap-2">
+                        <Button
+                          variant="secondary"
+                          onClick={() =>
+                            router.push(`${router.asPath}/${kls.idKelas}`)
+                          }
+                        >
+                          Detail Kelas
+                        </Button>
+                        <Button
+                          variant="delete"
+                          onClick={() => handleDeleteKelas(kls.idKelas)}
+                        >
+                          Hapus Kelas
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      )}
+        {totalPages > 1 && (
+          <div className="flex justify-end mt-4 gap-2">
+            {" "}
+            {/* Use "justify-end" class to align buttons to the right */}
+            <Button
+              variant="secondary"
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &lt; Previous
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next &gt;
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

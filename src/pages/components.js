@@ -12,6 +12,7 @@ import Sidebar from "@/components/Sidebar";
 import CardSubject from "@/components/CardSubject";
 import StudentCard from "@/components/StudentCard";
 
+
 const test = () => {
   console.log("Hello World");
 };
@@ -47,12 +48,13 @@ export default function components() {
         </div>
       </div>
       <div className="ml-4">
-        {/* <Modals
-          buttonName="delete"
-          desc="This is Explain Modals"
-          title="modals"
+        <Modals
+          confirmButtonName="delete"
+          cancelButtonName={"Cancel"}
+          desc="Are You Sure want to continue deleting this file ?"
+          title="Delete Class"
           onClick={test}
-        ></Modals> */}
+        ></Modals>
       </div>
       <div className="mt-4">
         {/* <Toast variant="success">Success message</Toast> */}

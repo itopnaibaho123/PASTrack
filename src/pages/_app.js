@@ -4,10 +4,10 @@ import Footer from "@/components/Footer";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import { useCookie } from "@/components/Hooks/useCookie";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }) {
-  const { pathname } = useRouter();
-
+  const { pathname, asPath } = useRouter();
 
   /*layouting*/
   return (

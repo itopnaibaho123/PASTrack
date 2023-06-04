@@ -1,20 +1,32 @@
-import React from 'react'
+import React from "react";
 
-import checkRole from '@/components/Helper/CheckRole';
-import FormModalContextProvider from '@/components/context/FormModalContext';
-import RegisterGuruForm from '@/components/Form/RegisterGuruForm';
-import Input from '@/components/Input';
-import { useRouter } from 'next/router';
-import Button from '@/components/Button';
-import { H2 } from '@/components/Typography';
-import FormKomponen from '@/components/Form/FormKomponen';
-import { getCookie } from '@/components/Helper/cookies';
-import Head from 'next/head';
+import checkRole from "@/components/Helper/CheckRole";
+import FormModalContextProvider from "@/components/context/FormModalContext";
+import RegisterGuruForm from "@/components/Form/RegisterGuruForm";
+import Input from "@/components/Input";
+import { useRouter } from "next/router";
+import Button from "@/components/Button";
+import { H2 } from "@/components/Typography";
+import FormKomponen from "@/components/Form/FormKomponen";
+import { getCookie } from "@/components/Helper/cookies";
+import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 export default function Create() {
   const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Peminatan", href: "/peminatan" },
+            { label: "Create Peminatan", href: router.asPath },
+          ]}
+          active={"Create Peminatan"}
+        />
+      </div>
       <Head>
         <title>{`Page Create Peminatan`}</title>
       </Head>
@@ -43,8 +55,10 @@ export default function Create() {
                   );
                   console.log(res)
                   if (res.ok) {
-                    setFormData({})
-                    router.push("/peminatan"); // Mengarahkan ke halaman /peminatan
+                    toast.success("Peminatan Berhasil Dibuat")
+                    router.push("/");
+                  }else{
+                    toast.error("Peminatan Gagal Dibuat")
                   }
                 } catch (err) {
                   // console.log(err)

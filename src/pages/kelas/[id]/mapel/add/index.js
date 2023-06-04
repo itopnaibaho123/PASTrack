@@ -1,13 +1,19 @@
 import Button from "@/components/Button";
 import { ALL_MATPEL, ADD_MATPEL_TO_KELAS, NOT_ASSIGNED_MATPEL, getNotAssignedMatpel } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
-import { getAllMatpelByKelas, postMatpelToKelas } from "@/components/Hooks/Matpel";
+import {
+  getAllMatpelByKelas,
+  postMatpelToKelas,
+} from "@/components/Hooks/Matpel";
 import FormCheckboxContextProvider from "@/components/context/FormCheckboxContext";
 import FormCheckboxSiswa from "@/components/Form/FormCheckboxSiswa";
 import Checkbox from "@/components/Checkbox";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
+
 import { H1, H2 } from "@/components/Typography";
 
 export default function SubjectAddPage(props) {
@@ -17,6 +23,17 @@ export default function SubjectAddPage(props) {
 
   return (
     <div className="bg-white p-16">
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Kelas", href: "/kelas" },
+            { label: `Kelas Id: ${id}`, href: `/kelas/${id}`},
+            { label: "Tambah Mata Pelajaran", href: router.asPath }
+          ]}
+          active={"Tambah Mata Pelajaran"}
+        />
+      </div>
       <Head>
         <title>{`Page Input Matpel`}</title>
       </Head>
@@ -40,7 +57,10 @@ export default function SubjectAddPage(props) {
                 );
                 console.log(res);
                 if (res.ok) {
+                  toast.success("Berhasil Menambahkan Mata Pelajaran")
                   router.back();
+                }else{
+                  toast.error("Gagal Menambahkan Mata Pelajaran")
                 }
               } catch (err) {
                 console.log(err);

@@ -10,6 +10,8 @@ import { H2 } from "@/components/Typography";
 import Input from "@/components/Input";
 import EditProfileForm from "@/components/Form/EditProfileForm";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 const typeSemester = [
   { semester: "Genap", value: false },
@@ -20,6 +22,17 @@ export default function create() {
   const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+
+            {label: "Home", href: "/"},
+            {label: "Create Semester", href: "/semester/create"}
+          ]}
+          active={"Create Semester"}
+        
+        />
+      </div>
       <Head>
         <title>{`Create Semester`}</title>
       </Head>
@@ -48,7 +61,7 @@ export default function create() {
               );
               console.log(res);
               if (res.ok) {
-                setFormData({});
+                toast.success("Semester Behasil Dibuat")
                 router.push("/");
               }
             } catch (err) {

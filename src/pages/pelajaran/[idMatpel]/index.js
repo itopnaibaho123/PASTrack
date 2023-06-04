@@ -7,15 +7,29 @@ import { MATPEL_LIST_SISWA } from "@/components/Hooks/Matpel";
 import { getListSiswa } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function index(props) {
   const router = useRouter();
   return (
     <>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
+            {
+              label: `Matpel id: ${props.idMatpel}`,
+              href: `/pelajaran/${props.idMatpel}`,
+            },
+          ]}
+          active={`Matpel id: ${props.idMatpel}`}
+        />
+      </div>
       <div className="flex flex-col gap-3 p-5">
-      <Head>
-        <title>{`Mata Pelajaran`}</title>
-      </Head>
+        <Head>
+          <title>{`Mata Pelajaran`}</title>
+        </Head>
         <div className="flex flex-col text-center items-center gap-4">
           <H3>Daftar Murid Mata Pelajaran</H3>
           <div className="flex justify-center gap-3">
@@ -30,14 +44,14 @@ export default function index(props) {
         </div>
         <div className="flex flex-wrap gap-3 justify-center">
           {props.siswa.map((student, index) => {
-          return (
-            <StudentCard
-              nama = {student.nama}
-              username={student.username}
-              key={index}
-            />
-          );
-        })}
+            return (
+              <StudentCard
+                nama={student.nama}
+                username={student.username}
+                key={index}
+              />
+            );
+          })}
         </div>
       </div>
     </>
@@ -58,15 +72,19 @@ export async function getServerSideProps(context) {
 
   if (authentications.rolesTrue) {
     if (role === "GURU") {
-      const siswa = await getListSiswa(`${MATPEL_LIST_SISWA}${context.query.idMatpel}`, token);
+      const siswa = await getListSiswa(
+        `${MATPEL_LIST_SISWA}${context.query.idMatpel}`,
+        token
+      );
 
       return {
         props: {
           role: role,
           siswa: siswa,
+          idMatpel: context.query.idMatpel
         },
       };
-    } 
+    }
   } else {
     return {
       redirect: {
@@ -76,4 +94,3 @@ export async function getServerSideProps(context) {
     };
   }
 }
-

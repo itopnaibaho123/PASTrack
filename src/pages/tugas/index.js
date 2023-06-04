@@ -7,11 +7,22 @@ import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { getAllTugas } from "@/components/Hooks/Tugas";
 import checkRole from "@/components/Helper/CheckRole";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function index(props) {
   const router = useRouter();
+
   return (
     <div className="flex flex-col">
+      <div className="h-full flex flex-col">
+          <Breadcrumb
+            links={[
+              { label: "Home", href: "/" },
+              { label: "Tugas", href: router.asPath },
+            ]}
+            active={"Tugas"}
+          />
+        </div>
       <Head>
         <title>{`List Tugas`}</title>
       </Head>
@@ -48,7 +59,6 @@ export default function index(props) {
       </div>
     </div>
   );
-
 }
 
 export async function getServerSideProps(context) {
@@ -65,7 +75,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if (role === "ADMIN", "GURU") {
+    if ((role === "ADMIN", "GURU")) {
       const postingan = await getAllTugas(`${POSTINGAN_TUGAS}`, token);
       return {
         props: {
@@ -83,5 +93,3 @@ export async function getServerSideProps(context) {
     };
   }
 }
-
-

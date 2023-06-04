@@ -14,6 +14,8 @@ import {
 import { getCookie } from "@/components/Helper/cookies";
 import checkRole from "@/components/Helper/CheckRole";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 export default function index(props, komponen, username) {
   const [path, setPath] = useState({});
 
@@ -21,6 +23,27 @@ export default function index(props, komponen, username) {
 
   return (
     <div>
+      <div className="h-full flex flex-col">
+          <Breadcrumb
+            links={[
+              { label: "Home", href: "/" },
+              { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
+              {
+                label: `Matpel id: ${props.idMatpel}`,
+                href: `/pelajaran/${props.idMatpel}`,
+              },
+              {
+                label: `${props.username}`,
+                href: `/pelajaran/${props.idMatpel}/siswa/${props.username}/`,
+              },
+              {
+                label: `Komponen`,
+                href: `${router.asPath}`,
+              },
+            ]}
+            active={"Komponen"}
+          />
+        </div>
       <Head>
         <title>{`Edit Komponen Siswa`}</title>
       </Head>
@@ -36,9 +59,13 @@ export default function index(props, komponen, username) {
               );
               console.log(res);
               if (res.ok) {
+                toast.success(`Berhasil Mengupdate Komponen Murid ${props.username}`)
                 router.back();
+              } else{
+                toast.error(`gagal Mengupdate Komponen Murid ${props.username}`)
               }
             } catch (err) {
+              toast.error(`gagal Mengupdate Komponen Murid ${props.username}`)
               console.log(err);
             } finally {
               setFormData({});
