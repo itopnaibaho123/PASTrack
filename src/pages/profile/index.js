@@ -8,7 +8,6 @@ import Button from "@/components/Button";
 import { Card, CardContent, CardHeader, Grid, Avatar } from "@material-ui/core";
 import Head from "next/head";
 import Breadcrumb from "@/components/Breadcrumb";
-
 export default function Profile({ id, role }) {
   const router = useRouter();
   const [profile, setProfile] = useState(null);
@@ -44,25 +43,25 @@ export default function Profile({ id, role }) {
         <Breadcrumb
           links={[
             { label: "Home", href: "/" },
-            { label: props.profile["nama"], href: router.asPath },
+            { label: profile["nama"], href: router.asPath },
           ]}
-          active={props.profile["nama"]}
+          active={profile["nama"]}
         />
       </div>
-
-      <div className="p-8 flex flex-col gap-4 items-center">
+      <div className="flex justify-center">
+      <div className="w-1/2 p-8 mb-1 bg-blue-800 rounded-2xl shadow-lg border-4 border-yellow-400 my-1 py-4">
         <Head>
           <title>Detail User</title>
         </Head>
-        <div className="flex items-center gap-4">
+        <div className="flex  justify-center items-center gap-4 my-5">
           <Avatar
             src="http://www.clker.com/cliparts/f/a/0/c/1434020125875430376profile.png"
             alt="Profile Image"
           />
-          <H3>Detail User</H3>
+          <h1 className="text-white font-bold text-3xl">Detail User</h1>
         </div>
+        
         <Card variant="outlined">
-          <CardHeader title="Detail User" />
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -83,7 +82,7 @@ export default function Profile({ id, role }) {
             </Grid>
           </CardContent>
         </Card>
-        <div className="flex gap-4">
+        <div className="flex gap-4 py-4">
           <Button
             variant="secondary"
             onClick={() => router.push("/profile/ChangePassword")}
@@ -94,8 +93,10 @@ export default function Profile({ id, role }) {
         </div>
       </div>
     </div>
+    </div>
   );
 }
+
 
 export async function getServerSideProps(context) {
   const authentications = checkRole(context);
