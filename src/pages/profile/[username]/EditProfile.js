@@ -5,7 +5,7 @@ import EditProfileForm from "@/components/Form/EditProfileForm";
 import { useRouter } from "next/router";
 import Input from "@/components/Input";
 import { getCookie } from "@/components/Helper/cookies";
-import { H1, H3 } from "@/components/Typography";
+import { H1, H2, H3 } from "@/components/Typography";
 import axios from "axios";
 import { FormModalContext } from "@/components/context/FormModalContext";
 import Head from "next/head";
@@ -35,13 +35,20 @@ export default function EditProfile(props) {
 
   
   return (
-    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+    <div>
       <Head>
         <title>{`Edit Profile ${props.id}`}</title>
       </Head>
-      <div className="flex flex-col text-center items-center py-4">
-        <H3>Edit Profile</H3>
+      <div className="ml-7 py-4">
+        <H2>Edit Profile</H2>
       </div>
+      <img
+          src="http://www.clker.com/cliparts/f/a/0/c/1434020125875430376profile.png"
+          alt="Profile Image"
+          className="h-20 w-20 rounded-full ml-5"
+        />
+        
+      <div className="float-left ml-5">
       <FormModalContextProvider>
         <EditProfileForm
           handleSubmit={async (formData, setFormData) => {
@@ -71,6 +78,7 @@ export default function EditProfile(props) {
             }
           }}
         >
+          
           <Input
             label="Edit Nama"
             name= "nama"
@@ -78,9 +86,9 @@ export default function EditProfile(props) {
             required
             inputvalue={dataObject.nama}
           />
-          
         </EditProfileForm>
       </FormModalContextProvider>
+    </div>
     </div>
   );
 }
