@@ -4,7 +4,7 @@ import { B, P } from "./Typography";
 
 export default function Footer() {
     return <>
-        <footer className="bg-main-text-grey rounded-3xl">
+        <footer className="bg-[#E8EDF6]  rounded-3xl">
             <div className="py-10 px-20 flex justify-between items-center">
                 <div>
 

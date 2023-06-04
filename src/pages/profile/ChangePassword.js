@@ -16,10 +16,10 @@ export default function () {
       <Head>
         <title>{`Change Password`}</title>
       </Head>
-      <div className="ml-6 py-4">
+      <div className="ml-12 py-10">
         <H2>Ganti Password</H2>
       </div>
-      <div className="float-left ml-5">
+      <div className="float-left ml-10">
         <FormModalContextProvider>
           <FormGantiPassword
             handleSubmit={async (formData, setFormData) => {

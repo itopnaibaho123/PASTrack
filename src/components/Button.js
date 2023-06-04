@@ -2,6 +2,7 @@ import React from 'react'
 
 const variants = {
 	primary: "bg-main-color-navy text-background",
+    natural: "bg-white text-main-color-black",
 	secondary: "bg-main-color-yellow text-main-color-navy",
 	disabled: "bg-background text-main-color-navy",
 	ghost: "bg-white text-main-color-navy ring-1 ring-main-color-navy",

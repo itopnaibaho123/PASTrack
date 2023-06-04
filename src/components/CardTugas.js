@@ -32,17 +32,18 @@ export default function CardTugas({
   };
 
   return (
-    <div className="w-2/3 p-10 mb-5 bg-blue-100 rounded-2xl shadow-xl border border-blue-400">
+    <div className="w-2/3 p-10 mb-5 bg-blue-800 rounded-2xl shadow-lg border-4 border-yellow-400">
       <div className="flex justify-between items-center">
         <div className="w-3/4">
-          <h1 className="text-2xl leading-10 font-bold text-blue-900"> Tugas: {judulPostingan} </h1>
-          <P className="text-slate-500"> Mata Pelajaran: {mataPelajaran}</P>
-          <P className="text-slate-500"> Due Date: {tanggalDeadline}</P>
-          <P className="text-slate-500"> Deskripsi Tugas: {deskripsi} </P>
+          <h1 className="text-2xl leading-10 font-bold text-white"> Tugas: {judulPostingan} </h1>
+          <h2 className="text-white"> Mata Pelajaran: {mataPelajaran}</h2>
+          <h2 className="text-white"> Due Date: {tanggalDeadline}</h2>
+          <h2 className="text-white"> Deskripsi Tugas: {deskripsi} </h2>
         </div>
         <div className="flex flex-col justify-between h-full">
           <div className="py-1">
             <Button
+              variant="natural"
               onClick={() =>
                 router.push(`${router.asPath}/edit/${kodePostingan}`)
               }

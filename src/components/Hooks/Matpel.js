@@ -11,8 +11,20 @@ export const MATPEL_GURU = API_ROUTE + "api/matpel/guru/";
 export const MATPEL_LIST_SISWA = API_ROUTE + "api/matpel/";
 export const ALL_MATPEL = API_KELAS + "allMatpel";
 export const ADD_MATPEL_TO_KELAS = API_KELAS + "addMatpel/";
+export const NOT_ASSIGNED_MATPEL = API_ROUTE + "api/kelas/notAssigned/Matpel"
 
 const getAllMatpel = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+const getNotAssignedMatpel = async (url, token) => {
   const response = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -87,4 +99,5 @@ export {
   getAllMatpelByKelas,
   postMatpelToKelas,
   getMatpelByKelas,
+  getNotAssignedMatpel,
 };

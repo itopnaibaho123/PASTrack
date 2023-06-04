@@ -22,7 +22,7 @@ export default function StudentAddPage(props) {
       </Head>
       <div className="flex justify-center items-center mb-8 mt-8">
         <div className="text-center">
-          <H2 className="text-2xl font-medium">Tambah Siswa</H2>
+          <H2 className="text-2xl font-medium">Tambah Siswa ke Kelas</H2>
           <p className="mt-4">Daftar Siswa yang ingin ditambahkan</p>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default function StudentAddPage(props) {
             }}
           >
             <div className="mb-8 flex justify-center items-center">
-              <table className="w-full border mb-4">
+              <table className="w-full border mb-4 shadow-lg">
                 <thead className="bg-blue-800">
                   <tr>
                     <th className="py-2 px-4 text-white text-center">Action</th>
