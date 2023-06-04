@@ -6,7 +6,7 @@ import DropdownSemester from "@/components/DropDown/DropdownSemester";
 import { useRouter } from "next/router";
 import { getCookie } from "@/components/Helper/cookies";
 import Button from "@/components/Button";
-import { H3 } from "@/components/Typography";
+import { H2 } from "@/components/Typography";
 import Input from "@/components/Input";
 import EditProfileForm from "@/components/Form/EditProfileForm";
 import Head from "next/head";
@@ -19,16 +19,15 @@ const typeSemester = [
 export default function create() {
   const router = useRouter();
   return (
-    <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+    <div>
       <Head>
         <title>{`Create Semester`}</title>
       </Head>
-      <div className="flex flex-col flex-wrap place-items-center">
-        <Button variant="ghost" onClick={() => router.back()}>
-          Back
-        </Button>
-        <H3>Create Semester</H3>
-      </div>
+      <div>
+      <div className="ml-12 py-10">
+          <H2>Buat Semester</H2>
+        </div>
+      <div className="float-left ml-10">
       <FormModalContextProvider>
         <EditProfileForm
           onClick={() => router.back()}
@@ -83,6 +82,8 @@ export default function create() {
           </DropdownSemester>
         </EditProfileForm>
       </FormModalContextProvider>
+    </div>
+    </div>
     </div>
   );
 }

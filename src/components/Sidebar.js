@@ -3,6 +3,13 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { clearCookie, getCookie, getRoles } from "@/components/Helper/cookies";
 import { useCookie } from "./Hooks/useCookie";
+import { FaUser } from 'react-icons/fa';
+import { FaChalkboard } from 'react-icons/fa';
+import { BsPeopleFill } from 'react-icons/bs';
+import { BiTask } from 'react-icons/bi';
+import { BiUserPlus } from 'react-icons/bi';
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import { BiCalendar } from 'react-icons/bi';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -28,67 +35,13 @@ export default function Sidebar() {
           title: "Edit Profile",
         },
       ],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <FaUser className="h-4 w-4" />,
     },
     {
       href: "/kelas",
       title: "Kelas",
       available: ["ADMIN"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <FaChalkboard className="h-4 w-4" />,
     },
     {
       href: "/pelajaran",
@@ -127,34 +80,7 @@ export default function Sidebar() {
       href: "/profile/listuser",
       title: "List All User",
       available: ["ADMIN"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <BsPeopleFill className="h-4 w-4" />,
     },
     {
       href: "/walas-kelas-saya",
@@ -226,95 +152,14 @@ export default function Sidebar() {
       href: "/tugas-saya",
       title: "Daftar Tugas",
       available: ["MURID", "ORANGTUA"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <BiTask className="h-4 w-4" />,
     },
     {
       href: "/tugas",
       title: "Tugas",
       available: ["ADMIN", "GURU", "SISWA"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <BiTask className="h-4 w-4" />,
+      icon: <BiTask className="h-4 w-4" />,
     },
     {
       href: "/dashboard",
@@ -391,100 +236,20 @@ export default function Sidebar() {
           title: "Siswa",
         },
       ],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <BiUserPlus className="h-4 w-4" />,
     },
     {
       href: "/peminatan",
       title: "Peminatan",
       available: ["ADMIN"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <FaChalkboardTeacher className="h-4 w-4" />,
+
     },
     {
-      href: "/semester/create",
+      href: "/semester",
       title: "Semester",
       available: ["ADMIN"],
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: <BiCalendar className="h-4 w-4" />,
     },
   ];
 
@@ -523,8 +288,8 @@ export default function Sidebar() {
                             }
                           }}
                           className={`flex ${
-                            router.asPath.includes(href) ? "bg-blue-700" : ""
-                          } items-center p-4 rounded-lg hover:bg-blue-700 cursor-pointer text-white`}
+                            router.asPath.includes(href) ? "bg-blue-500" : ""
+                          } items-center p-4 rounded-lg hover:bg-blue-400 cursor-pointer text-white`}
                         >
                           {/* icon */}
                           <div className="flex mr-2 justify-center items-center content-center w-8 h-8 rounded-full bg-white text-blue-800">
@@ -557,8 +322,8 @@ export default function Sidebar() {
                         <Link
                           href={href}
                           className={`flex ${
-                            router.asPath.includes(href) ? "bg-blue-700" : ""
-                          } items-center p-4 rounded-lg hover:bg-blue-700 cursor-pointer text-white`}
+                            router.asPath.includes(href) ? "bg-blue-400" : ""
+                          } items-center p-4 rounded-lg hover:bg-blue-500 cursor-pointer text-white`}
                         >
                           {/* icon */}
                           <div className="flex mr-2 justify-center items-center content-center w-8 h-8 rounded-full bg-white text-blue-800">
@@ -601,9 +366,9 @@ export default function Sidebar() {
                                 href={href}
                                 className={`flex ${
                                   router.asPath.includes(href)
-                                    ? "bg-blue-700"
+                                    ? "bg-blue-400"
                                     : ""
-                                } items-center px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer text-white`}
+                                } items-center px-4 py-2 rounded-lg hover:bg-blue-400 cursor-pointer text-white`}
                               >
                                 {title}
                               </Link>
@@ -631,7 +396,7 @@ export default function Sidebar() {
           .sidebar-container {
             width: 320px;
             height: 100vh;
-            background: #f2f2f2;
+            background: #E8EDF6;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
           }
         `}</style>
