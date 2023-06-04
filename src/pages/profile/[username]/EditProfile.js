@@ -50,7 +50,7 @@ export default function EditProfile(props) {
       <Head>
         <title>{`Edit Profile ${props.id}`}</title>
       </Head>
-      <div className="ml-7 py-4">
+      <div className="ml-12 py-10">
         <H2>Edit Profile</H2>
       </div>
       <img
@@ -108,7 +108,7 @@ export default function EditProfile(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context, ["ADMIN"]);
+  const authentications = checkRole(context, ["ADMIN", "GURU", "MURID"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {

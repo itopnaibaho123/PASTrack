@@ -17,8 +17,9 @@ export default function App({ Component, pageProps }) {
           
           <Sidebar />
           <div className="flex-1">
-            <Toaster/>
+            <div className="max-h-screen overflow-y-auto">
             <Component {...pageProps} />
+          </div>
           </div>
         </div>
       )}
