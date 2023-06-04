@@ -1,6 +1,6 @@
 import FormModalContextProvider from "@/components/context/FormModalContext";
 import FormCreatePostinganTugas from "@/components/Form/FormCreatePostinganTugas";
-import { H1, H3 } from "@/components/Typography";
+import { H1, H2, H3 } from "@/components/Typography";
 import React from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
@@ -25,36 +25,29 @@ export default function CreatePostinganTugas() {
           active={"Create Tugas"}
         />
       </div>
-      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-        <Head>
-          <title>{`Create Tugas`}</title>
-        </Head>
-        <div className="flex flex-col text-center items-center py-4">
-          <H3>Buat Postingan Tugas</H3>
-        </div>
+      <Head>
+        <title>{`Create Tugas`}</title>
+      </Head>
+      <div className="ml-12 py-10">
+        <H2>Buat Postingan Tugas</H2>
+      </div>
+      <div className="float-left ml-10">
         <FormModalContextProvider>
-          <FormCreatePostinganTugas
-            handleSubmit={async (formData, setFormData) => {
-              try {
-                console.log(formData);
-                const res = await postTugas(
-                  `${POSTINGAN_TUGAS}`,
-                  formData,
-                  getCookie("token")
-                );
-                console.log(res);
-                if (res.ok) {
-                  toast.success("Tugas Berhasil Dibuat")
-                  router.back();
-                }
-              } catch (err) {
-                console.log(err);
-                toast("Tugas Tidak Berhasil Dibuat")
-              } finally {
-                setFormData({});
+          <FormCreatePostinganTugas handleSubmit={async (formData, setFormData) => {
+            try {
+              console.log(formData)
+              const res = await postTugas(`${POSTINGAN_TUGAS}`, formData, getCookie('token'))
+              console.log(res)
+              if (res.ok) {
+                toast.success("Tugas Berhasil Dibuat")
+                router.back();
               }
-            }}
-          >
+            } catch (err) {
+              console.log(err)
+            } finally {
+              setFormData({})
+            }
+          }}>
             <Input
               type="text"
               label={"Judul"}

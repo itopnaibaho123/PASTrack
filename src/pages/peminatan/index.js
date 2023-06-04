@@ -3,7 +3,7 @@ import { PEMINATAN } from "@/components/Hooks/Peminatan";
 import { getListPeminatan } from "@/components/Hooks/Peminatan";
 import StudentCard from "@/components/StudentCard";
 import checkRole from "@/components/Helper/CheckRole";
-import { H3 } from "@/components/Typography";
+import { H2 } from "@/components/Typography";
 import Button from "@/components/Button";
 import { useRouter } from "next/router";
 import Head from "next/head";

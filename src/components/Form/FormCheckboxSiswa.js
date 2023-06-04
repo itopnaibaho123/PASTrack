@@ -18,7 +18,7 @@ export default function FormCheckboxSiswa ({handleSubmit,children}) {
       >
         <div className="max-w-[375px] w-full flex-1 flex flex-col justify-center mx-auto">
           <div className="px-2">{children}</div>
-          <div className="px-2">
+          <div className="px-2 flex justify-center">
             <Button full variant="primary">
               Submit
             </Button>

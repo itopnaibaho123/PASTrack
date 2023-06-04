@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import FormModalContextProvider from "@/components/context/FormModalContext";
 import RegisterSiswaForm from "@/components/Form/RegisterSiswaForm";
-import { B, H3 } from "@/components/Typography";
+import { B, H2 } from "@/components/Typography";
 import Input from "@/components/Input";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
@@ -31,19 +31,16 @@ export default function Siswa(props) {
           active={"Register Siswa"}
         />
       </div>
-      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-        <div className="flex justify-between items-center mb-4">
-          <Button variant="ghost" onClick={handleBack}>
-            <FaChevronLeft className="mr-2" />
-          </Button>
-          <H3>Register Siswa</H3>
-          <div style={{ width: "32px" }}></div> {/* Spacing for alignment */}
-        </div>
+      <div className="ml-12 py-10">
+        <H2>Register Siswa</H2>
+      </div>
+      <div className="float-left ml-10">
         <FormModalContextProvider>
           <RegisterSiswaForm
             handleSubmit={async (formData, setFormData) => {
+
               try {
-                console.log(formData);
+                console.log(formData)
                 const res = await fetch(
                   `${process.env.NEXT_PUBLIC_API_ROUTE}api/register/student`,
                   {
@@ -93,9 +90,14 @@ export default function Siswa(props) {
               required
               type="number"
             />
-            <Select label={"Angkatan"} name={"angkatan"} placeholder="id">
+            <Select
+              label={"Angkatan"}
+              name={"angkatan"}
+              placeholder="id"
+            >
               {props.angkatan}
             </Select>
+
           </RegisterSiswaForm>
         </FormModalContextProvider>
       </div>
