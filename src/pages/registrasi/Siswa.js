@@ -54,7 +54,7 @@ export default function Siswa(props) {
                 );
                 if (res.ok) {
                   toast.success("Akun Murid Berhasil Dibuat")
-                  router.push("/");
+                  router.push("/profile/listuser");
                 }else {
                   toast.error("Akun Murid Gagal Dibuat")
                 }

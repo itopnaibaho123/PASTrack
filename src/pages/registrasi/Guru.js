@@ -52,7 +52,7 @@ export default function Guru() {
                 console.log(res)
                 if (res.ok) {
                   toast.success("Akun Guru Berhasil Dibuat")
-                  router.push("/");
+                  router.push("/profile/listuser");
                 }else{
                   toast.error("Akun Guru Tidak Berhasil Dibuat")
                 }
