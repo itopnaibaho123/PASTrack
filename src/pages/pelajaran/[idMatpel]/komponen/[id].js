@@ -14,18 +14,19 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 export default function detailKomponen(props) {
   const router = useRouter();
+  console.log(props.data)
   return (
     <div>
       <div className="h-full flex flex-col">
         <Breadcrumb
           links={[
-            { label: "Back To Home", href: "/" },
+            { label: "Home", href: "/" },
             { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
             { label: `Matpel id: ${props.idMatpel}`, href: `/pelajaran/${props.idMatpel}` },
             { label: `Daftar Komponen`, href: `/pelajaran/${props.idMatpel}/komponen` },
-            { label: `Komponen id: ${props.id}`, href: router.asPath },
+            { label: `${props.data["namaKomponen"]}`, href: router.asPath },
           ]}
-          active={`Komponen id: ${props.id}`}
+          active={`${props.data["namaKomponen"]}`}
         />
       </div>
       <Head>

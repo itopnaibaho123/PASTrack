@@ -184,7 +184,7 @@ export async function getServerSideProps(context) {
     if ((role === "GURU", "MURID")) {
       const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
       const semester = await getListSemester();
-
+      
       return {
         props: {
           role: role,
