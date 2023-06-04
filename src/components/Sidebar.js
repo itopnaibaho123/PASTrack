@@ -632,6 +632,7 @@ export default function Sidebar() {
             width: 320px;
             height: 100vh;
             background: #f2f2f2;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
           }
         `}</style>
       </div>
