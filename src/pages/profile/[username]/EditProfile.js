@@ -39,16 +39,16 @@ export default function EditProfile(props) {
       <Head>
         <title>{`Edit Profile ${props.id}`}</title>
       </Head>
-      <div className="ml-7 py-4">
+      <div className="ml-12 py-10">
         <H2>Edit Profile</H2>
       </div>
       <img
           src="http://www.clker.com/cliparts/f/a/0/c/1434020125875430376profile.png"
           alt="Profile Image"
-          className="h-20 w-20 rounded-full ml-5"
+          className="h-20 w-20 rounded-full ml-10"
         />
         
-      <div className="float-left ml-5">
+      <div className="float-left ml-10">
       <FormModalContextProvider>
         <EditProfileForm
           handleSubmit={async (formData, setFormData) => {
@@ -95,7 +95,7 @@ export default function EditProfile(props) {
 
 export async function getServerSideProps(context) {
   // context.req.query
-  const authentications = checkRole(context, ["ADMIN"]);
+  const authentications = checkRole(context, ["ADMIN", "GURU", "MURID"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {

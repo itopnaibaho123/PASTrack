@@ -18,7 +18,7 @@ export default function ubahTugas(props) {
   return (
     <div>
       <Head>
-        <title>{`Detail Tugas`}</title>
+        <title>{`Edit Tugas`}</title>
       </Head>
       <div className="ml-12 py-10">
         <H2>Ubah Postingan Tugas</H2>
