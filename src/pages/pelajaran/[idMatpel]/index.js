@@ -12,7 +12,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 export default function index(props) {
   const router = useRouter();
   return (
-    <>
+    <div>
       <div className="h-full flex flex-col">
         <Breadcrumb
           links={[
@@ -54,7 +54,7 @@ export default function index(props) {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export async function getServerSideProps(context) {
@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
         props: {
           role: role,
           siswa: siswa,
-          idMatpel: context.query.idMatpel
+          idMatpel: context.query.idMatpel,
         },
       };
     }

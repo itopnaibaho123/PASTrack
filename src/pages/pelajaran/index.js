@@ -9,10 +9,11 @@ import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
 import Head from "next/head";
 import Breadcrumb from "@/components/Breadcrumb";
+import { useState } from "react";
 
 export default function index(props) {
   const router = useRouter();
-  console.log(props.semester);
+
   return (
     <div>
       <div className="h-full flex flex-col">
@@ -91,7 +92,7 @@ export async function getServerSideProps(context) {
     if ((role === "GURU", "MURID")) {
       const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
       const semester = await getListSemester();
-
+      
       return {
         props: {
           role: role,

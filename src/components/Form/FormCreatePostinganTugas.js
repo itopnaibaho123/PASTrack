@@ -6,12 +6,6 @@ import { B } from "../Typography";
 export default function FormCreatePostinganTugas({ handleSubmit, children }) {
   const { formData, setFormData, isOpen, setIsOpen } =
     useContext(FormModalContext);
-
-  const submitting = (e) => {
-    e.stopPropagation;
-    e.preventDefault;
-    handleSubmit(formData, setFormData, isOpen, setIsOpen);
-  };
   const handleConfirmClick = () => {
     setIsOpen(false);
   };
@@ -34,6 +28,7 @@ export default function FormCreatePostinganTugas({ handleSubmit, children }) {
             e.stopPropagation();
             e.preventDefault();
             handleSubmit(formData, setFormData);
+            handleConfirmClick
           }}
         >
           {isOpen && (
@@ -52,10 +47,10 @@ export default function FormCreatePostinganTugas({ handleSubmit, children }) {
                       Are You Sure Want To Add This Tugas
                     </p>
                     <div className="flex justify-end space-x-2">
-                      <Button className="bg-red" onClick={handleCancelClick}>
+                      <Button  variant="secondary" onClick={handleCancelClick}>
                         Cancel
                       </Button>
-                      <Button onClick={handleConfirmClick} type={"submit"}>
+                      <Button type={"submit"}>
                         Submit
                       </Button>
                     </div>

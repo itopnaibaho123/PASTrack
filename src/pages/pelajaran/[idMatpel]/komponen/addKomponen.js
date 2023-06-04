@@ -19,7 +19,7 @@ export default function addKomponen(props) {
       <div className="h-full flex flex-col">
         <Breadcrumb
           links={[
-            { label: "Back To Home", href: "/" },
+            { label: "Home", href: "/" },
             { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
             { label: `Matpel id: ${props.idMatpel}`, href: `/pelajaran/${props.idMatpel}` },
             { label: `Daftar Komponen`, href: `/pelajaran/${props.idMatpel}/komponen` },

@@ -41,7 +41,6 @@ export default function EditProfile(props) {
         <Breadcrumb
           links={[
             { label: "Home", href: "/" },
-            { label: props.id, href: router.asPath },
             { label: "Edit Profile", href: router.asPath },
           ]}
           active={"Edit Profile"}
