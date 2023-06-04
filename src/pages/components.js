@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { H1, H3, H2, B, P } from "@/components/Typography";
 import Button from "@/components/Button";
-import Modals from "@/components/Modals";
+
 import Toast from "@/components/Toast";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
@@ -48,13 +48,7 @@ export default function components() {
         </div>
       </div>
       <div className="ml-4">
-        <Modals
-          confirmButtonName="delete"
-          cancelButtonName={"Cancel"}
-          desc="Are You Sure want to continue deleting this file ?"
-          title="Delete Class"
-          onClick={test}
-        ></Modals>
+      
       </div>
       <div className="mt-4">
         {/* <Toast variant="success">Success message</Toast> */}

@@ -5,7 +5,7 @@ import { B, H2, H3, P } from "./Typography";
 import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { deleteTugas } from "@/components/Hooks/Tugas";
 import { getCookie } from "@/components/Helper/cookies";
-import Modals from "./Modals";
+
 import Toast from "./Toast";
 
 export default function CardTugas({
