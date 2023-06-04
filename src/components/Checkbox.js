@@ -24,6 +24,7 @@ export default function Checkbox({ name, value, id, username, idMatpel }) {
 
   return (
     <div>
+      <div> 
       <label className="flex items-center" key={id}>
         <input
           id={id}
@@ -35,6 +36,7 @@ export default function Checkbox({ name, value, id, username, idMatpel }) {
         />
         <span className="text-gray-700">{value}</span>
       </label>
+    </div>
     </div>
   );
 }

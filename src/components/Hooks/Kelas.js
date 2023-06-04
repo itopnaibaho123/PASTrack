@@ -11,6 +11,7 @@ export const KELAS = API_ROUTE + "api/kelas/";
 export const LIST_MATPEL_KELAS = API_ROUTE + "api/kelas/allMatpel";
 export const ADD_MATPEL_TO_KELASS = KELAS + "addMatpel/";
 export const LIST_SEMESTER_KELAS = API_ROUTE + "api/kelas/allSemester";
+export const HAPUS_KELAS = API_ROUTE + "api/kelas/delete/"
 
 const getAllKelas= async (url, token) => {
   
@@ -81,4 +82,22 @@ const getAllListSemester = async (url, token) => {
   return data;
 };
 
-export {postKelas, postMatpelKelas, getAllKelas, getKelas, getAllListMatpel, getAllListSemester}
+const deleteKelas = async (url, token) => {
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      return;
+    }
+    throw new Error("Failed to delete the kelas");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export { postKelas, postMatpelKelas, getAllKelas, getKelas, getAllListMatpel, getAllListSemester, deleteKelas }

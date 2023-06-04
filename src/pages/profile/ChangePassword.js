@@ -4,7 +4,7 @@ import React from "react";
 import Input from "@/components/Input";
 import { clearCookie, getCookie } from "@/components/Helper/cookies";
 import { B } from "@/components/Typography";
-import { H1, H3 } from "@/components/Typography";
+import { H1, H2, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -23,13 +23,13 @@ export default function () {
           active={"Ganti Password"}
         />
       </div>
-      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
-        <Head>
-          <title>{`Change Password`}</title>
-        </Head>
-        <div className="flex flex-col text-center items-center py-4">
-          <H3>Ganti Password</H3>
-        </div>
+      <Head>
+        <title>{`Change Password`}</title>
+      </Head>
+      <div className="ml-6 py-4">
+        <H2>Ganti Password</H2>
+      </div>
+      <div className="float-left ml-5">
         <FormModalContextProvider>
           <FormGantiPassword
             handleSubmit={async (formData, setFormData) => {
@@ -94,6 +94,6 @@ export default function () {
           </FormGantiPassword>
         </FormModalContextProvider>
       </div>
-    </div>
+      </div>
   );
 }

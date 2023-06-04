@@ -32,34 +32,26 @@ export default function CardTugas({
   };
 
   return (
-    <div className="align-middle inline-block shadow overflow-hidden">
-      <div className="grid grid-cols-1 gap-y-4">
-        <div className="bg-blue-100 border-4 border-blue-200 rounded p-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <div className="flex">
-                <div className="flex flex-col">
-                  <H3 className="text-xl font-medium"> Tugas: {judulPostingan} </H3>
-                  <P className="text-xl font-medium"> Mata Pelajaran: {mataPelajaran}</P>
-                  <P className="text-xl font-medium"> Due Date: {tanggalDeadline}</P>
-                  <P className="text-gray-500"> Deskripsi Tugas: {deskripsi} </P>
-                </div>
-                <div className="flex flex-col w-full items-end justify-end">
-                  <div className="py-1">
-                    <Button
-                      onClick={() =>
-                        router.push(`${router.asPath}/edit/${kodePostingan}`)
-                      }
-                    >
-                      Edit Tugas
-                    </Button>
-                  </div>
-                  <div className="mt-2">
-                    <Button onClick={() => setIsModalOpen(true)}>Hapus Tugas</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="w-2/3 p-10 mb-5 bg-blue-100 rounded-2xl shadow-xl border border-blue-400">
+      <div className="flex justify-between items-center">
+        <div className="w-3/4">
+          <h1 className="text-2xl leading-10 font-bold text-blue-900"> Tugas: {judulPostingan} </h1>
+          <P className="text-slate-500"> Mata Pelajaran: {mataPelajaran}</P>
+          <P className="text-slate-500"> Due Date: {tanggalDeadline}</P>
+          <P className="text-slate-500"> Deskripsi Tugas: {deskripsi} </P>
+        </div>
+        <div className="flex flex-col justify-between h-full">
+          <div className="py-1">
+            <Button
+              onClick={() =>
+                router.push(`${router.asPath}/edit/${kodePostingan}`)
+              }
+            >
+              Edit Tugas
+            </Button>
+          </div>
+          <div className="mt-2">
+            <Button variant="delete" onClick={() => setIsModalOpen(true)}>Hapus Tugas</Button>
           </div>
         </div>
       </div>
@@ -78,7 +70,7 @@ export default function CardTugas({
       )}
       {isToastOpen && (
         <div className="flex justify-center absolute bottom-4">
-          <Toast variant="success" duration={15000} onClose={() => setIsToastOpen(false)}>
+          <Toast variant="success" duration={12000} onClose={() => setIsToastOpen(false)}>
             Tugas berhasil dihapus
           </Toast>
         </div>

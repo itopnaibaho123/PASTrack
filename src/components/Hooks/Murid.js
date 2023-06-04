@@ -11,8 +11,20 @@ export const GET_ALL_SISWA = API_KELAS + "allSiswa";
 export const ADD_SISWA_TO_KELAS = API_KELAS + "addMurid/";
 export const KLS_MURID = API_ROUTE + "api/kelas/siswa/allKelas/"
 export const CURRENT_KLS_MURID = API_ROUTE + "api/kelas/siswa/currentClass/"
+export const NOT_ASSIGNED_MURID = API_ROUTE + "api/kelas/notAssigned/Siswa"
 
 const getAllSiswa = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
+const getNotAssignedMurid = async (url, token) => {
   const response = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -80,4 +92,6 @@ const getAllKelasByMurid = async (url, token) => {
   return data;
 };
 
-export { getAllSiswa, addSiswaToKelas, getSiswaByKelas, getKelas, getCurrentKelasMurid, getAllKelasByMurid };
+
+
+export { getAllSiswa, addSiswaToKelas, getSiswaByKelas, getKelas, getCurrentKelasMurid, getAllKelasByMurid, getNotAssignedMurid };
