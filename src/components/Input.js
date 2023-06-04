@@ -1,4 +1,4 @@
-  import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { FormModalContext } from "./context/FormModalContext";
 
@@ -21,15 +21,22 @@ export default function Input({
   required = true,
   full,
   type = "text",
-  inputvalue
+  inputvalue,
 }) {
+  useEffect(() => {
+    if (inputvalue) {
+      setFormData((previous) => ({
+        ...previous,
+        [name]: inputvalue,
+      }));
+    }
+  }, []);
+
   // const [form, setForm] = useState()
   const { setFormData, formData } = useContext(FormModalContext);
   return (
     <div className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`}>
-      <label htmlFor={name}>
-        {label}
-      </label>
+      <label htmlFor={name}>{label}</label>
       <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
         <input
           max={9999999999}
@@ -40,7 +47,7 @@ export default function Input({
           name={name}
           disabled={disabled}
           type={type}
-          value={formData[name] || inputvalue || ''}
+          value={formData[name] || inputvalue || ""}
           required={required}
           onChange={(e) => {
             setFormData((previous) => ({
@@ -56,5 +63,3 @@ export default function Input({
     </div>
   );
 }
-
-

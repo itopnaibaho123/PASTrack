@@ -27,7 +27,7 @@ export default function FormKomponen({ handleSubmit, children }) {
             e.stopPropagation();
             e.preventDefault();
             handleSubmit(formData, setFormData);
-            handleConfirmClick;
+            handleConfirmClick();
           }}
         >
           {isOpen && (

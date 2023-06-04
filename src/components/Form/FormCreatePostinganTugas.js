@@ -28,7 +28,7 @@ export default function FormCreatePostinganTugas({ handleSubmit, children }) {
             e.stopPropagation();
             e.preventDefault();
             handleSubmit(formData, setFormData);
-            handleConfirmClick
+            handleConfirmClick()
           }}
         >
           {isOpen && (

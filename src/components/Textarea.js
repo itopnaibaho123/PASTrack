@@ -1,5 +1,5 @@
-import React, {useContext} from 'react'
-import { FormModalContext } from './context/FormModalContext';
+import React, { useContext, useEffect } from "react";
+import { FormModalContext } from "./context/FormModalContext";
 
 const variants = {
   primary: "bg-main-color-navy text-background",
@@ -19,16 +19,23 @@ export default function Textarea({
   required = true,
   full,
   type = "text",
-  inputvalue
+  inputvalue,
 }) {
   // const [form, setForm] = useState()
   const { setFormData, formData } = useContext(FormModalContext);
 
+  useEffect(() => {
+    if (inputvalue) {
+      setFormData((previous) => ({
+        ...previous,
+        [name]: inputvalue,
+      }));
+    }
+  }, []);
+
   return (
     <div className={`flex flex-col gap-2 py-1.5 ${full && "w-full"} mb-2`}>
-      <label htmlFor={name}>
-        {label}
-      </label>
+      <label htmlFor={name}>{label}</label>
       <div className="flex ring-gray/50 ring-[1.5px] rounded-sm items-stretch">
         <textarea
           rows="4"
@@ -38,7 +45,7 @@ export default function Textarea({
           name={name}
           disabled={disabled}
           type={type}
-          value={formData[name] || inputvalue || ''}
+          value={formData[name] || inputvalue || ""}
           required={required}
           onChange={(e) => {
             setFormData((previous) => ({
@@ -52,5 +59,5 @@ export default function Textarea({
         <span className="px-4 font-medium text-red-300">{helper}</span>
       )}
     </div>
-  )
+  );
 }

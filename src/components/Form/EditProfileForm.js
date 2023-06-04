@@ -30,7 +30,7 @@ export default function EditProfileForm({ handleSubmit, children }) {
             e.stopPropagation();
             e.preventDefault();
             handleSubmit(formData, setFormData);
-            handleConfirmClick;
+            handleConfirmClick()
           }}
         >
           {isOpen && (

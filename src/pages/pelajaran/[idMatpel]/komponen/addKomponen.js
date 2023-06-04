@@ -53,6 +53,7 @@ export default function addKomponen(props) {
                 toast.error("Gagal Menambahkan Komponen")
               }
             } catch (err) {
+              toast.error("Gagal Menambahkan Komponen")
               console.log(err);
             } finally {
               setFormData({});

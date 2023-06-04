@@ -27,7 +27,7 @@ export default function FormCreateMataPelajaran ({handleSubmit,children}) {
             e.stopPropagation();
             e.preventDefault();
             handleSubmit(formData, setFormData);
-            handleConfirmClick
+            handleConfirmClick()
           }}
         >
           {isOpen && (
