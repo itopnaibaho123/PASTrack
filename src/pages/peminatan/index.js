@@ -27,7 +27,7 @@ export default function index(props) {
           <title>{`Page Peminatan`}</title>
         </Head>
         <div className="flex flex-col text-center items-center">
-          <H3>Kelola Peminatan</H3>
+          <H2>Kelola Peminatan</H2>
         </div>
         <div className="flex justify-center gap-2 ">
           <Button onClick={() => router.back()}>Kembali</Button>

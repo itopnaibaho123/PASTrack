@@ -5,7 +5,6 @@ import { B, H2, H3, P } from "./Typography";
 import { POSTINGAN_TUGAS } from "@/components/Hooks/Tugas";
 import { deleteTugas } from "@/components/Hooks/Tugas";
 import { getCookie } from "@/components/Helper/cookies";
-import Modals from "./Modals";
 import Toast from "./Toast";
 
 export default function CardTugas({
@@ -31,6 +30,17 @@ export default function CardTugas({
     }
   };
 
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirmClick = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancelClick = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="w-2/3 p-10 mb-5 bg-blue-800 rounded-2xl shadow-lg border-4 border-yellow-400">
       <div className="flex justify-between items-center">
@@ -57,17 +67,45 @@ export default function CardTugas({
         </div>
       </div>
       {isModalOpen && (
-        <Modals
-          title="Delete Tugas"
-          desc="Apakah Anda yakin ingin menghapus tugas ini?"
-          confirmButtonName="Hapus Tugas"
-          onClick={() => {
-            handleDelete();
-            setIsModalOpen(false);
-          }}
-          onClose={() => setIsModalOpen(false)}
-          cancelButtonName="Batal"
-        />
+        // <Modals
+        //   title="Delete Tugas"
+        //   desc="Apakah Anda yakin ingin menghapus tugas ini?"
+        //   confirmButtonName="Hapus Tugas"
+        //   onClick={() => {
+        //     handleDelete();
+        //     setIsModalOpen(false);
+        //   }}
+        //   onClose={() => setIsModalOpen(false)}
+        //   cancelButtonName="Batal"
+        // />
+        <div>
+              {/* Overlay */}
+              <div
+                className="fixed inset-0 w-screen h-screen bg-black/20"
+                onClick={handleClose}
+              ></div>
+              <div className="fixed inset-0 w-screen h-screen grid place-items-center">
+                <div className="px-4">
+                  {/* Modal */}
+                  <div className="bg-white rounded-lg max-w-[448px] mx-auto p-6">
+                    <B className="text-xl mb-2">Delete Mata Pelajaran</B>
+                    <p className="text-gray-500 mb-4">
+                      Are You Sure Want To Delete This Matpel
+                    </p>
+                    <div className="flex justify-end space-x-2">
+                      <Button  variant="secondary" onClick={handleCancelClick}>
+                        Cancel
+                      </Button>
+                      <Button onClick={() => {
+                        handleDelete() 
+                        handleConfirmClick()}}>
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
       )}
       {isToastOpen && (
         <div className="flex justify-center absolute bottom-4">

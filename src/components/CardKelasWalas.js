@@ -11,13 +11,13 @@ export default function ({
 }) {
   const router = useRouter()
   return (
-    <div className="py-2 px-3 bg-blue-100 justify-center w-min-w-[230px] max-w-md max-h-[300px] ring-2 ring-blue-200 rounded p-4 shadow overflow-hidden">
+    <div className="w-auto sm:w-1/2 p-8 mb-1 bg-blue-800 rounded-2xl shadow-lg border-4 border-yellow-400 my-1 py-4">
       <div className="py-5">
-        <H3>Kelas: {namaKelas}</H3>
+        <h1 className="text-white font-bold text-3xl">Kelas: {namaKelas}</h1>
       </div>
       <P>{semester}</P>
       <div className="py-4">
-         <Button onClick={()=> router.push(`${router.asPath}/${id}`)}>Detail Kelas</Button>
+         <Button variant="natural" onClick={()=> router.push(`${router.asPath}/${id}`)}>Detail Kelas</Button>
       </div>
     </div>
   );
