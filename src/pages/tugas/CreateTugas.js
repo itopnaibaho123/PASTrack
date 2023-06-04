@@ -9,11 +9,22 @@ import { postTugas } from "@/components/Hooks/Tugas";
 import { getCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 export default function CreatePostinganTugas() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Tugas", href: "/tugas" },
+            { label: "Create Tugas", href: router.asPath },
+          ]}
+          active={"Create Tugas"}
+        />
+      </div>
       <Head>
         <title>{`Create Tugas`}</title>
       </Head>
@@ -28,7 +39,8 @@ export default function CreatePostinganTugas() {
               const res = await postTugas(`${POSTINGAN_TUGAS}`, formData, getCookie('token'))
               console.log(res)
               if (res.ok) {
-                router.back()
+                toast.success("Tugas Berhasil Dibuat")
+                router.back();
               }
             } catch (err) {
               console.log(err)

@@ -1,30 +1,28 @@
 import Button from "./Button";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { B } from "./Typography";
+import { FormModalContext } from "./context/FormModalContext";
 
 export default function Modals({
-  onClick,
-  onClose,
+
   title,
   desc,
   confirmButtonName,
   cancelButtonName,
+  
 }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, setIsOpen } =useContext(FormModalContext);
 
   const handleConfirmClick = () => {
     setIsOpen(false);
-    onClick();
   };
 
   const handleCancelClick = () => {
     setIsOpen(false);
-    onClose();
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    onClose();
   };
 
   return (
@@ -43,8 +41,16 @@ export default function Modals({
                 <B className="text-xl mb-2">{title}</B>
                 <p className="text-gray-500 mb-4">{desc}</p>
                 <div className="flex justify-end space-x-2">
-                  <Button onClick={handleCancelClick}>{cancelButtonName}</Button>
-                  <Button onClick={handleConfirmClick}>{confirmButtonName}</Button>
+                  <Button
+                    className="color-"
+                    onClick={handleCancelClick}
+                    type=""
+                  >
+                    {cancelButtonName}
+                  </Button>
+                  <Button onClick={handleConfirmClick} type={"submit"}>
+                    {confirmButtonName}
+                  </Button>
                 </div>
               </div>
             </div>

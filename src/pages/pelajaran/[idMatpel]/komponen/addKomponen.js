@@ -10,11 +10,24 @@ import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { addNewKomponen } from "@/components/Hooks/Komponen";
 import { getCookie } from "@/components/Helper/cookies";
 import { H1, H3 } from "@/components/Typography";
-
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 export default function addKomponen(props) {
   const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Back To Home", href: "/" },
+            { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
+            { label: `Matpel id: ${props.idMatpel}`, href: `/pelajaran/${props.idMatpel}` },
+            { label: `Daftar Komponen`, href: `/pelajaran/${props.idMatpel}/komponen` },
+            { label: `Tambah Komponen`, href: router.asPath },
+          ]}
+          active={`Tambah Komponen`}
+        />
+      </div>
       <div className="flex flex-col text-center items-center py-4">
         <H3>Buat Komponen Penilaian</H3>
       </div>
@@ -34,7 +47,10 @@ export default function addKomponen(props) {
               );
               console.log(res);
               if (res.ok) {
+                toast.success("Berhasil Menambahkan Komponen")
                 router.back();
+              }else{
+                toast.error("Gagal Menambahkan Komponen")
               }
             } catch (err) {
               console.log(err);

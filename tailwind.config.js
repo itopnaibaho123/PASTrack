@@ -9,6 +9,7 @@ module.exports = {
         'main-color-yellow': '#FFD503',
         'main-text-brown': '#666666',
         'main-text-grey': '#EAEAEA',
+        "lightblue": "#0e81a0",
       }
 
     },

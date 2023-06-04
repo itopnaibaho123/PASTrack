@@ -8,6 +8,8 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import Button from "@/components/Button";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 export default function Guru() {
   const router = useRouter();
@@ -16,6 +18,15 @@ export default function Guru() {
   };
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Register Guru", href: router.asPath },
+          ]}
+          active={"Register Guru"}
+        />
+      </div>
       <div className="ml-12 py-10">
           <H2>Register Guru</H2>
         </div>
@@ -40,8 +51,10 @@ export default function Guru() {
                 );
                 console.log(res)
                 if (res.ok) {
-                  setFormData({})
+                  toast.success("Akun Guru Berhasil Dibuat")
                   router.push("/");
+                }else{
+                  toast.error("Akun Guru Tidak Berhasil Dibuat")
                 }
               } catch (err) {
                 // console.log(err)

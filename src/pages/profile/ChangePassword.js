@@ -7,12 +7,22 @@ import { B } from "@/components/Typography";
 import { H1, H2, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
-
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 export default function () {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "profile", href: "/profile" },
+            { label: "Ganti Password", href: "/ChangePassword" },
+          ]}
+          active={"Ganti Password"}
+        />
+      </div>
       <Head>
         <title>{`Change Password`}</title>
       </Head>
@@ -25,32 +35,35 @@ export default function () {
             handleSubmit={async (formData, setFormData) => {
               // setIsError(false);
               if (formData["passwordBaru"] !== formData["ulangiPasswordBaru"]) {
-                formData["passwordLama"] = ""
-                formData["passwordBaru"] = ""
-                formData["ulangiPasswordBaru"] = ""
+                formData["passwordLama"] = "";
+                formData["passwordBaru"] = "";
+                formData["ulangiPasswordBaru"] = "";
               } else {
                 try {
                   const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_ROUTE}api/user/changePassword/${getCookie('username')}`,
+                    `${
+                      process.env.NEXT_PUBLIC_API_ROUTE
+                    }api/user/changePassword/${getCookie("username")}`,
                     {
                       method: "PUT",
                       body: JSON.stringify(formData),
                       headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${getCookie('token')}`,
+                        Authorization: `Bearer ${getCookie("token")}`,
                       },
                     }
                   );
-                  console.log(res)
+                  console.log(res);
                   if (res.ok) {
-                    console.log("Sukses")
+                    toast.success("Password Berhasil Diganti")
                     clearCookie();
                     router.push("/");
-                  } else if(res.status=== 406){
-                    console.log("Password Lama Salah")
+                  } else if (res.status === 406) {
+                    toast.error("Password Lama Salah")
                   }
                 } catch (err) {
                   // console.log(err)
+                  toast.error("Password Gagal Diganti")
                 } finally {
                   setFormData({});
                 }

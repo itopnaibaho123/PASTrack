@@ -10,13 +10,26 @@ import { getCookie } from "@/components/Helper/cookies";
 import { getTugas, updateTugas } from "@/components/Hooks/Tugas";
 import checkRole from "@/components/Helper/CheckRole";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import toast, { Toaster } from 'react-hot-toast';
 import { H1, H2, H3 } from "@/components/Typography";
 
 /* untuk edit postingan tugas */
 export default function ubahTugas(props) {
+  const notify = (error) => error? toast.error("Maaf tidak berhasil mengganti tugas") : toast.success("Tugas berhasil diganti");
   const router = useRouter();
   return (
     <div>
+       <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Tugas", href: "/tugas" },
+            { label: props.data["judulPostingan"], href: router.asPath },
+          ]}
+          active={props.data["judulPostingan"]}
+        />
+      </div>
       <Head>
         <title>{`Edit Tugas`}</title>
       </Head>
@@ -36,9 +49,11 @@ export default function ubahTugas(props) {
                 );
                 console.log(res);
                 if (res.ok) {
+                  notify(false)
                   router.back();
                 }
               } catch (err) {
+                notify(true)
                 console.log(err);
               } finally {
                 setFormData({});

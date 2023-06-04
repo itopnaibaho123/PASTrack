@@ -10,12 +10,24 @@ import { getKomponen, updateKomponen } from "@/components/Hooks/Komponen";
 import checkRole from "@/components/Helper/CheckRole";
 import { getCookie } from "@/components/Helper/cookies";
 import Head from "next/head";
-
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function detailKomponen(props) {
   const router = useRouter();
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Back To Home", href: "/" },
+            { label: "Daftar Mata Pelajaran", href: "/pelajaran" },
+            { label: `Matpel id: ${props.idMatpel}`, href: `/pelajaran/${props.idMatpel}` },
+            { label: `Daftar Komponen`, href: `/pelajaran/${props.idMatpel}/komponen` },
+            { label: `Komponen id: ${props.id}`, href: router.asPath },
+          ]}
+          active={`Komponen id: ${props.id}`}
+        />
+      </div>
       <Head>
         <title>{`Page Detail Komponen`}</title>
       </Head>
@@ -29,7 +41,7 @@ export default function detailKomponen(props) {
               const res = await updateKomponen(
                 `${KOMPONEN}${props.idMatpel}/komponen/${props.id}`,
                 formData,
-                getCookie('token')
+                getCookie("token")
               );
               console.log(res);
               if (res.ok) {

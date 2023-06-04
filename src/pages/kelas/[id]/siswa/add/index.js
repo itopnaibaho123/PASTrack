@@ -8,6 +8,9 @@ import checkRole from "@/components/Helper/CheckRole";
 import { useRouter } from "next/router";
 import { getCookie } from "@/components/Helper/cookies";
 import Head from "next/head";
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
+
 import { H1, H2 } from "@/components/Typography";
 
 export default function StudentAddPage(props) {
@@ -17,6 +20,17 @@ export default function StudentAddPage(props) {
 
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Daftar Kelas", href: "/kelas" },
+            { label: `Kelas Id: ${id}`, href: `/kelas/${id}` },
+            { label: "Tambah Siswa", href: router.asPath },
+          ]}
+          active={"Tambah Siswa"}
+        />
+      </div>
       <Head>
         <title>{`Page Input Siswa`}</title>
       </Head>
@@ -40,9 +54,13 @@ export default function StudentAddPage(props) {
                 );
                 console.log(res);
                 if (res.ok) {
+                  toast.success("Murid Berhasil Ditambahkan")
                   router.back();
+                }else {
+                  toast.error("Murid Gagal Ditambahkan")
                 }
               } catch (err) {
+                toast.error("Murid Gagal Ditambahkan")
                 console.log(err);
               } finally {
                 setFormData({});

@@ -10,17 +10,27 @@ import { getListAngkatan } from "@/components/Hooks/Angkatan";
 import checkRole from "@/components/Helper/CheckRole";
 import Select from "@/components/DropDown/Select";
 import { FaChevronLeft } from "react-icons/fa";
-
+import Breadcrumb from "@/components/Breadcrumb";
+import { toast } from "react-hot-toast";
 
 export default function Siswa(props) {
   const router = useRouter();
-  console.log(props.angkatan)
+  console.log(props.angkatan);
 
   const handleBack = () => {
     router.push("/profile/listuser");
   };
   return (
     <div>
+      <div className="h-full flex flex-col">
+        <Breadcrumb
+          links={[
+            { label: "Home", href: "/" },
+            { label: "Register Siswa", href: router.asPath },
+          ]}
+          active={"Register Siswa"}
+        />
+      </div>
       <div className="ml-12 py-10">
         <H2>Register Siswa</H2>
       </div>
@@ -43,7 +53,10 @@ export default function Siswa(props) {
                   }
                 );
                 if (res.ok) {
+                  toast.success("Akun Murid Berhasil Dibuat")
                   router.push("/");
+                }else {
+                  toast.error("Akun Murid Gagal Dibuat")
                 }
               } catch (err) {
                 console.log(err);
@@ -108,7 +121,7 @@ export async function getServerSideProps(context) {
     props: {
       id: username,
       role: role,
-      angkatan: angkatan
+      angkatan: angkatan,
     },
   };
 }

@@ -13,7 +13,7 @@ const variants = {
 export default function Button({
     isLoading = false,
     children,
-    type= "submit",
+    type,
     variant = "primary",
     onClick,
     disabled,
