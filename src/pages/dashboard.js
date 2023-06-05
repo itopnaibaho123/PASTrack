@@ -135,13 +135,14 @@ export default function dashboard(props) {
       }
       setlblAvgMatpel(permittedAvgLabelMatpel);
       setAvgMatpel(permittedAvgMatpel);
-    } else if (props.role === "MURID") {
+    } else if (props.role === "MURID", "ORANGTUA") {
       const permittedAvgLabel = [];
       const permittedAvgValue = [];
-
+      
       for (let i = 0; i < props.pencapaianNilai.length; i++) {
-        permittedAvgLabel.push(props.pencapaianNilai[i]["semester"]);
-        permittedAvgValue.push(props.pencapaianNilai[i]["avgScore"]);
+        console.log(props.pencapaianNilai)
+        permittedAvgLabel.push(props.pencapaianNilai[i]["semesterId"]);
+        permittedAvgValue.push(props.pencapaianNilai[i]["score"]);
       }
       setAverageLineLabel(permittedAvgLabel);
       setAverageLineValue(permittedAvgValue);
@@ -152,7 +153,6 @@ export default function dashboard(props) {
     try {
       const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
-      console.log(rankOfData);
     } catch (e) {
       console.log(e);
     }
