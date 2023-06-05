@@ -94,7 +94,7 @@ export default function Sidebar() {
       icon: <FaChalkboard className="h-4 w-4" />,
     },
     {
-      href: "/orangtua-kelas-saya",
+      href: "/murid-kelas-saya",
       title: "Kelas Anak Saya",
       available: ["ORANGTUA"],
       icon: <FaChalkboard className="h-4 w-4" />,
