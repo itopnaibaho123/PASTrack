@@ -84,7 +84,7 @@ export default function dashboard(props) {
   const [rank, setRank] = useState([]);
   const [angkatan, setAngkatan] = useState(1);
   const [angkatanDist, setAngkatanDist] = useState(1);
-  const [distribusiLabel, setDistribusiLabel] = useState([]);
+  const [distribusiLabel, setDistribusiLabel] = useState(["0-10","11-40","41-60","61-70","71-80","81-90","91-100"]);
   const [distribusiValue, setDistribusiValue] = useState([]);
   const [averageLineLabel, setAverageLineLabel] = useState([]);
   const [averageLineValue, setAverageLineValue] = useState([]);
@@ -164,14 +164,11 @@ export default function dashboard(props) {
         angkatan,
         getCookie("token")
       );
-      const unpermitLabelDistribusi = [];
       const unpermitValueDistribusi = [];
-      for (const key in dataDistribusi) {
-        unpermitLabelDistribusi.push(key);
-        unpermitValueDistribusi.push(dataDistribusi[key]);
+      for (let i = 0; i < distribusiLabel.length; i++) {
+        unpermitValueDistribusi.push(dataDistribusi[distribusiLabel[i]]);
       }
 
-      setDistribusiLabel(unpermitLabelDistribusi);
       setDistribusiValue(unpermitValueDistribusi);
     } catch (e) {
       console.log(e);
