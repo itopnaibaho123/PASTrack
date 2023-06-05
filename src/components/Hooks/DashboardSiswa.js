@@ -2,6 +2,7 @@ import dashboard from "@/pages/dashboard";
 import axios from "axios";
 const API_ROUTE = process.env.NEXT_PUBLIC_API_ROUTE;
 export const DASHBOARD = API_ROUTE + "api/dashboard/siswa/";
+export const DASHBOARD_SISWA = API_ROUTE + "api/dashboard/siswa/nilai-per-semester/";
 
 const getAllRank = async (username, token) => {
     const APIS = `${DASHBOARD}all-ranking/${username}`
@@ -19,8 +20,7 @@ const getAllRank = async (username, token) => {
 
 
   const getPencapaianNilai = async (username, token) => {
-    const APIS = `${DASHBOARD}${username}/avg-linechart`
-   
+    const APIS = `${DASHBOARD_SISWA}${username}`
     const response = await axios.get(APIS,{
       headers: {
         "Content-Type": "application/json",

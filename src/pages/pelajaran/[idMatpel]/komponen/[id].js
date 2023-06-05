@@ -10,6 +10,7 @@ import { getKomponen, updateKomponen } from "@/components/Hooks/Komponen";
 import checkRole from "@/components/Helper/CheckRole";
 import { getCookie } from "@/components/Helper/cookies";
 import Head from "next/head";
+import { H2 } from "@/components/Typography";
 import Breadcrumb from "@/components/Breadcrumb";
 
 export default function detailKomponen(props) {
@@ -30,9 +31,14 @@ export default function detailKomponen(props) {
         />
       </div>
       <Head>
-        <title>{`Page Detail Komponen`}</title>
+        <title>{`Edit Komponen`}</title>
       </Head>
-      <Button onClick={router.back}>Back</Button>
+      <div className="flex flex-col text-center items-center py-4">
+        <H2>Edit Komponen Penilaian</H2>
+      </div>
+      <div className="flex justify-center">
+        <Button onClick={() => router.back()}>Back</Button>
+      </div>
       <FormModalContextProvider>
         <FormKomponen
           handleSubmit={async (formData, setFormData) => {

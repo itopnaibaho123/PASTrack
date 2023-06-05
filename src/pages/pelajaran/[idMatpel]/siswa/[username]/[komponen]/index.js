@@ -5,6 +5,7 @@ import FormKomponen from "@/components/Form/FormKomponen";
 import React, { useState } from "react";
 import Input from "@/components/Input";
 import { useRouter } from "next/router";
+import { H1, H2, H3 } from "@/components/Typography";
 import Button from "@/components/Button";
 import { KomponenSiswaAPI } from "@/components/Hooks/KomponenSiswa";
 import {
@@ -47,7 +48,12 @@ export default function index(props, komponen, username) {
       <Head>
         <title>{`Edit Komponen Siswa`}</title>
       </Head>
-      <Button onClick={() => router.back()}>Back</Button>
+      <div className="flex flex-col text-center items-center py-4">
+        <H2>Masukan Nilai Siswa ke Dalamn Komponen Nilai</H2>
+      </div>
+      <div className="flex justify-center">
+      <Button variant="secondary" onClick={() => router.back()}>Back</Button>
+      </div>
       <FormModalContextProvider>
         <FormKomponen
           handleSubmit={async (formData, setFormData) => {

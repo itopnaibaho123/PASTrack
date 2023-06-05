@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import StudentCard from "@/components/StudentCard";
 import { B, H3 } from "@/components/Typography";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { MATPEL_LIST_SISWA } from "@/components/Hooks/Matpel";
 import { getListSiswa } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
@@ -11,6 +11,26 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 export default function index(props) {
   const router = useRouter();
+  const [listMurid, setListMurid] = useState(props.siswa); // Menyimpan daftar kelas
+  const [searchQueryMurid, setSearchQueryMurid] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const muridPerPage = 10;
+
+  const filteredMurid = listMurid.filter(
+    (murid) =>
+      murid.nama.toLowerCase().includes(searchQueryMurid.toLowerCase())
+  )
+
+  // Calculate pagination values
+  const indexOfLastMurid = currentPage * muridPerPage;
+  const indexOfFirstMurid = indexOfLastMurid - muridPerPage;
+  const currentMurid = filteredMurid.slice(indexOfFirstMurid, indexOfLastMurid);
+  const totalPages = Math.ceil(filteredMurid.length / muridPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div>
       <div className="h-full flex flex-col">
@@ -42,21 +62,60 @@ export default function index(props) {
             </Button>
           </div>
         </div>
-        <div className="flex flex-wrap gap-3 justify-center">
-          {props.siswa.map((student, index) => {
-            return (
-              <StudentCard
-                nama={student.nama}
-                username={student.username}
-                key={index}
-              />
-            );
-          })}
-        </div>
+        <table className="table-auto shadow-lg">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 bg-blue-800 text-white">Nama Siswa</th>
+              <th className="px-4 py-2 bg-blue-800 text-white">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentMurid.map((student, index) => {
+              const { nama, username } = student;
+              return (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                >
+                  <td className="border px-4 py-2">{nama}</td>
+                  <td className="border px-4 py-2 text-center">
+                    <Button
+                      variant="secondary"
+                      onClick={() => router.push(`${router.asPath}/siswa/${username}`)}
+                    >
+                      Lihat Nilai
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+      {totalPages > 1 && (
+          <div className="flex justify-end mt-4 gap-2 pr-5">
+            {" "}
+            <Button
+              variant="secondary"
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &lt; Previous
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next &gt;
+            </Button>
+          </div>
+        )}
     </div>
   );
 }
+
+
 export async function getServerSideProps(context) {
   // context.req.query
   const authentications = checkRole(context, ["GURU"]);

@@ -24,6 +24,17 @@ const getAllMatpel = async (url, token) => {
   return data;
 };
 
+const getAllMatpelDaftarGuru = async (url, token) => {
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { data } = response;
+  return data;
+};
+
 const getNotAssignedMatpel = async (url, token) => {
   const response = await axios.get(url, {
     headers: {
@@ -100,4 +111,5 @@ export {
   postMatpelToKelas,
   getMatpelByKelas,
   getNotAssignedMatpel,
+  getAllMatpelDaftarGuru,
 };

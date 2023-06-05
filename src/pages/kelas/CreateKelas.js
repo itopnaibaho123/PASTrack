@@ -36,7 +36,7 @@ export default function CreateKelas(props) {
           active={"Create Kelas"}
         />
       </div>
-      <div className="border border-gray-300 rounded-lg shadow-md p-5 max-w-2xl mx-auto my-5">
+      <div className="">
         <Head>
           <title>{`Create Kelas`}</title>
         </Head>

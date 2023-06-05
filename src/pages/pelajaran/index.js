@@ -3,7 +3,7 @@ import { H1, H2 } from "@/components/Typography";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { useRouter } from "next/router";
-import { MATPEL_GURU } from "@/components/Hooks/Matpel";
+import { MATPEL_GURU, getAllMatpelDaftarGuru } from "@/components/Hooks/Matpel";
 import { getAllMatpel } from "@/components/Hooks/Matpel";
 import checkRole from "@/components/Helper/CheckRole";
 import { getListSemester } from "@/components/Hooks/Semester";
@@ -182,7 +182,7 @@ export async function getServerSideProps(context) {
 
   if (authentications.rolesTrue) {
     if ((role === "GURU", "MURID")) {
-      const matpel = await getAllMatpel(`${MATPEL_GURU}${username}`, token);
+      const matpel = await getAllMatpelDaftarGuru(`${MATPEL_GURU}${username}/viewall`, token);
       const semester = await getListSemester();
       
       return {
