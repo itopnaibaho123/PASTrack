@@ -9,7 +9,7 @@ import checkRole from "@/components/Helper/CheckRole";
 import { KOMPONEN } from "@/components/Hooks/Komponen";
 import { addNewKomponen } from "@/components/Hooks/Komponen";
 import { getCookie } from "@/components/Helper/cookies";
-import { H1, H3 } from "@/components/Typography";
+import { H1, H2, H3 } from "@/components/Typography";
 import Breadcrumb from "@/components/Breadcrumb";
 import { toast } from "react-hot-toast";
 export default function addKomponen(props) {
@@ -29,7 +29,7 @@ export default function addKomponen(props) {
         />
       </div>
       <div className="flex flex-col text-center items-center py-4">
-        <H3>Buat Komponen Penilaian</H3>
+        <H2>Buat Komponen Penilaian</H2>
       </div>
       <div className="flex justify-center">
       <Button onClick={() => router.back()}>Back</Button>

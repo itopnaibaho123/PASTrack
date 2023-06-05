@@ -12,6 +12,7 @@ import Head from "next/head";
 import Breadcrumb from "@/components/Breadcrumb";
 import { toast } from "react-hot-toast";
 
+
 export default function EditProfile(props) {
   const router = useRouter();
   // const [ formData, setFormData ] = useContext(FormModalContext);
@@ -49,6 +50,7 @@ export default function EditProfile(props) {
       <Head>
         <title>{`Edit Profile ${props.id}`}</title>
       </Head>
+      <div className="flex flex-col items-center justify-center"> {/* Menengahkan vertikal */}
       <div className="ml-12 py-10">
         <H2>Edit Profile</H2>
       </div>
@@ -101,6 +103,7 @@ export default function EditProfile(props) {
           </EditProfileForm>
         </FormModalContextProvider>
       </div>
+    </div>
     </div>
   );
 }
