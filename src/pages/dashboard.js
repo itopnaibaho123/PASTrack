@@ -10,6 +10,7 @@ import {
   getPeminatanMurid,
 } from "@/components/Hooks/DashboardSiswa";
 import { FaSearch } from "react-icons/fa";
+import { getUsernameMurid } from "@/components/Hooks/Orangtua";
 
 import {
   Chart as ChartJS,
@@ -96,7 +97,6 @@ export default function dashboard(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 2;
 
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = rank.slice(indexOfFirstUser, indexOfLastUser);
@@ -152,7 +152,7 @@ export default function dashboard(props) {
     try {
       const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
-      console.log(rankOfData)
+      console.log(rankOfData);
     } catch (e) {
       console.log(e);
     }
@@ -186,7 +186,7 @@ export default function dashboard(props) {
       );
       const unpermitLabelPeminatan = [];
       const unpermitValuePeminatan = [];
-  
+
       for (let i = 0; i < dataNilai.length; i++) {
         unpermitLabelPeminatan.push(dataNilai[i]["semester"]);
         unpermitValuePeminatan.push(dataNilai[i]["nilaiAkhir"]);
@@ -208,10 +208,8 @@ export default function dashboard(props) {
     const filteredUsers = rank.filter((murid) =>
       murid["student"]["nama"].includes(searchQueryNama.toLowerCase())
     );
-    setRank(filteredUsers)
+    setRank(filteredUsers);
   }, [angkatan]);
-
-
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -533,7 +531,7 @@ export default function dashboard(props) {
         </div>
       </div>
     );
-  } else if (props.role === "MURID") {
+  } else if ((props.role === "MURID", "ORANGTUA")) {
     dashboardTitle = "DASHBOARD MURID";
     const kelasRank = props.ranking.rankingKelasCurrentSemester; // contoh nilai ranking kelas
     const angkatanRank = props.ranking.rankingAngkatanCurrentSemester; // contoh nilai ranking angkatan
@@ -732,6 +730,22 @@ export async function getServerSideProps(context) {
         pencapaianNilai: pencapaianNilai,
         peminatan: peminatan,
         username: username,
+      },
+    };
+  } else if (role === "ORANGTUA") {
+    const usernameAnak = await getUsernameMurid(username, token);
+    const ranking = await getAllRank(usernameAnak[0]['usernameAnak'], token);
+    const pencapaianNilai = await getPencapaianNilai(usernameAnak[0]['usernameAnak'], token);
+    const peminatan = await getPeminatanMurid(usernameAnak[0]['usernameAnak'], token);
+
+    return {
+      props: {
+        role: role,
+        ranking: ranking,
+        token: token,
+        pencapaianNilai: pencapaianNilai,
+        peminatan: peminatan,
+        username: usernameAnak[0]['usernameAnak'],
       },
     };
   }

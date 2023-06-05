@@ -15,6 +15,7 @@ import { getListSemester } from "@/components/Hooks/Semester";
 import { getListGuru } from "@/components/Hooks/Guru";
 import { GURU_KELAS } from "@/components/Hooks/Guru";
 import Breadcrumb from "@/components/Breadcrumb";
+import { getUsernameMurid } from "@/components/Hooks/Orangtua";
 
 export default function Index(props) {
   const router = useRouter();
@@ -92,9 +93,12 @@ export default function Index(props) {
 
                   return (
                     <tr key={kls.idKelas} className={rowBackgroundColor}>
-                      <td className="border p-2 text-center">{kls.namaKelas}</td>
-                      <td className="border p-2 text-center">{`${semester.semester ? "Ganjil" : "Genap"
-                        } ${awalSemester} - ${akhirSemester}`}</td>
+                      <td className="border p-2 text-center">
+                        {kls.namaKelas}
+                      </td>
+                      <td className="border p-2 text-center">{`${
+                        semester.semester ? "Ganjil" : "Genap"
+                      } ${awalSemester} - ${akhirSemester}`}</td>
                       <td className="border p-2">
                         <div className="flex justify-center gap-2">
                           <Button
@@ -115,7 +119,9 @@ export default function Index(props) {
           ) : (
             <div className="flex justify-center mt-4 gap-2">
               <div className="w-4/4 p-8 mb-1 bg-blue-800 rounded-2xl shadow-lg border-4 border-yellow-400 my-1 py-4">
-                <p className="text-white text-center font-semibold">Anda belum pernah terdaftar dikelas manapun.</p>
+                <p className="text-white text-center font-semibold">
+                  Anda belum pernah terdaftar dikelas manapun.
+                </p>
               </div>
             </div>
           )}
@@ -138,7 +144,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if ((role === "MURID", "ORANGTUA")) {
+    if ((role === "MURID")) {
       const list_kelas_murid = await getAllKelasByMurid(
         `${KLS_MURID}${username}`,
         token
@@ -146,6 +152,26 @@ export async function getServerSideProps(context) {
       const semester = await getListSemester();
       const current_kelas_murid = await getCurrentKelasMurid(
         `${CURRENT_KLS_MURID}${username}`,
+        token
+      );
+      return {
+        props: {
+          role: role,
+          list_kelas_murid: list_kelas_murid,
+          current_kelas_murid: current_kelas_murid,
+          semester: semester,
+        },
+      };
+    } else if (role === "ORANGTUA") {
+      console.log("MASUK SINI")
+      const usernameAnak = await getUsernameMurid(username, token);
+      const list_kelas_murid = await getAllKelasByMurid(
+        `${KLS_MURID}${usernameAnak[0]['usernameAnak']}`,
+        token
+      );
+      const semester = await getListSemester();
+      const current_kelas_murid = await getCurrentKelasMurid(
+        `${CURRENT_KLS_MURID}${usernameAnak[0]['usernameAnak']}`,
         token
       );
       return {
