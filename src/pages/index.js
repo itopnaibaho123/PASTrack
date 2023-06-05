@@ -24,7 +24,7 @@ export default function Home() {
       <div>
         <header class="bg-gray absolute top-0 left-0 w-full flex items-center z-10"></header>
         <section id="home">
-          <div class="w-full bg-dark-blue h-[324px] mt-72">
+          <div class="w-full relative bg-dark-blue h-[324px] mt-72">
             <div class="container">
               <div class="flex flex-wrap pt-40">
                 <div class="w-full flex">
@@ -34,7 +34,7 @@ export default function Home() {
                       width="444"
                       height="444"
                       alt=""
-                      class="absolute top-56"
+                      class="absolute -top-12"
                     />
                   </div>
                   <div class="w-1/2 self-end px-4">
