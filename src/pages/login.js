@@ -7,6 +7,7 @@ import PasswordInput from "@/components/PasswordInput";
 import { setCookie } from "@/components/Helper/cookies";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { toast } from "react-hot-toast";
 
 export default function login() {
   const router = useRouter();
@@ -49,9 +50,13 @@ export default function login() {
                       setCookie("username", json.username);
                       setCookie("role", json.role);
                       setCookie("type", json.type);
+                      toast.success(`Selamat datang user ${json.username}`)
                       router.push("/");
+                    }else{
+                      toast.error(`Maaf Password atau Email yang anda masukkan salah`)
                     }
                   } catch (err) {
+                    toast.error(`Maaf telah terjadi kesalahan pada server`)
                     // console.log(err)
                   } finally {
                     setFormData({});

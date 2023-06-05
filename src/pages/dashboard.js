@@ -9,6 +9,7 @@ import {
   getPencapaianNilai,
   getPeminatanMurid,
 } from "@/components/Hooks/DashboardSiswa";
+import { FaSearch } from "react-icons/fa";
 
 import {
   Chart as ChartJS,
@@ -61,6 +62,7 @@ export const optionsBar = {
 
 export const options = {
   responsive: true,
+
   plugins: {
     legend: {
       position: "top",
@@ -78,7 +80,7 @@ export default function dashboard(props) {
   const [lblAvgMatpel, setlblAvgMatpel] = useState([]);
   const [avgMatpel, setAvgMatpel] = useState([]);
   const [page, setPage] = useState(1);
-  const [rank, setRank] = useState();
+  const [rank, setRank] = useState([]);
   const [angkatan, setAngkatan] = useState(1);
   const [angkatanDist, setAngkatanDist] = useState(1);
   const [distribusiLabel, setDistribusiLabel] = useState([]);
@@ -90,7 +92,20 @@ export default function dashboard(props) {
   );
   const [peminatanLineLabel, setPeminatanLineLabel] = useState([]);
   const [peminatanLineValue, setpeminatanLineValue] = useState([]);
+  const [searchQueryNama, setSearchQueryNama] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 2;
 
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = rank.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(rank.length / usersPerPage);
+
+  const handleSearchNama = (e) => {
+    setSearchQueryNama(e.target.value);
+    setCurrentPage(1); // Reset halaman saat melakukan pencarian
+  };
   useEffect(() => {
     if (props.role === "GURU") {
       const permittedAvgLabelAngkatan = [];
@@ -137,6 +152,7 @@ export default function dashboard(props) {
     try {
       const rankOfData = await getRank(angkatan, page, getCookie("token"));
       setRank(rankOfData);
+      console.log(rankOfData)
     } catch (e) {
       console.log(e);
     }
@@ -170,7 +186,7 @@ export default function dashboard(props) {
       );
       const unpermitLabelPeminatan = [];
       const unpermitValuePeminatan = [];
-      console.log(dataNilai);
+  
       for (let i = 0; i < dataNilai.length; i++) {
         unpermitLabelPeminatan.push(dataNilai[i]["semester"]);
         unpermitValuePeminatan.push(dataNilai[i]["nilaiAkhir"]);
@@ -189,7 +205,17 @@ export default function dashboard(props) {
 
   useEffect(() => {
     fetchRank(page, angkatan);
+    const filteredUsers = rank.filter((murid) =>
+      murid["student"]["nama"].includes(searchQueryNama.toLowerCase())
+    );
+    setRank(filteredUsers)
   }, [angkatan]);
+
+
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     fetchDistribusi(angkatanDist);
@@ -220,8 +246,8 @@ export default function dashboard(props) {
             {dashboardTitle}
           </h2>
           <div className="bg-white-100 p-6 rounded-md">
-            <div className="flex flex-wrap">
-              <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+            <div className="grid grid-cols-2">
+              <div className="w-full p-3">
                 <div
                   className="bg-white rounded-lg p-5"
                   style={{
@@ -253,34 +279,36 @@ export default function dashboard(props) {
                       </select>
                     </div>
                   </div>
-                  <Bar
-                    options={optionsBar}
-                    data={{
-                      labels: distribusiLabel,
-                      datasets: [
-                        {
-                          order: 0,
-                          label: "Garis Distribusi Nilai Angkatan",
-                          data: distribusiValue,
-                          type: "line",
-                          backgroundColor: "rgb(255,213,3 )",
-                          borderColor: "rgba(255,213,3,1)",
-                        },
-                        {
-                          order: 1,
-                          label: "Distribusi Nilai Angkatan",
-                          data: distribusiValue,
-                          borderColor: "rgb(14, 49, 120)",
-                          backgroundColor: "rgba(14, 49, 120, 1)",
-                        },
-                      ],
-                    }}
-                  />
+                  <div className="h-full">
+                    <Bar
+                      options={optionsBar}
+                      data={{
+                        labels: distribusiLabel,
+                        datasets: [
+                          {
+                            order: 0,
+                            label: "Garis Distribusi Nilai Angkatan",
+                            data: distribusiValue,
+                            type: "line",
+                            backgroundColor: "rgb(255,213,3 )",
+                            borderColor: "rgba(255,213,3,1)",
+                          },
+                          {
+                            order: 1,
+                            label: "Distribusi Nilai Angkatan",
+                            data: distribusiValue,
+                            borderColor: "rgb(14, 49, 120)",
+                            backgroundColor: "rgba(14, 49, 120, 1)",
+                          },
+                        ],
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+              <div className="w-full p-3">
                 <div
-                  className="bg-white rounded-lg p-5"
+                  className="bg-white h-full rounded-lg p-5 "
                   style={{
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                     border: "1px solid #87CEEB",
@@ -289,8 +317,7 @@ export default function dashboard(props) {
                   <h3 className="text-xl font-medium mb-4">
                     Bar Chart Score Per Angkatan
                   </h3>
-
-                  <div className="h-40">
+                  <div className="h-full">
                     <Bar
                       options={optionsBar}
                       data={{
@@ -308,7 +335,7 @@ export default function dashboard(props) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+              <div className="w-full p-3">
                 <div
                   className="bg-white rounded-lg p-5"
                   style={{
@@ -319,7 +346,7 @@ export default function dashboard(props) {
                   <h3 className="text-xl font-medium mb-4">
                     Bar Score Per Matpel
                   </h3>
-                  <div className="h-40">
+                  <div className="h-full">
                     <Bar
                       options={optionsBar}
                       data={{
@@ -337,9 +364,9 @@ export default function dashboard(props) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 xl:w-1/3 p-3">
+              <div className="w-full p-3">
                 <div
-                  className="bg-white rounded-lg p-5"
+                  className="bg-white h-full rounded-lg p-5"
                   style={{
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                     border: "1px solid #87CEEB",
@@ -368,8 +395,73 @@ export default function dashboard(props) {
                       </select>
                     </div>
                   </div>
+                  <div className="mb-4">
+                    <div className="flex items-center border p-2 rounded-md shadow-sm border-blue-300">
+                      <FaSearch className="mr-2 text-blue-500" />{" "}
+                      {/* Ikon pencarian */}
+                      <input
+                        type="text"
+                        placeholder="Cari Nama..."
+                        value={searchQueryNama}
+                        onChange={handleSearchNama}
+                        className="border-none focus:outline-none flex-grow"
+                        style={{ backgroundColor: "transparent" }}
+                      />
+                    </div>
+                  </div>
                   <div className="overflow-x-auto">
-                    <table className="table-auto w-full">
+                    <table className="w-full border-collapse rounded-full shadow-md">
+                      <thead>
+                        <tr>
+                          <th
+                            className="border p-2"
+                            style={{
+                              backgroundColor: "#000080",
+                              color: "white",
+                            }}
+                          >
+                            Nama Siswa
+                          </th>
+                          <th
+                            className="border p-2"
+                            style={{
+                              backgroundColor: "#000080",
+                              color: "white",
+                            }}
+                          >
+                            Ranking
+                          </th>
+                          <th
+                            className="border p-2"
+                            style={{
+                              backgroundColor: "#000080",
+                              color: "white",
+                            }}
+                          >
+                            Average Score
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rank.map((user, index) => {
+                          const rowBackgroundColor =
+                            index % 2 === 0 ? "bg-white" : "bg-gray-200";
+
+                          return (
+                            <tr key={index} className={rowBackgroundColor}>
+                              <td className="border p-2">
+                                {user["student"]["nama"]}
+                              </td>
+                              <td className="border p-2">{user["ranking"]}</td>
+                              <td className="border p-2">
+                                {user["averageScore"]}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    {/* <table className="table-auto w-full">
                       <thead>
                         <tr>
                           <th className="px-4 py-2">Nama Siswa</th>
@@ -393,8 +485,8 @@ export default function dashboard(props) {
                             </tr>
                           ))}
                       </tbody>
-                    </table>
-                    <div className="flex">
+                    </table> */}
+                    {/* <div className="flex">
                       {page > 1 && (
                         <Button
                           varian="secondary"
@@ -412,8 +504,28 @@ export default function dashboard(props) {
                           Next
                         </Button>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
+                  {totalPages > 1 && (
+                    <div className="flex justify-end mt-4 gap-2">
+                      {" "}
+                      {/* Use "justify-end" class to align buttons to the right */}
+                      <Button
+                        variant="secondary"
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                      >
+                        &lt; Previous
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                      >
+                        Next &gt;
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -428,7 +540,7 @@ export default function dashboard(props) {
     const angkatanRankAllSemester = props.ranking.rankingAngkatanAllSemester;
     return (
       <div>
-         <div className="h-full flex flex-col">
+        <div className="h-full flex flex-col">
           <Breadcrumb
             links={[
               { label: "Home", href: "/" },
@@ -523,27 +635,26 @@ export default function dashboard(props) {
                       </select>
                     </div>
                   </div>
-                  <div className="h-40">
-                    <Line
-                      options={options}
-                      data={{
-                        labels: peminatanLineLabel,
-                        datasets: [
-                          {
-                            label: "Perkembangan Nilai Per Semester",
-                            data: peminatanLineValue,
-                            backgroundColor: "rgb(255,213,3 )",
-                            borderColor: "rgba(255,213,3,1)",
-                          },
-                        ],
-                      }}
-                    />
-                  </div>
+
+                  <Line
+                    options={options}
+                    data={{
+                      labels: peminatanLineLabel,
+                      datasets: [
+                        {
+                          label: "Perkembangan Nilai Per Semester",
+                          data: peminatanLineValue,
+                          backgroundColor: "rgb(255,213,3 )",
+                          borderColor: "rgba(255,213,3,1)",
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </div>
               <div className="w-full md:w-1/2 xl:w-1/3 p-3">
                 <div
-                  className="bg-white rounded-lg p-5"
+                  className="bg-white h-full rounded-lg p-5"
                   style={{
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                     border: "1px solid #87CEEB",
@@ -553,22 +664,20 @@ export default function dashboard(props) {
                     Rata-Rata Pencapaian Semester
                   </h3>
 
-                  <div className="h-40">
-                    <Line
-                      options={options}
-                      data={{
-                        labels: averageLineLabel,
-                        datasets: [
-                          {
-                            label: "Perkembangan Nilai Per Semester",
-                            data: averageLineValue,
-                            backgroundColor: "rgb(255,213,3 )",
-                            borderColor: "rgba(255,213,3,1)",
-                          },
-                        ],
-                      }}
-                    />
-                  </div>
+                  <Line
+                    options={options}
+                    data={{
+                      labels: averageLineLabel,
+                      datasets: [
+                        {
+                          label: "Perkembangan Nilai Per Semester",
+                          data: averageLineValue,
+                          backgroundColor: "rgb(255,213,3 )",
+                          borderColor: "rgba(255,213,3,1)",
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </div>
             </div>
