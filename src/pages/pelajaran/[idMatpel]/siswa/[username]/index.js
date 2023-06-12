@@ -179,10 +179,10 @@ export default function komponen(props) {
             <Button
               variant="secondary"
               onClick={() =>
-                router.push(`/pelajara/${props.idMatpel}/komponen`)
+                router.push(`/pelajaran/${props.idMatpel}/komponen`)
               }
             >
-              Tambah Komponen
+              Lihat Komponen
             </Button>
           </div>
           <div className="flex flex-wrap justify-start gap-2 py-2">
