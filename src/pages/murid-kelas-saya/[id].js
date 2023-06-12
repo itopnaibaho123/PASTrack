@@ -150,7 +150,7 @@ export async function getServerSideProps(context) {
           username: username,
         },
       };
-    } else if ((role === "MURID", "GURU")) {
+    } else if ((role === "MURID", "GURU", "ORANGTUA")) {
       const students = await getSiswaByKelas(
         `${API_KELAS}${context.query.id}/siswa`,
         token
