@@ -64,18 +64,10 @@ export default function komponen(props) {
             <title>List Komponen</title>
           </Head>
           <div className="flex flex-col text-center items-center">
-            <H2>Daftar User</H2>
+            <H2>Daftar Komponen</H2>
           </div>
           <div className="flex justify-center gap-2">
             <Button onClick={() => router.back()}>Kembali</Button>
-            <Button
-              variant="secondary"
-              onClick={() =>
-                router.push(`/pelajara/${props.idMatpel}/komponen`)
-              }
-            >
-              Tambah Komponen
-            </Button>
           </div>
           <div className="flex flex-wrap justify-start gap-2 py-2">
             <table className="w-full border-collapse rounded-full shadow-md">
@@ -180,7 +172,7 @@ export default function komponen(props) {
             <title>List Komponen</title>
           </Head>
           <div className="flex flex-col text-center items-center">
-            <H2>Daftar User</H2>
+            <H2>Daftar Komponen</H2>
           </div>
           <div className="flex justify-center gap-2">
             <Button onClick={() => router.back()}>Kembali</Button>
