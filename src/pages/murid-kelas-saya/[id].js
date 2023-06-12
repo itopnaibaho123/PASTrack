@@ -116,7 +116,7 @@ export default function detailKelasMurid(props) {
 }
 
 export async function getServerSideProps(context) {
-  const authentications = checkRole(context, ["ADMIN", "MURID"]);
+  const authentications = checkRole(context, ["ADMIN", "MURID", "ORANGTUA"]);
   if (!authentications.tokenTrue) {
     return {
       redirect: {
@@ -128,7 +128,7 @@ export async function getServerSideProps(context) {
   const { role, token, username } = context.req.cookies;
 
   if (authentications.rolesTrue) {
-    if ((role === "ADMIN", "MURID")) {
+    if ((role === "ADMIN", "MURID", "ORANGTUA")) {
       const students = await getSiswaByKelas(
         `${API_KELAS}${context.query.id}/siswa`,
         token
